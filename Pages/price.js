@@ -11,7 +11,7 @@ import Optionssmall from "../Components/optionssmall";
 import Infosmall from "../Components/infosmall";
 import Price_comment from "../Components/price_comment";
 
-export default function Price() {
+const Price = (props) => {
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -87,3 +87,5 @@ const styles = StyleSheet.create({
         width: 35,
     },
 });
+
+export default Price;

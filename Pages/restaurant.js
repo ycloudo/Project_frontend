@@ -10,12 +10,7 @@ import {
 import Options from "../Components/options";
 import Info from "../Components/info";
 
-export default function Restaurant() {
-    const [restaurantflag, setrestaurantflag] = useState("1");
-    const clickchange = () => {
-        setrestaurantflag("3");
-    };
-
+const Restaurant = (props) => {
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -25,8 +20,7 @@ export default function Restaurant() {
             >
                 <View style={styles.top}>
                     <View style={styles.backbackground}>
-                        <Text>{restaurantflag}</Text>
-                        <TouchableOpacity onPress={clickchange}>
+                        <TouchableOpacity>
                             <Image
                                 source={require("../assets/back.png")}
                                 style={styles.back}
@@ -91,3 +85,6 @@ const styles = StyleSheet.create({
         width: 35,
     },
 });
+
+
+export default Restaurant;
