@@ -7,8 +7,8 @@ import {
     Image,
     TouchableOpacity,
 } from "react-native";
-import Options from "./options";
-import Info from "./info";
+import Options from "../Components/options";
+import Info from "../Components/info";
 
 export default function Restaurant() {
     const [restaurantflag, setrestaurantflag] = useState("1");

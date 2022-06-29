@@ -7,9 +7,9 @@ import {
     Image,
     TouchableOpacity,
 } from "react-native";
-import Optionssmall from "./optionssmall";
-import Infosmall from "./infosmall";
-import Price_comment from "./price_comment";
+import Optionssmall from "../Components/optionssmall";
+import Infosmall from "../Components/infosmall";
+import Price_comment from "../Components/price_comment";
 
 export default function Price() {
     return (

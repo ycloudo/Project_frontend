@@ -7,6 +7,8 @@ import Favor from "./Pages/Favor";
 import Eat from "./Pages/Eat";
 import Personal from "./Pages/Personal";
 import Information from "./Pages/Information";
+import Price from "./Pages/price";
+import Restaurant from "./Pages/restaurant";
 
 export default function App() {
     const [pageStatus, setPageStatus] = useState({
