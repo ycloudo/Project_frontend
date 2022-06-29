@@ -12,6 +12,15 @@ import Infosmall from "../Components/infosmall";
 import Price_comment from "../Components/price_comment";
 
 const Price = (props) => {
+    const pricebackStatusHandler = () => {
+        props.setPageStatus((prev) => ({
+            ...prev,
+            pages: {
+                ...(prev.pages = 0),
+                restaurant: 1,
+            },
+        }));
+    };
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -21,7 +30,7 @@ const Price = (props) => {
             >
                 <View style={styles.top}>
                     <View style={styles.backbackground}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={pricebackStatusHandler}>
                             <Image
                                 source={require("../assets/back.png")}
                                 style={styles.back}

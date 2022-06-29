@@ -11,6 +11,15 @@ import Options from "../Components/options";
 import Info from "../Components/info";
 
 const Restaurant = (props) => {
+    const restaurantbackStatusHandler = () => {
+        props.setPageStatus((prev) => ({
+            ...prev,
+            pages: {
+                ...(prev.pages = 0),
+                main: 1,
+            },
+        }));
+    };
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -20,7 +29,7 @@ const Restaurant = (props) => {
             >
                 <View style={styles.top}>
                     <View style={styles.backbackground}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={restaurantbackStatusHandler}>
                             <Image
                                 source={require("../assets/back.png")}
                                 style={styles.back}
