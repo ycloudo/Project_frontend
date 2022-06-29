@@ -19,6 +19,7 @@ const Price = (props) => {
                 ...(prev.pages = 0),
                 restaurant: 1,
             },
+            navbar: 0,
         }));
     };
     return (

@@ -9,6 +9,7 @@ const Options = (props) => {
                 ...(prev.pages = 0),
                 price: 1,
             },
+            navbar: 0,
         }));
     };
     return (

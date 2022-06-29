@@ -34,8 +34,8 @@ export default function App() {
             {pageStatus.pages.favor ? <Favor /> : null}
             {pageStatus.pages.personal ? <Personal /> : null}
             {pageStatus.pages.information ? <Information /> : null}
-            {pageStatus.pages.restaurant ? <Restaurant /> : null}
-            {pageStatus.pages.price ? <Price /> : null}
+            {pageStatus.pages.restaurant ? <Restaurant setPageStatus={setPageStatus}/> : null}
+            {pageStatus.pages.price ? <Price setPageStatus={setPageStatus}/> : null}
             {pageStatus.navbar ? (
                 <Navbar pageStatus={pageStatus} setPageStatus={setPageStatus} />
             ) : null}

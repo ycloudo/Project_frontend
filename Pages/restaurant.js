@@ -18,6 +18,7 @@ const Restaurant = (props) => {
                 ...(prev.pages = 0),
                 main: 1,
             },
+            navbar: 1,
         }));
     };
     return (
@@ -47,7 +48,7 @@ const Restaurant = (props) => {
                 </View>
                 <Info />
             </ImageBackground>
-            <Options />
+            <Options setPageStatus={props.setPageStatus}/>
         </View>
     );
 }
