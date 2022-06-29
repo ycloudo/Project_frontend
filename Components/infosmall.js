@@ -5,10 +5,9 @@ import {
     View,
     Image,
     ImageBackground,
-    DatePickerAndroid,
 } from "react-native";
 
-export default function Infosmall() {
+const Infosmall = (props) => {
     return (
         <View style={styles.box}>
             <View style={styles.namestar}>
@@ -76,3 +75,5 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
 });
+
+export default Infosmall;

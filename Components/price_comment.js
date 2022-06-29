@@ -8,7 +8,7 @@ import {
     ScrollView,
 } from "react-native";
 
-export default function Price_comment() {
+const Price_comment = (props) => {
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -97,3 +97,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 30,
     },
 });
+
+
+export default Price_comment;

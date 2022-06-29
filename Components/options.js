@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-export default function Options() {
+const Options = (props) => {
     return (
         <View>
             <View style={styles.container}>
@@ -114,3 +114,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
 });
+
+
+export default Options;

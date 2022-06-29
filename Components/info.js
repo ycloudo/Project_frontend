@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 
-export default function Info() {
+const Info = (props) => {
     return (
         <View style={styles.box}>
             <Text style={styles.name}>早頓小室</Text>
@@ -62,3 +62,5 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
 });
+
+export default Info;
