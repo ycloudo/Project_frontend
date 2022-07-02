@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 const Personal = () => {
     return (
         <View style={styles.main_container}>
-            <Text>Personal</Text>
+            <Text>Personal Page</Text>
         </View>
     );
 };
