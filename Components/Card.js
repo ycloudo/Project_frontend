@@ -7,7 +7,7 @@ const Card = (props) => {
             ...prev,
             pages: {
                 ...(prev.pages = 0),
-                information: 1,
+                restaurant: 1,
             },
             navbar: 0,
         }));

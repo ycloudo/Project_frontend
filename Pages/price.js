@@ -7,11 +7,21 @@ import {
     Image,
     TouchableOpacity,
 } from "react-native";
-import Optionssmall from "./optionssmall";
-import Infosmall from "./infosmall";
-import Price_comment from "./price_comment";
+import Optionssmall from "../Components/optionssmall";
+import Infosmall from "../Components/infosmall";
+import Price_comment from "../Components/price_comment";
 
-export default function Price() {
+const Price = (props) => {
+    const pricebackStatusHandler = () => {
+        props.setPageStatus((prev) => ({
+            ...prev,
+            pages: {
+                ...(prev.pages = 0),
+                restaurant: 1,
+            },
+            navbar: 0,
+        }));
+    };
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -21,7 +31,7 @@ export default function Price() {
             >
                 <View style={styles.top}>
                     <View style={styles.backbackground}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={pricebackStatusHandler}>
                             <Image
                                 source={require("../assets/back.png")}
                                 style={styles.back}
@@ -87,3 +97,5 @@ const styles = StyleSheet.create({
         width: 35,
     },
 });
+
+export default Price;

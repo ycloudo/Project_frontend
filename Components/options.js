@@ -1,12 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-export default function Options() {
+const Options = (props) => {
+    const priceStatusHandler = () => {
+        props.setPageStatus((prev) => ({
+            ...prev,
+            pages: {
+                ...(prev.pages = 0),
+                price: 1,
+            },
+            navbar: 0,
+        }));
+    };
     return (
         <View>
             <View style={styles.container}>
                 <View style={styles.boxl}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={priceStatusHandler}>
                         <View style={styles.boxli}>
                             <Image
                                 source={require("../assets/money.png")}
@@ -114,3 +124,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
 });
+
+
+export default Options;
