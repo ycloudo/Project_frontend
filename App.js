@@ -7,6 +7,8 @@ import Favor from "./Pages/Favor";
 import Eat from "./Pages/Eat";
 import Personal from "./Pages/Personal";
 import Information from "./Pages/Information";
+import Price from "./Pages/price";
+import Restaurant from "./Pages/restaurant";
 
 export default function App() {
     const [pageStatus, setPageStatus] = useState({
@@ -17,6 +19,8 @@ export default function App() {
             favor: 0, //favor page
             personal: 0, //personal account page
             information: 0, //reataurant page
+            restaurant: 0, //restaurantinfo page
+            price: 0, //price page
         },
         navbar: 1, //navbar
     });
@@ -30,6 +34,8 @@ export default function App() {
             {pageStatus.pages.favor ? <Favor /> : null}
             {pageStatus.pages.personal ? <Personal /> : null}
             {pageStatus.pages.information ? <Information /> : null}
+            {pageStatus.pages.restaurant ? <Restaurant setPageStatus={setPageStatus}/> : null}
+            {pageStatus.pages.price ? <Price setPageStatus={setPageStatus}/> : null}
             {pageStatus.navbar ? (
                 <Navbar pageStatus={pageStatus} setPageStatus={setPageStatus} />
             ) : null}

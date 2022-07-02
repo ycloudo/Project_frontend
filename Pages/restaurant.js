@@ -7,15 +7,20 @@ import {
     Image,
     TouchableOpacity,
 } from "react-native";
-import Options from "./options";
-import Info from "./info";
+import Options from "../Components/options";
+import Info from "../Components/info";
 
-export default function Restaurant() {
-    const [restaurantflag, setrestaurantflag] = useState("1");
-    const clickchange = () => {
-        setrestaurantflag("3");
+const Restaurant = (props) => {
+    const restaurantbackStatusHandler = () => {
+        props.setPageStatus((prev) => ({
+            ...prev,
+            pages: {
+                ...(prev.pages = 0),
+                main: 1,
+            },
+            navbar: 1,
+        }));
     };
-
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -25,8 +30,7 @@ export default function Restaurant() {
             >
                 <View style={styles.top}>
                     <View style={styles.backbackground}>
-                        <Text>{restaurantflag}</Text>
-                        <TouchableOpacity onPress={clickchange}>
+                        <TouchableOpacity onPress={restaurantbackStatusHandler}>
                             <Image
                                 source={require("../assets/back.png")}
                                 style={styles.back}
@@ -44,7 +48,7 @@ export default function Restaurant() {
                 </View>
                 <Info />
             </ImageBackground>
-            <Options />
+            <Options setPageStatus={props.setPageStatus}/>
         </View>
     );
 }
@@ -91,3 +95,6 @@ const styles = StyleSheet.create({
         width: 35,
     },
 });
+
+
+export default Restaurant;

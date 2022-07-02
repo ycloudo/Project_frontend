@@ -8,7 +8,7 @@ import {
     ScrollView,
 } from "react-native";
 
-export default function Optionssmall() {
+const Optionssmall = (props) => {
     return (
         <View style={styles.container}>
             <ScrollView
@@ -124,3 +124,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
 });
+
+
+export default Optionssmall;
