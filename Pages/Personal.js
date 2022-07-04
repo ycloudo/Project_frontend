@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
         paddingRight: "6%",
         display: "flex",
         flexDirection: "column",
+        fontSize: 30,
     },
 });
 
