@@ -20,12 +20,14 @@ const SearchBox = () => {
                 placeholder="  ...來點日式料理?"
                 style={styles.input}
             ></TextInput>
-            <TouchableOpacity style={styles.searh_button} onPress={click}>
-                <Icon
-                    name="ios-search-circle-outline"
-                    size={50}
-                    color="#FFC107"
-                ></Icon>
+            <TouchableOpacity onPress={click}>
+                <View style={styles.searchbotton}>
+                    <Icon
+                        name="ios-search-circle-outline"
+                        size={50}
+                        color="#FFFAFA"
+                    ></Icon>
+                </View>
             </TouchableOpacity>
         </View>
     );
@@ -34,14 +36,20 @@ const SearchBox = () => {
 const styles = StyleSheet.create({
     input: {
         backgroundColor: "#FFFAFA",
-        borderRadius: 5,
-        width: "80%",
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+        flexGrow: 1,
         fontSize: 17,
     },
     searchbox: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-around",
+        width: "100%",
+    },
+    searchbotton: {
+        backgroundColor: "#FFC107",
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
     },
 });
 

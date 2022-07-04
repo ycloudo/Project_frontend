@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         height: "90%",
     },
     main_container: {
-        top: "8%",
+        top: "10%",
         paddingLeft: "6%",
         paddingRight: "6%",
         display: "flex",
