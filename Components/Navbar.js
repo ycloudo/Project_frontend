@@ -40,6 +40,12 @@ const Navbar = (props) => {
             },
         }));
     };
+    const settingStatusHandler = () => {
+        props.setPageStatus((prev) => ({
+            ...prev,
+            setting: !props.pageStatus.setting,
+        }));
+    };
     const main_color = props.pageStatus.pages.main
         ? "rgb(0,0,0)"
         : "rgb(255,250,250)";
@@ -49,7 +55,7 @@ const Navbar = (props) => {
     const favor_color = props.pageStatus.pages.favor
         ? "rgb(0,0,0)"
         : "rgb(255,250,250)";
-    const personal_color = props.pageStatus.pages.personal
+    const setting_color = props.pageStatus.setting
         ? "rgb(0,0,0)"
         : "rgb(255,250,250)";
     return (
@@ -78,10 +84,14 @@ const Navbar = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.icon_container}
-                    onPress={personalStatusHandler}
+                    onPress={settingStatusHandler}
                 >
-                    <Icon_i name="person" size={30} color={personal_color} />
-                    <Text style={{ color: personal_color }}>個人資訊</Text>
+                    <Icon_i
+                        name="ios-settings-sharp"
+                        size={30}
+                        color={setting_color}
+                    />
+                    <Text style={{ color: setting_color }}>設定</Text>
                 </TouchableOpacity>
             </View>
         </View>
