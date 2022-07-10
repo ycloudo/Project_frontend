@@ -46,6 +46,7 @@ const Main = (props) => {
 const styles = StyleSheet.create({
     scrollview_container: {
         height: "90%",
+        backgroundColor: "#E0E0E0",
     },
     main_container: {
         top: "10%",
