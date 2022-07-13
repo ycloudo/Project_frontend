@@ -7,13 +7,14 @@ import Icon_i from "@expo/vector-icons/Ionicons";
 import Main from "../Pages/Main";
 import Eat from "../Pages/Eat";
 import Favor from "../Pages/Favor";
-import { MainStack } from '../Pages/index';
+import { MainStack } from "../Pages/index";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import SettingDrawer from "./SettingDrawer";
 
 const Tab = createBottomTabNavigator();
 
 const Navbar = () => {
-    return (    
+    return (
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
@@ -24,20 +25,23 @@ const Navbar = () => {
             <Tab.Screen
                 name="首頁"
                 component={MainStack}
-                options={   
-                    ({route}) => ({
-                        tabBarStyle: {display: getRouteName(route),backgroundColor: "#E0E0E0",height:"10%"},                
-                        tabBarIcon: ({ focused }) => {
-                            const color = focused
-                                ? "rgb(0,0,0)"
-                                : "rgb(255,250,250)";
-                            return (
-                                <View style={styles.icon_container}>
-                                    <Icon_m name="home" size={30} color={color} />
-                                    <Text style={{ color: color }}>首頁</Text>
-                                </View>
-                            );
-                        },  
+                options={({ route }) => ({
+                    tabBarStyle: {
+                        display: getRouteName(route),
+                        backgroundColor: "#E0E0E0",
+                        height: "10%",
+                    },
+                    tabBarIcon: ({ focused }) => {
+                        const color = focused
+                            ? "rgb(0,0,0)"
+                            : "rgb(255,250,250)";
+                        return (
+                            <View style={styles.icon_container}>
+                                <Icon_m name="home" size={30} color={color} />
+                                <Text style={{ color: color }}>首頁</Text>
+                            </View>
+                        );
+                    },
                 })}
             />
             <Tab.Screen
@@ -64,26 +68,32 @@ const Navbar = () => {
             <Tab.Screen
                 name="收藏"
                 component={Favor}
-                options={
-                    ({route}) => ({
-                        tabBarStyle: {display: getRouteName(route),backgroundColor: "#E0E0E0",height:"10%"},                
-                        tabBarIcon: ({ focused }) => {
-                            const color = focused
-                                ? "rgb(0,0,0)"
-                                : "rgb(255,250,250)";
-                            return (
-                                <View style={styles.icon_container}>
-                                    <Icon_m name="bookmark" size={30} color={color} />
-                                    <Text style={{ color: color }}>收藏</Text>
-                                </View>
-                            );
-                        },  
-                })
-                }
+                options={({ route }) => ({
+                    tabBarStyle: {
+                        display: getRouteName(route),
+                        backgroundColor: "#E0E0E0",
+                        height: "10%",
+                    },
+                    tabBarIcon: ({ focused }) => {
+                        const color = focused
+                            ? "rgb(0,0,0)"
+                            : "rgb(255,250,250)";
+                        return (
+                            <View style={styles.icon_container}>
+                                <Icon_m
+                                    name="bookmark"
+                                    size={30}
+                                    color={color}
+                                />
+                                <Text style={{ color: color }}>收藏</Text>
+                            </View>
+                        );
+                    },
+                })}
             />
             <Tab.Screen
                 name="設定"
-                component={Favor}
+                component={SettingDrawer}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         const color = focused
@@ -101,6 +111,12 @@ const Navbar = () => {
                         );
                     },
                 }}
+                listeners={({ navigation, route }) => ({
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        navigation.openDrawer();
+                    },
+                })}
             />
         </Tab.Navigator>
     );
@@ -119,14 +135,14 @@ const styles = StyleSheet.create({
     },
 });
 
-const getRouteName = route =>{
+const getRouteName = (route) => {
     const routeName = getFocusedRouteNameFromRoute(route);
     //console.log(routeName);
     //console.log(route);
-    if(routeName=="restaurant"||routeName=="price"){
-        return 'none';
+    if (routeName == "restaurant" || routeName == "price") {
+        return "none";
     }
-    return 'flex';
+    return "flex";
 };
 
 export default Navbar;
