@@ -7,6 +7,7 @@ import Icon_i from "@expo/vector-icons/Ionicons";
 import Main from "../Pages/Main";
 import Eat from "../Pages/Eat";
 import Favor from "../Pages/Favor";
+import SettingDrawer from "./SettingDrawer";
 
 const Tab = createBottomTabNavigator();
 
@@ -80,7 +81,7 @@ const Navbar = () => {
             />
             <Tab.Screen
                 name="設定"
-                component={Favor}
+                component={SettingDrawer}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         const color = focused
@@ -98,6 +99,12 @@ const Navbar = () => {
                         );
                     },
                 }}
+                // listeners={({ navigation, route }) => ({
+                //     tabPress: (e) => {
+                //         e.preventDefault();
+                //         navigation.openDrawer();
+                //     },
+                // })}
             />
         </Tab.Navigator>
     );
