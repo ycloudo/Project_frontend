@@ -1,0 +1,38 @@
+export const data = [
+    {
+        name:'AAA',
+        address:'aaa',
+        star:'1',
+        save:'1',
+        id:'1',
+    },
+    {
+        name:'BBB',
+        address:'bbb',
+        star:'2',
+        save:'0',
+        id:'2',
+    },
+    {
+        name:'CCC',
+        address:'ccc',
+        star:'3',
+        save:'0',
+        id:'3',
+    },
+    {
+        name:'DDD',
+        address:'ddd',
+        star:'4',
+        save:'0',
+        id:'4',
+    },
+    {
+        name:'EEE',
+        address:'eee',
+        star:'5',
+        save:'0',
+        id:'5',
+    },
+];
+    

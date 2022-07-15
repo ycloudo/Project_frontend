@@ -1,22 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-const Options = (props) => {
-    const priceStatusHandler = () => {
-        props.setPageStatus((prev) => ({
-            ...prev,
-            pages: {
-                ...(prev.pages = 0),
-                price: 1,
-            },
-            navbar: 0,
-        }));
-    };
+const Options = ({navigation,id,name,address,star,save}) => {
     return (
         <View>
             <View style={styles.container}>
                 <View style={styles.boxl}>
-                    <TouchableOpacity onPress={priceStatusHandler}>
+                    <TouchableOpacity onPress={() => navigation.navigate('price',{id,name,address,star,save})}>
                         <View style={styles.boxli}>
                             <Image
                                 source={require("../assets/money.png")}

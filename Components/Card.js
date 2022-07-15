@@ -1,20 +1,14 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Card = (props) => {
-    const cardHadler = () => {
-        props.setPageStatus((prev) => ({
-            ...prev,
-            pages: {
-                ...(prev.pages = 0),
-                restaurant: 1,
-            },
-            navbar: 0,
-        }));
-    };
+const Card = ({navigation,item}) => {
+    
     return (
-        <TouchableOpacity onPress={cardHadler}>
-            <View style={styles.container}></View>
+        <TouchableOpacity onPress={() => navigation.navigate('restaurant',item)}>
+            <View style={styles.container}>
+                <Text>{item.name}</Text>
+            </View>
         </TouchableOpacity>
     );
 };

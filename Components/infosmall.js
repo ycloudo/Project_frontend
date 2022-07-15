@@ -7,21 +7,21 @@ import {
     ImageBackground,
 } from "react-native";
 
-const Infosmall = (props) => {
+const Infosmall = ({name,address,star}) => {
     return (
         <View style={styles.box}>
             <View style={styles.namestar}>
-                <Text style={styles.name}>早頓小室</Text>
+                <Text style={styles.name}>{name}</Text>
                 <View style={styles.star}>
                     <ImageBackground
                         source={require("../assets/star.png")}
                         style={styles.starphoto}
                     >
-                        <Text style={styles.starnum}>4.4</Text>
+                        <Text style={styles.starnum}>{star}</Text>
                     </ImageBackground>
                 </View>
             </View>
-            <Text style={styles.address}>高雄市鼓山區捷興二街29-1號</Text>
+            <Text style={styles.address}>{address}</Text>
         </View>
     );
 }
