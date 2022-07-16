@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import Card from "../Components/Card";
 import SearchBox from "../Components/SearchBox";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {data} from "../data";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { data } from "../data";
 
-const Main = ({navigation}) => {
+const Main = ({ navigation }) => {
     return (
         <View style={styles.scrollview_container}>
             <ScrollView
@@ -17,8 +17,9 @@ const Main = ({navigation}) => {
                     <Text>{}</Text>
                     {data.map((item) => (
                         <Card
-                        item={item}
-                        navigation = {navigation}
+                            item={item}
+                            navigation={navigation}
+                            key={item.id}
                         />
                     ))}
 
