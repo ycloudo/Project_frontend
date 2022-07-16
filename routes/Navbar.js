@@ -4,16 +4,19 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon_m from "@expo/vector-icons/MaterialIcons";
 import Icon_mc from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon_i from "@expo/vector-icons/Ionicons";
+import Icon_f from "@expo/vector-icons/Foundation";
 import Main from "../Pages/Main";
 import Eat from "../Pages/Eat";
 import Favor from "../Pages/Favor";
-import { MainStack } from '../Pages/index';
+import { MainStack } from "../Pages/index";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import SettingDrawer from "./SettingDrawer";
+import FavorSetting from "../Pages/FavorSetting";
 
 const Tab = createBottomTabNavigator();
 
 const Navbar = () => {
-    return (    
+    return (
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
@@ -24,20 +27,23 @@ const Navbar = () => {
             <Tab.Screen
                 name="首頁"
                 component={MainStack}
-                options={   
-                    ({route}) => ({
-                        tabBarStyle: {display: getRouteName(route),backgroundColor: "#E0E0E0",height:"10%"},                
-                        tabBarIcon: ({ focused }) => {
-                            const color = focused
-                                ? "rgb(0,0,0)"
-                                : "rgb(255,250,250)";
-                            return (
-                                <View style={styles.icon_container}>
-                                    <Icon_m name="home" size={30} color={color} />
-                                    <Text style={{ color: color }}>首頁</Text>
-                                </View>
-                            );
-                        },  
+                options={({ route }) => ({
+                    tabBarStyle: {
+                        display: getRouteName(route),
+                        backgroundColor: "#E0E0E0",
+                        height: "10%",
+                    },
+                    tabBarIcon: ({ focused }) => {
+                        const color = focused
+                            ? "rgb(0,0,0)"
+                            : "rgb(255,250,250)";
+                        return (
+                            <View style={styles.icon_container}>
+                                <Icon_m name="home" size={30} color={color} />
+                                <Text style={{ color: color }}>首頁</Text>
+                            </View>
+                        );
+                    },
                 })}
             />
             <Tab.Screen
@@ -64,43 +70,46 @@ const Navbar = () => {
             <Tab.Screen
                 name="收藏"
                 component={Favor}
-                options={
-                    ({route}) => ({
-                        tabBarStyle: {display: getRouteName(route),backgroundColor: "#E0E0E0",height:"10%"},                
-                        tabBarIcon: ({ focused }) => {
-                            const color = focused
-                                ? "rgb(0,0,0)"
-                                : "rgb(255,250,250)";
-                            return (
-                                <View style={styles.icon_container}>
-                                    <Icon_m name="bookmark" size={30} color={color} />
-                                    <Text style={{ color: color }}>收藏</Text>
-                                </View>
-                            );
-                        },  
-                })
-                }
-            />
-            <Tab.Screen
-                name="設定"
-                component={Favor}
-                options={{
+                options={({ route }) => ({
+                    tabBarStyle: {
+                        display: getRouteName(route),
+                        backgroundColor: "#E0E0E0",
+                        height: "10%",
+                    },
                     tabBarIcon: ({ focused }) => {
                         const color = focused
                             ? "rgb(0,0,0)"
                             : "rgb(255,250,250)";
                         return (
                             <View style={styles.icon_container}>
-                                <Icon_i
-                                    name="ios-settings-sharp"
+                                <Icon_m
+                                    name="bookmark"
                                     size={30}
                                     color={color}
                                 />
-                                <Text style={{ color: color }}>設定</Text>
+                                <Text style={{ color: color }}>收藏</Text>
                             </View>
                         );
                     },
+                })}
+            />
+            <Tab.Screen
+                name="設定"
+                component={FavorSetting}
+                options={{
+                    tabBarIcon: () => (
+                        <View style={styles.icon_container}>
+                            <Icon_f name="list" size={30} color="black" />
+                            <Text style={{ color: "black" }}>設定</Text>
+                        </View>
+                    ),
                 }}
+                listeners={({ navigation }) => ({
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        navigation.openDrawer();
+                    },
+                })}
             />
         </Tab.Navigator>
     );
@@ -109,7 +118,6 @@ const Navbar = () => {
 const styles = StyleSheet.create({
     menu_container: {
         position: "absolute",
-        top: "90%",
         width: "100%",
         height: "10%",
         backgroundColor: "#E0E0E0",
@@ -119,14 +127,14 @@ const styles = StyleSheet.create({
     },
 });
 
-const getRouteName = route =>{
+const getRouteName = (route) => {
     const routeName = getFocusedRouteNameFromRoute(route);
     //console.log(routeName);
     //console.log(route);
-    if(routeName=="restaurant"||routeName=="price"){
-        return 'none';
+    if (routeName == "restaurant" || routeName == "price") {
+        return "none";
     }
-    return 'flex';
+    return "flex";
 };
 
 export default Navbar;

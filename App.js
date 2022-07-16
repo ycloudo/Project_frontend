@@ -1,24 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import Navbar from "./Components/Navbar";
-import Main from "./Pages/Main";
-import Favor from "./Pages/Favor";
-import Eat from "./Pages/Eat";
-import Personal from "./Pages/Personal";
-import Information from "./Pages/Information";
-import Price from "./Pages/price";
-import Restaurant from "./Pages/restaurant";
-// import Setting from "./Pages/Setting";
+import Navbar from "./routes/Navbar";
+import Drawer from "./routes/DrawerNav";
 
 export default function App() {
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
-
             <NavigationContainer>
-                <Navbar />
+                <Drawer />
             </NavigationContainer>
         </View>
     );
