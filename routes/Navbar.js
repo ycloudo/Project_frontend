@@ -10,7 +10,6 @@ import Eat from "../Pages/Eat";
 import Favor from "../Pages/Favor";
 import { MainStack } from "../Pages/index";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import SettingDrawer from "./SettingDrawer";
 import FavorSetting from "../Pages/FavorSetting";
 
 const Tab = createBottomTabNavigator();
