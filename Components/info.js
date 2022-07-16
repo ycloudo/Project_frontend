@@ -1,17 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 
-const Info = (props) => {
+const Info = ({name,address,star}) => {
     return (
         <View style={styles.box}>
-            <Text style={styles.name}>早頓小室</Text>
-            <Text style={styles.address}>高雄市鼓山區捷興二街29-1號</Text>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.address}>{address}</Text>
             <View style={styles.star}>
                 <ImageBackground
                     source={require("../assets/star.png")}
                     style={styles.starphoto}
                 >
-                    <Text style={styles.starnum}>4.4</Text>
+                    <Text style={styles.starnum}>{star}</Text>
                 </ImageBackground>
             </View>
         </View>

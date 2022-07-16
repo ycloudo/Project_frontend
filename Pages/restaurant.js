@@ -9,18 +9,11 @@ import {
 } from "react-native";
 import Options from "../Components/options";
 import Info from "../Components/info";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useRoute } from '@react-navigation/native';
 
-const Restaurant = (props) => {
-    const restaurantbackStatusHandler = () => {
-        props.setPageStatus((prev) => ({
-            ...prev,
-            pages: {
-                ...(prev.pages = 0),
-                main: 1,
-            },
-            navbar: 1,
-        }));
-    };
+const Restaurant = ({navigation}) => {
+    const route = useRoute();
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -30,7 +23,7 @@ const Restaurant = (props) => {
             >
                 <View style={styles.top}>
                     <View style={styles.backbackground}>
-                        <TouchableOpacity onPress={restaurantbackStatusHandler}>
+                        <TouchableOpacity onPress={() => {navigation.goBack();}}>
                             <Image
                                 source={require("../assets/back.png")}
                                 style={styles.back}
@@ -38,17 +31,25 @@ const Restaurant = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.savebackground}>
-                        <TouchableOpacity>
-                            <Image
+                        {route.params.save == '0'
+                            ?<TouchableOpacity>
+                                <Image
                                 source={require("../assets/save.png")}
                                 style={styles.save}
-                            />
-                        </TouchableOpacity>
+                                />
+                            </TouchableOpacity>
+                            :<TouchableOpacity>
+                                <Image
+                                source={require("../assets/saved.png")}
+                                style={styles.save}
+                                />
+                            </TouchableOpacity>
+                        } 
                     </View>
                 </View>
-                <Info />
+                <Info name={route.params.name} address={route.params.address} star={route.params.star}/>
             </ImageBackground>
-            <Options setPageStatus={props.setPageStatus}/>
+            <Options navigation={navigation} id={route.params.id} name={route.params.name} address={route.params.address} star={route.params.star} save={route.params.save}/>
         </View>
     );
 }
@@ -69,13 +70,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#DFE0E2",
         marginTop: 40,
         marginLeft: 25,
-        height: 55,
-        width: 55,
+        height: 45,
+        width: 45,
         borderRadius: 90,
     },
     back: {
-        height: 40,
-        width: 40,
+        height: 27,
+        width: 27,
     },
     top: {
         flexDirection: "row",
@@ -85,14 +86,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#DFE0E2",
         marginTop: 40,
-        marginLeft: 230,
-        height: 55,
-        width: 55,
+        marginLeft: 245,
+        height: 45,
+        width: 45,
         borderRadius: 90,
     },
     save: {
-        height: 35,
-        width: 35,
+        height: 23,
+        width: 23,
     },
 });
 

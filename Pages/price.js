@@ -10,18 +10,10 @@ import {
 import Optionssmall from "../Components/optionssmall";
 import Infosmall from "../Components/infosmall";
 import Price_comment from "../Components/price_comment";
+import { useRoute } from '@react-navigation/native';
 
-const Price = (props) => {
-    const pricebackStatusHandler = () => {
-        props.setPageStatus((prev) => ({
-            ...prev,
-            pages: {
-                ...(prev.pages = 0),
-                restaurant: 1,
-            },
-            navbar: 0,
-        }));
-    };
+const Price = ({navigation}) => {
+    const route = useRoute();
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -31,7 +23,7 @@ const Price = (props) => {
             >
                 <View style={styles.top}>
                     <View style={styles.backbackground}>
-                        <TouchableOpacity onPress={pricebackStatusHandler}>
+                        <TouchableOpacity onPress={() => {navigation.goBack();}}>
                             <Image
                                 source={require("../assets/back.png")}
                                 style={styles.back}
@@ -39,18 +31,26 @@ const Price = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.savebackground}>
-                        <TouchableOpacity>
-                            <Image
+                        {route.params.save == '0'
+                            ?<TouchableOpacity>
+                                <Image
                                 source={require("../assets/save.png")}
                                 style={styles.save}
-                            />
-                        </TouchableOpacity>
+                                />
+                            </TouchableOpacity>
+                            :<TouchableOpacity>
+                                <Image
+                                source={require("../assets/saved.png")}
+                                style={styles.save}
+                                />
+                            </TouchableOpacity>
+                        }
                     </View>
                 </View>
-                <Infosmall />
+                <Infosmall name={route.params.name} address={route.params.address} star={route.params.star}/>
             </ImageBackground>
-            <Optionssmall />
-            <Price_comment />
+            <Optionssmall id={route.params.id}/>
+            <Price_comment id={route.params.id}/>
         </View>
     );
 }
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#DFE0E2",
         marginTop: 40,
         marginLeft: 25,
-        height: 55,
-        width: 55,
+        height: 45,
+        width: 45,
         borderRadius: 90,
     },
     back: {
-        height: 40,
-        width: 40,
+        height: 27,
+        width: 27,
     },
     top: {
         flexDirection: "row",
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#DFE0E2",
         marginTop: 40,
-        marginLeft: 230,
-        height: 55,
-        width: 55,
+        marginLeft: 245,
+        height: 45,
+        width: 45,
         borderRadius: 90,
     },
     save: {
-        height: 35,
-        width: 35,
+        height: 23,
+        width: 23,
     },
 });
 

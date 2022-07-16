@@ -1,26 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import Card from "../Components/Card";
 import SearchBox from "../Components/SearchBox";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {data} from "../data";
 
-const Main = (props) => {
-    const data = [
-        {
-            key: "1",
-        },
-        {
-            key: "2",
-        },
-        {
-            key: "3",
-        },
-        {
-            key: "4",
-        },
-        {
-            key: "5",
-        },
-    ];
+const Main = ({navigation}) => {
     return (
         <View style={styles.scrollview_container}>
             <ScrollView
@@ -29,10 +14,11 @@ const Main = (props) => {
             >
                 <SearchBox />
                 <View style={styles.card_container}>
+                    <Text>{}</Text>
                     {data.map((item) => (
                         <Card
-                            key={item.key}
-                            setPageStatus={props.setPageStatus}
+                        item={item}
+                        navigation = {navigation}
                         />
                     ))}
 
@@ -45,7 +31,7 @@ const Main = (props) => {
 
 const styles = StyleSheet.create({
     scrollview_container: {
-        height: "90%",
+        //height: "90%",
         backgroundColor: "#E0E0E0",
     },
     main_container: {
@@ -57,7 +43,7 @@ const styles = StyleSheet.create({
         paddingBottom: 100,
     },
     card_container: {
-        top: 40,
+        top: 35,
         display: "flex",
         flexDirection: "column",
     },
