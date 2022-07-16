@@ -4,10 +4,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon_m from "@expo/vector-icons/MaterialIcons";
 import Icon_mc from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon_i from "@expo/vector-icons/Ionicons";
+import Icon_f from "@expo/vector-icons/Foundation";
 import Main from "../Pages/Main";
 import Eat from "../Pages/Eat";
 import Favor from "../Pages/Favor";
-import SettingDrawer from "./SettingDrawer";
+import FavorSetting from "../Pages/FavorSetting";
 
 const Tab = createBottomTabNavigator();
 
@@ -81,30 +82,21 @@ const Navbar = () => {
             />
             <Tab.Screen
                 name="設定"
-                component={SettingDrawer}
+                component={FavorSetting}
                 options={{
-                    tabBarIcon: ({ focused }) => {
-                        const color = focused
-                            ? "rgb(0,0,0)"
-                            : "rgb(255,250,250)";
-                        return (
-                            <View style={styles.icon_container}>
-                                <Icon_i
-                                    name="ios-settings-sharp"
-                                    size={30}
-                                    color={color}
-                                />
-                                <Text style={{ color: color }}>設定</Text>
-                            </View>
-                        );
-                    },
+                    tabBarIcon: () => (
+                        <View style={styles.icon_container}>
+                            <Icon_f name="list" size={30} color="black" />
+                            <Text style={{ color: "black" }}>設定</Text>
+                        </View>
+                    ),
                 }}
-                // listeners={({ navigation, route }) => ({
-                //     tabPress: (e) => {
-                //         e.preventDefault();
-                //         navigation.openDrawer();
-                //     },
-                // })}
+                listeners={({ navigation }) => ({
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        navigation.openDrawer();
+                    },
+                })}
             />
         </Tab.Navigator>
     );
@@ -113,7 +105,6 @@ const Navbar = () => {
 const styles = StyleSheet.create({
     menu_container: {
         position: "absolute",
-        top: "90%",
         width: "100%",
         height: "10%",
         backgroundColor: "#E0E0E0",

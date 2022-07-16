@@ -4,14 +4,14 @@ import { useState } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import Navbar from "./routes/Navbar";
-import SettingDrawer from "./routes/SettingDrawer";
+import Drawer from "./routes/DrawerNav";
 
 export default function App() {
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
             <NavigationContainer>
-                <Navbar />
+                <Drawer />
             </NavigationContainer>
         </View>
     );
