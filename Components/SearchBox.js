@@ -22,8 +22,8 @@ const SearchBox = () => {
             <TouchableOpacity onPress={click}>
                 <View style={styles.searchbotton}>
                     <Icon
-                        name="ios-search-circle-outline"
-                        size={50}
+                        name="ios-search-outline"
+                        size={40}
                         color="#FFFAFA"
                     ></Icon>
                 </View>
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     searchbotton: {
+        padding: 5,
         backgroundColor: "#FFC107",
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,
