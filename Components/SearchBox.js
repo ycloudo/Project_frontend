@@ -1,56 +1,44 @@
-import {
-    StyleSheet,
-    View,
-    TextInput,
-    TouchableOpacity,
-    Keyboard,
-    ScrollView,
-} from "react-native";
-import React from "react";
+import { View, TextInput, TouchableOpacity } from "react-native";
+import React, { useState, useRef } from "react";
 import Icon from "@expo/vector-icons/Ionicons";
 
-const SearchBox = () => {
+const SearchBox = ({ navigation, styles, color, placeholder }) => {
+    const [input, setInput] = useState(""); //get user input value
+    const [counter, setCounter] = useState(0);
+    const inputRef = useRef(); //foucs input
+    const inputHandler = (text) => {
+        setInput(text);
+        setCounter(text.length);
+    };
     const click = () => {
-        Keyboard.dismiss();
+        if (counter == 0) {
+            inputRef.current.focus();
+        } else {
+            navigation.navigate("result", { input: input });
+            setInput("");
+            setCounter(0);
+        }
     };
     return (
         <View style={styles.searchbox}>
             <TextInput
-                placeholder="  ...來點日式料理?"
+                placeholder={placeholder}
                 style={styles.input}
+                onChangeText={inputHandler}
+                value={input}
+                ref={inputRef}
             ></TextInput>
             <TouchableOpacity onPress={click}>
                 <View style={styles.searchbotton}>
                     <Icon
                         name="ios-search-outline"
                         size={40}
-                        color="#FFFAFA"
+                        color={color}
                     ></Icon>
                 </View>
             </TouchableOpacity>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    input: {
-        backgroundColor: "#FFFAFA",
-        borderTopLeftRadius: 5,
-        borderBottomLeftRadius: 5,
-        flexGrow: 1,
-        fontSize: 17,
-    },
-    searchbox: {
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-    },
-    searchbotton: {
-        padding: 5,
-        backgroundColor: "#FFC107",
-        borderTopRightRadius: 5,
-        borderBottomRightRadius: 5,
-    },
-});
 
 export default SearchBox;
