@@ -12,11 +12,15 @@ import Icon_f from "@expo/vector-icons/Feather";
 import Icon_o from "@expo/vector-icons/Octicons";
 import AuthButton from "../../Components/AuthButton";
 
-const Login = () => {
+const Login = ({ navigation }) => {
     const Icon_user = (props) => <Icon_f {...props} name="user" />;
     const Icon_pwd = (props) => <Icon_o {...props} name="key" />;
     const [account, setAccount] = useState("");
     const [password, setPwd] = useState("");
+    const signupHandler = () => {
+        navigation.navigate("signup");
+    };
+    const LoginHandler = () => {};
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={ctr.main_ctr}>
@@ -52,6 +56,7 @@ const Login = () => {
                                 />
                             )}
                             styles={login_btn}
+                            handler={LoginHandler}
                         >
                             登入
                         </AuthButton>
@@ -62,7 +67,7 @@ const Login = () => {
                         還沒有帳號嗎?
                         <Text
                             style={{ color: "#FFC107", fontWeight: "500" }}
-                            onPress={() => {}}
+                            onPress={signupHandler}
                         >
                             立即註冊
                         </Text>

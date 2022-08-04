@@ -14,10 +14,13 @@ import Icon_o from "@expo/vector-icons/Octicons";
 import Input from "../../Components/Input";
 import AuthButton from "../../Components/AuthButton";
 
-const Signup = () => {
+const Signup = ({ navigation }) => {
     const Icon_name = (props) => <Icon_ma {...props} name="text-account" />;
     const Icon_account = (props) => <Icon_f {...props} name="user" />;
     const Icon_pwd = (props) => <Icon_o {...props} name="key" />;
+    const loginHandler = () => {
+        navigation.navigate("login");
+    };
     return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-250}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -75,7 +78,7 @@ const Signup = () => {
                             已經有帳號了?
                             <Text
                                 style={{ color: "#FFC107", fontWeight: "500" }}
-                                onPress={() => {}}
+                                onPress={loginHandler}
                             >
                                 立即登入
                             </Text>

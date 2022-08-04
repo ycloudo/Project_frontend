@@ -3,20 +3,17 @@ import { StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import Navbar from "./routes/Navbar";
 import Drawer from "./routes/DrawerNav";
-import Start from "./Pages/Start";
-import Login from "./Pages/Auth/Login";
-import Signup from "./Pages/Auth/Signup";
+import Auth from "./routes/AuthStackNav";
 
 export default function App() {
+    const isSignin = 0;
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
-            {/* <NavigationContainer>
-                <Drawer />
-            </NavigationContainer> */}
-            <Signup />
+            <NavigationContainer>
+                {isSignin ? <Drawer /> : <Auth />}
+            </NavigationContainer>
         </View>
     );
 }
