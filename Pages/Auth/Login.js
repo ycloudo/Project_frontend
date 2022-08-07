@@ -11,19 +11,28 @@ import Input from "../../Components/Input";
 import Icon_f from "@expo/vector-icons/Feather";
 import Icon_o from "@expo/vector-icons/Octicons";
 import AuthButton from "../../Components/AuthButton";
+import Header from "../../Components/SignPage/Header";
 
-const Login = () => {
+const Login = ({ navigation, route }) => {
     const Icon_user = (props) => <Icon_f {...props} name="user" />;
     const Icon_pwd = (props) => <Icon_o {...props} name="key" />;
     const [account, setAccount] = useState("");
     const [password, setPwd] = useState("");
+    const signupHandler = () => {
+        navigation.navigate("signup");
+    };
+    const LoginHandler = () => {
+        // console.log(1);
+    };
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={ctr.main_ctr}>
-                <View style={ctr.header_ctr}></View>
+                <View style={ctr.header_ctr}>
+                    <Header pagename={route.name} />
+                </View>
                 <View style={ctr.content_ctr}>
                     <Text style={content.title}>登入</Text>
-                    <Text style={content.disscription}>
+                    <Text style={content.discription}>
                         立即登入以獲取美食評論!
                     </Text>
                     <View style={content.input}>
@@ -52,22 +61,21 @@ const Login = () => {
                                 />
                             )}
                             styles={login_btn}
+                            handler={LoginHandler}
                         >
                             登入
                         </AuthButton>
+                        <View style={content.bottom}>
+                            <Text
+                                onPress={signupHandler}
+                                style={content.bottom_text}
+                            >
+                                還沒有帳號嗎?
+                            </Text>
+                        </View>
                     </View>
                 </View>
-                <View style={ctr.bottom_ctr}>
-                    <Text style={{ color: "gray", fontSize: 16 }}>
-                        還沒有帳號嗎?
-                        <Text
-                            style={{ color: "#FFC107", fontWeight: "500" }}
-                            onPress={() => {}}
-                        >
-                            立即註冊
-                        </Text>
-                    </Text>
-                </View>
+                <View style={ctr.bottom_ctr}></View>
             </View>
         </TouchableWithoutFeedback>
     );
@@ -76,25 +84,21 @@ const Login = () => {
 const ctr = StyleSheet.create({
     main_ctr: {
         height: "100%",
-        backgroundColor: "#FFFAFA",
+        backgroundColor: "#F6FFFF",
         display: "flex",
         flexDirection: "column",
     },
     header_ctr: {
-        height: "25%",
-        borderBottomWidth: 1,
-        borderBottomColor: "red",
+        paddingTop: "17%",
+        height: "20%",
     },
     content_ctr: {
-        height: "65%",
-        paddingLeft: "13%",
-        paddingRight: "10%",
-        paddingTop: "5%",
-        // borderBottomWidth: 1,
-        // borderBottomColor: "red",
+        alignItems: "center",
+        height: "55%",
+        width: "100%",
     },
     bottom_ctr: {
-        height: "10%",
+        height: "25%",
         paddingTop: "10%",
         alignItems: "center",
     },
@@ -103,48 +107,54 @@ const content = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: "500",
+        color: "#423067",
     },
-    disscription: {
+    discription: {
         paddingTop: "2%",
         fontSize: 16,
-        color: "gray",
+        color: "#423067",
     },
     input: {
-        paddingRight: "10%",
-        paddingTop: "20%",
+        width: "80%",
+        paddingTop: "10%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-around",
-        height: "45%",
+        height: "50%",
     },
     btn: {
-        paddingRight: "10%",
+        top: "10%",
         height: "10%",
         width: "100%",
-        flexDirection: "row",
-        justifyContent: "flex-end",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        left: "15%",
+    },
+    bottom: {
+        top: "20%",
+        borderColor: "#FFCE2D",
+        borderBottomWidth: 2,
+        width: 110,
+    },
+    bottom_text: {
+        bottom: "30%",
+        color: "gray",
+        fontSize: 16,
     },
 });
 const login_btn = StyleSheet.create({
     btn_ctr: {
-        backgroundColor: "#FFC107",
-        width: "40%",
-        borderRadius: 30,
-        paddingLeft: "4%",
-        paddingRight: "4%",
-        justifyContent: "space-around",
-    },
-    btn: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
+        width: "70%",
+        height: 100,
     },
     btn_text: {
-        color: "white",
+        color: "#423067",
         fontSize: 20,
         fontWeight: "500",
         marginRight: 5,
         marginLeft: 8,
+        top: "100%",
+        textAlign: "center",
     },
 });
 

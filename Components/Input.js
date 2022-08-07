@@ -10,7 +10,7 @@ const Input = ({ label, Icon, secure, inputStateHandler, input }) => {
     useEffect(() => {
         Animated.timing(ani, {
             toValue: isFocused || inputLen ? 1 : 0,
-            duration: 200,
+            duration: 250,
             useNativeDriver: false,
         }).start();
     }, [isFocused]);
@@ -24,24 +24,34 @@ const Input = ({ label, Icon, secure, inputStateHandler, input }) => {
         inputStateHandler(text);
         setInputLen(text.length);
     };
+    const color = isFocused || inputLen ? "#423067" : "gray";
+    const bgColor = isFocused || inputLen ? "#ffffff" : "transparent";
     const text = {
         position: "absolute",
-        left: "18%",
+        left: "22%",
         top: ani.interpolate({
             inputRange: [0, 1],
-            outputRange: ["10%", "-35%"],
+            outputRange: ["28%", "-50%"],
         }),
         fontSize: ani.interpolate({
             inputRange: [0, 1],
-            outputRange: [16, 11],
+            outputRange: [16, 14],
         }),
-        color: "gray",
+        fontWeight: ani.interpolate({
+            inputRange: [0, 1],
+            outputRange: ["400", "500"],
+        }),
+        color: color,
     };
-    const icon_color = isFocused || inputLen ? "black" : "gray";
 
     return (
-        <View style={styles.input_ctr}>
-            <Icon size={30} color={icon_color} />
+        <View
+            style={[
+                styles.input_ctr,
+                { borderColor: color, backgroundColor: bgColor },
+            ]}
+        >
+            <Icon size={30} color={color} />
             <Animated.Text style={text}>{label}</Animated.Text>
             <TextInput
                 style={styles.input}
@@ -65,17 +75,19 @@ const styles = StyleSheet.create({
     input_ctr: {
         display: "flex",
         flexDirection: "row",
-        borderBottomColor: "gray",
-        borderBottomWidth: 1,
-        paddingBottom: "2%",
-        paddingLeft: "5%",
+        borderWidth: 2,
+        paddingLeft: "10%",
         width: "100%",
+        height: 50,
         justifyContent: "space-around",
+        borderRadius: 35,
+        alignItems: "center",
     },
     input: {
         width: "100%",
         fontSize: 20,
         paddingLeft: "10%",
+        color: "#423067",
     },
 });
 

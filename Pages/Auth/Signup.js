@@ -13,18 +13,28 @@ import Icon_f from "@expo/vector-icons/Feather";
 import Icon_o from "@expo/vector-icons/Octicons";
 import Input from "../../Components/Input";
 import AuthButton from "../../Components/AuthButton";
+import Header from "../../Components/SignPage/Header";
 
-const Signup = () => {
+const Signup = ({ navigation, route }) => {
     const Icon_name = (props) => <Icon_ma {...props} name="text-account" />;
     const Icon_account = (props) => <Icon_f {...props} name="user" />;
     const Icon_pwd = (props) => <Icon_o {...props} name="key" />;
+    const signinHandler = () => {
+        navigation.navigate("login");
+    };
+    const onSignup = () => {};
     return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-250}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={ctr.main}>
-                    <View style={ctr.header}></View>
+                    <View style={ctr.header}>
+                        <Header pagename={route.name} />
+                    </View>
                     <View style={ctr.content}>
-                        <Text style={content.title}>建立帳號</Text>
+                        <Text style={content.title}>註冊</Text>
+                        <Text style={content.discription}>
+                            建立帳號以獲取美食評論!
+                        </Text>
                         <View style={content.input}>
                             <Input
                                 label="姓名"
@@ -65,22 +75,21 @@ const Signup = () => {
                                     />
                                 )}
                                 styles={signup_btn}
+                                handler={onSignup}
                             >
                                 註冊
                             </AuthButton>
+                            <View style={content.bottom}>
+                                <Text
+                                    onPress={signinHandler}
+                                    style={content.bottom_text}
+                                >
+                                    已經有帳號了?
+                                </Text>
+                            </View>
                         </View>
                     </View>
-                    <View style={ctr.bottom}>
-                        <Text style={{ color: "gray", fontSize: 16 }}>
-                            已經有帳號了?
-                            <Text
-                                style={{ color: "#FFC107", fontWeight: "500" }}
-                                onPress={() => {}}
-                            >
-                                立即登入
-                            </Text>
-                        </Text>
-                    </View>
+                    <View style={ctr.bottom}></View>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -90,25 +99,21 @@ const Signup = () => {
 const ctr = StyleSheet.create({
     main: {
         height: "100%",
-        backgroundColor: "#FFFAFA",
+        backgroundColor: "#F6FFFF",
         display: "flex",
         flexDirection: "column",
     },
     header: {
-        height: "25%",
-        borderBottomWidth: 1,
-        borderBottomColor: "red",
+        height: "17%",
+        paddingTop: "17%",
     },
     content: {
-        height: "65%",
-        paddingLeft: "13%",
-        paddingRight: "10%",
-        paddingTop: "5%",
-        // borderBottomWidth: 1,
-        // borderBottomColor: "red",
+        alignItems: "center",
+        height: "70%",
+        width: "100%",
     },
     bottom: {
-        height: "10%",
+        // height: "23%",
         paddingTop: "10%",
         alignItems: "center",
     },
@@ -117,43 +122,51 @@ const content = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: "500",
+        color: "#423067",
+    },
+    discription: {
+        paddingTop: "2%",
+        fontSize: 16,
+        color: "#423067",
     },
     input: {
-        paddingRight: "10%",
-        paddingTop: "8%",
-        display: "flex",
+        width: "80%",
+        paddingTop: "10%",
         flexDirection: "column",
-        justifyContent: "space-around",
-        height: "65%",
+        justifyContent: "space-evenly",
+        height: "70%",
     },
     btn: {
-        paddingRight: "10%",
         height: "10%",
         width: "100%",
-        flexDirection: "row",
-        justifyContent: "flex-end",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        left: "15%",
+    },
+    bottom: {
+        borderColor: "#FFCE2D",
+        borderBottomWidth: 2,
+        width: 110,
+    },
+    bottom_text: {
+        bottom: "30%",
+        color: "gray",
+        fontSize: 16,
     },
 });
 const signup_btn = StyleSheet.create({
     btn_ctr: {
-        backgroundColor: "#FFC107",
-        width: "40%",
-        borderRadius: 30,
-        paddingLeft: "4%",
-        paddingRight: "4%",
-        justifyContent: "space-around",
-    },
-    btn: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
+        width: "70%",
+        height: 100,
     },
     btn_text: {
-        color: "white",
+        color: "#423067",
         fontSize: 20,
         fontWeight: "500",
         marginRight: 5,
         marginLeft: 8,
+        top: "100%",
+        textAlign: "center",
     },
 });
 
