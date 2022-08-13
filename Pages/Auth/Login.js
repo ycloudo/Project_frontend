@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
     Text,
     View,
@@ -12,17 +12,21 @@ import Icon_f from "@expo/vector-icons/Feather";
 import Icon_o from "@expo/vector-icons/Octicons";
 import AuthButton from "../../Components/AuthButton";
 import Header from "../../Components/SignPage/Header";
+import { AuthContext } from "../../content/AuthContext";
 
 const Login = ({ navigation, route }) => {
     const Icon_user = (props) => <Icon_f {...props} name="user" />;
     const Icon_pwd = (props) => <Icon_o {...props} name="key" />;
+    const { login } = useContext(AuthContext);
     const [account, setAccount] = useState("");
     const [password, setPwd] = useState("");
     const signupHandler = () => {
         navigation.navigate("signup");
     };
     const LoginHandler = () => {
-        // console.log(1);
+        setTimeout(() => {
+            login(account, password);
+        }, 250);
     };
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

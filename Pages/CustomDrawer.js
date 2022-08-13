@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
     Text,
     View,
@@ -12,8 +12,14 @@ import {
     DrawerItemList,
 } from "@react-navigation/drawer";
 import Icon_m from "@expo/vector-icons/MaterialIcons";
+import { AuthContext } from "../content/AuthContext";
 
 const CustomDrawer = (props) => {
+    const { logout } = useContext(AuthContext);
+    const logoutHandler = () => {
+        logout();
+    };
+
     return (
         <View style={{ flex: 1 }}>
             <ImageBackground style={styles.header_container}>
@@ -29,7 +35,7 @@ const CustomDrawer = (props) => {
                 <DrawerItemList {...props} />
             </View>
             <View style={styles.footer_container}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={logoutHandler}>
                     <View style={styles.logout_container}>
                         <Icon_m name="logout" size={25} />
                         <Text style={{ marginLeft: 5, fontSize: 17 }}>

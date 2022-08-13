@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
     Text,
     View,
@@ -14,15 +14,26 @@ import Icon_o from "@expo/vector-icons/Octicons";
 import Input from "../../Components/Input";
 import AuthButton from "../../Components/AuthButton";
 import Header from "../../Components/SignPage/Header";
+import { AuthContext } from "../../content/AuthContext";
 
 const Signup = ({ navigation, route }) => {
     const Icon_name = (props) => <Icon_ma {...props} name="text-account" />;
     const Icon_account = (props) => <Icon_f {...props} name="user" />;
     const Icon_pwd = (props) => <Icon_o {...props} name="key" />;
+    const [name, setName] = useState("");
+    const [account, setAccount] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPwd, setConfirmPwd] = useState("");
+    const { signup } = useContext(AuthContext);
     const signinHandler = () => {
         navigation.navigate("login");
     };
-    const onSignup = () => {};
+
+    const onSignup = () => {
+        setTimeout(() => {
+            signup(name, account, password);
+        }, 250);
+    };
     return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-250}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -40,29 +51,29 @@ const Signup = ({ navigation, route }) => {
                                 label="姓名"
                                 Icon={Icon_name}
                                 secure={false}
-                                inputStateHandler={() => {}}
-                                input={""}
+                                inputStateHandler={setName}
+                                input={name}
                             />
                             <Input
                                 label="帳號"
                                 Icon={Icon_account}
                                 secure={false}
-                                inputStateHandler={() => {}}
-                                input={""}
+                                inputStateHandler={setAccount}
+                                input={account}
                             />
                             <Input
                                 label="密碼"
                                 Icon={Icon_pwd}
                                 secure={true}
-                                inputStateHandler={() => {}}
-                                input={""}
+                                inputStateHandler={setPassword}
+                                input={password}
                             />
                             <Input
                                 label="確認密碼"
                                 Icon={Icon_pwd}
                                 secure={true}
-                                inputStateHandler={() => {}}
-                                input={""}
+                                inputStateHandler={setConfirmPwd}
+                                input={confirmPwd}
                             />
                         </View>
                         <View style={content.btn}>
