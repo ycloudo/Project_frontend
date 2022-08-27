@@ -30,7 +30,7 @@ const CustomDrawer = (props) => {
 
 const styles = StyleSheet.create({
     avatar_container: {
-        backgroundColor: "#FFC107",
+        backgroundColor: "#FFF4B0",
         height: 300,
         width: "100%",
     },
