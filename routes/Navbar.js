@@ -1,10 +1,10 @@
 import { React } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Icon_m from "@expo/vector-icons/MaterialIcons";
-import Icon_mc from "@expo/vector-icons/MaterialCommunityIcons";
+//import Icon_m from "@expo/vector-icons/MaterialIcons";
+//import Icon_mc from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon_i from "@expo/vector-icons/Ionicons";
-import Icon_f from "@expo/vector-icons/Foundation";
+//import Icon_f from "@expo/vector-icons/Foundation";
 import Main from "../Pages/Main";
 import Eat from "../Pages/Eat";
 import Favor from "../Pages/Favor";
@@ -29,17 +29,26 @@ const Navbar = () => {
                 options={({ route }) => ({
                     tabBarStyle: {
                         display: getRouteName(route),
-                        backgroundColor: "#E0E0E0",
+                        backgroundColor: "#EFFAFF",
                         height: "10%",
                     },
                     tabBarIcon: ({ focused }) => {
-                        const color = focused
-                            ? "rgb(0,0,0)"
-                            : "rgb(255,250,250)";
+                        const height = focused
+                            ? 48
+                            : 40;
+                        const width = focused
+                            ? 15
+                            : 12.5;
+                        const rotate = focused
+                            ? '-45deg'
+                            : '0deg';
                         return (
                             <View style={styles.icon_container}>
-                                <Icon_m name="home" size={30} color={color} />
-                                <Text style={{ color: color }}>首頁</Text>
+                                <Image
+                                source={require("../assets/spoon.png")}
+                                style={{height:height,width:width,transform: [{rotateZ:rotate}]}}
+                                />
+                                <Text>首頁</Text>
                             </View>
                         );
                     },
@@ -48,23 +57,33 @@ const Navbar = () => {
             <Tab.Screen
                 name="吃什麼"
                 component={Eat}
-                options={{
+                options={({ route }) => ({
+                    tabBarStyle: {
+                        display: getRouteName(route),
+                        backgroundColor: "#fff",
+                        height: "10%",
+                    },
                     tabBarIcon: ({ focused }) => {
-                        const color = focused
-                            ? "rgb(0,0,0)"
-                            : "rgb(255,250,250)";
+                        const height = focused
+                            ? 48
+                            : 40;
+                        const width = focused
+                            ? 15
+                            : 12.5;
+                        const rotate = focused
+                            ? '-45deg'
+                            : '0deg';
                         return (
                             <View style={styles.icon_container}>
-                                <Icon_mc
-                                    name="ferris-wheel"
-                                    size={30}
-                                    color={color}
+                                <Image
+                                source={require("../assets/fork.png")}
+                                style={{height:height,width:width,transform: [{rotateZ:rotate}]}}
                                 />
-                                <Text style={{ color: color }}>吃什麼</Text>
+                                <Text>吃什麼</Text>
                             </View>
                         );
                     },
-                }}
+                })}
             />
             <Tab.Screen
                 name="收藏"
@@ -72,21 +91,26 @@ const Navbar = () => {
                 options={({ route }) => ({
                     tabBarStyle: {
                         display: getRouteName(route),
-                        backgroundColor: "#E0E0E0",
+                        backgroundColor: "#EFFAFF",
                         height: "10%",
                     },
                     tabBarIcon: ({ focused }) => {
-                        const color = focused
-                            ? "rgb(0,0,0)"
-                            : "rgb(255,250,250)";
+                        const height = focused
+                            ? 48
+                            : 40;
+                        const width = focused
+                            ? 15
+                            : 12.5;
+                        const rotate = focused
+                            ? '-45deg'
+                            : '0deg';
                         return (
                             <View style={styles.icon_container}>
-                                <Icon_m
-                                    name="bookmark"
-                                    size={30}
-                                    color={color}
+                                <Image
+                                source={require("../assets/knife.png")}
+                                style={{height:height,width:width,transform: [{rotateZ:rotate}]}}
                                 />
-                                <Text style={{ color: color }}>收藏</Text>
+                                <Text>收藏</Text>
                             </View>
                         );
                     },
@@ -98,8 +122,11 @@ const Navbar = () => {
                 options={{
                     tabBarIcon: () => (
                         <View style={styles.icon_container}>
-                            <Icon_f name="list" size={30} color="black" />
-                            <Text style={{ color: "black" }}>設定</Text>
+                            <Image
+                            source={require("../assets/plate.png")}
+                            style={styles.icon}
+                            />
+                            <Text>設定</Text>
                         </View>
                     ),
                 }}
@@ -122,7 +149,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#E0E0E0",
     },
     icon_container: {
+        marginTop:10,
         alignItems: "center",
+    },
+    icon: {
+        height: 40,
+        width: 40,
     },
 });
 

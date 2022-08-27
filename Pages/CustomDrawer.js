@@ -49,8 +49,8 @@ const CustomDrawer = (props) => {
 };
 
 const styles = StyleSheet.create({
-    header_container: {
-        backgroundColor: "#FFC107",
+    avatar_container: {
+        backgroundColor: "#FFF4B0",
         height: 300,
         width: "100%",
         alignItems: "center",

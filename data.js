@@ -5,6 +5,7 @@ export const data = [
         star:'1',
         save:'1',
         id:'1',
+        status:'台式'
     },
     {
         name:'BBB',
@@ -12,6 +13,7 @@ export const data = [
         star:'2',
         save:'0',
         id:'2',
+        status:'台式'
     },
     {
         name:'CCC',
@@ -19,6 +21,7 @@ export const data = [
         star:'3',
         save:'0',
         id:'3',
+        status:'日式'
     },
     {
         name:'DDD',
@@ -26,6 +29,7 @@ export const data = [
         star:'4',
         save:'0',
         id:'4',
+        status:'韓式'
     },
     {
         name:'EEE',
@@ -33,6 +37,7 @@ export const data = [
         star:'5',
         save:'0',
         id:'5',
+        status:'韓式'
     },
 ];
     

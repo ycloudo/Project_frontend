@@ -20,9 +20,9 @@ const SettingDrawer = () => {
                     marginLeft: -25,
                     fontSize: 15,
                 },
-                drawerActiveBackgroundColor: "#FFC107",
-                drawerActiveTintColor: "#FFFAFA",
-                drawerInactiveTintColor: "#333",
+                drawerActiveBackgroundColor: "#fff",
+                drawerActiveTintColor: "#000000",
+                drawerInactiveTintColor: "#000000",
             }}
             drawerContent={(props) => <CustomDrawer {...props} />}
         >
@@ -44,11 +44,11 @@ const SettingDrawer = () => {
             />
             <Drawer.Screen
                 name="個人檔案"
-                component={FavorSetting}
+                component={Personal}
                 options={{
                     drawerIcon: ({ color }) => (
-                        <Icon_m
-                            name="account-outline"
+                        <Icon_i
+                            name="ios-settings-outline"
                             size={25}
                             color={color}
                         />
@@ -61,7 +61,7 @@ const SettingDrawer = () => {
                 options={{
                     drawerIcon: ({ color }) => (
                         <Icon_i
-                            name="ios-settings-outline"
+                            name="ios-person-outline"
                             size={25}
                             color={color}
                         />

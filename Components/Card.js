@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Card = ({navigation,item}) => {
     
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('restaurant',item)}>
+        <TouchableOpacity onPress={() => navigation.navigate('price',item)}>
             <View style={styles.container}>
                 <Text>{item.name}</Text>
             </View>

@@ -40,7 +40,7 @@ const Main = ({ navigation }) => {
 const styles = StyleSheet.create({
     scrollview_container: {
         //height: "90%",
-        backgroundColor: "#E0E0E0",
+        backgroundColor: "#EFFAFF",
     },
     main_container: {
         top: "10%",
