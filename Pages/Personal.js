@@ -1,22 +1,27 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image,TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image,TextInput, TouchableOpacity, ImageBackground} from "react-native";
 import Icon_left from "@expo/vector-icons/Entypo";
 import Icon_right from "@expo/vector-icons/Entypo";
 import Icon_account from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon_passward from "@expo/vector-icons/Entypo";
 import Icon_human_male_female from "@expo/vector-icons/MaterialCommunityIcons";
-import Icon_phone from "@expo/vector-icons/Entypo";
+//import Icon_phone from "@expo/vector-icons/Entypo";
 import Icon_check from "@expo/vector-icons/Feather";
 import Icon_back from "@expo/vector-icons/AntDesign";
 
 const Personal = ({navigation}) => {
-    const [name, onChangeName] = React.useState("程尤欣欣向榮");
+    const [account, onChangeAccount] = React.useState("程尤欣欣向榮");
     const [passward, onChangePassward] = React.useState("123456789");
     const [human, onChangeHuman] = React.useState("Male");
-    const [phone, onChangePhone] = React.useState("0932-xxx-xxx");
+    //const [phone, onChangePhone] = React.useState("0932-xxx-xxx");
+    const [name, onChangeName] = React.useState("程尤欣");
     const [count, setCount] = useState(1);
     return (
-        <View style={styles.container}>
+        <ImageBackground
+                source={require("../assets/personal_bg.png")}
+                style={styles.container}   
+            >
+        
             <TouchableOpacity style={styles.back}  onPress={() => {navigation.goBack();}}>
                 <Icon_back name="arrowleft" size={25} color='#000'/>
             </TouchableOpacity>
@@ -51,39 +56,38 @@ const Personal = ({navigation}) => {
                 <View style={styles.info_bg}>
                     <View style={styles.info_bgf}>
                     <View style={styles.info_bgft}></View>
+                    <View style={styles.info_box_name}>
+                        <Text style={styles.info_name}>{name}</Text>
+                    </View>
                     <View style={styles.info_box}>
                         <Icon_account name="account" size={30} color="#7B7B7B"/>
-                        <TextInput style={styles.info} onChangeText={onChangeName} value={name} />
+                        <TextInput style={styles.info} onChangeText={onChangeAccount} value={account} />
                     </View>
                     <View style={styles.info_box}>
                         <Icon_passward name="key" size={29} color="#7B7B7B"/>
                         <TextInput style={styles.info} onChangeText={onChangePassward} value={passward} />
                     </View>
-                    <View style={styles.info_box}>
+                    <View style={styles.info_box_end}>
                         <Icon_human_male_female name="human-male-female" size={31} color="#7B7B7B"/>
                         <TextInput style={styles.info} onChangeText={onChangeHuman} value={human} />
                     </View>
-                    <View style={styles.info_box_end}>
-                        <Icon_phone name="phone" size={30} color="#7B7B7B"/>
-                        <TextInput style={styles.info} onChangeText={onChangePhone} value={phone} />
-                    </View>
+                    
                     <View style={styles.save}>
                         <TouchableOpacity>
                             <Icon_check name="check" size={53} color='#000'/>
                         </TouchableOpacity>
                     </View>
                     </View>
-                </View>
-                    
-              
+                </View>  
             </View>
-            </View>
+            
+            </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#FFF4B0",
+        //backgroundColor: "#FFF4B0",
         height:"100%",
     },
     back: {
@@ -137,14 +141,14 @@ const styles = StyleSheet.create({
     info_box: {
         top:"7%",
         height:60,
-        borderBottomColor:"#7B7B7B",
-        borderBottomWidth:1,
         alignItems: "center",
         flexDirection: "row",
         marginLeft: 20,
         marginRight: 10,
         marginBottom:10,
         paddingBottom:10,
+        borderBottomColor:"#7B7B7B",
+        borderBottomWidth:1,
     },
     info_box_end: {
         top:"7%",
@@ -156,13 +160,27 @@ const styles = StyleSheet.create({
         marginBottom:10,
         paddingBottom:10,
     },
+    info_box_name: {
+        top:"7%",
+        height:60,
+        alignItems: "center",
+        flexDirection: "row",
+        paddingTop:10,
+        paddingBottom:10,
+    },
     info: {
         color:"#7B7B7B",
         fontSize: 20,
         marginLeft:25,
         fontWeight:"bold",
     },
-    
+    info_name: {
+        color:"#5B5B5B",
+        fontSize: 26,
+        marginLeft:70,
+        fontWeight:"bold",
+        
+    },
     save: {
         width:53,
         height:53,

@@ -21,7 +21,6 @@ const Main = ({ navigation }) => {
                     color={color}
                 />
                 <View style={styles.card_container}>
-                    <Text>{}</Text>
                     {data.map((item) => (
                         <Card
                             item={item}
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
     },
     main_container: {
         top: "10%",
+        //top:80,
         paddingLeft: "6%",
         paddingRight: "6%",
         display: "flex",
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
         paddingBottom: 100,
     },
     card_container: {
-        top: 35,
+        //top: 55,
+        top: "5%",
         display: "flex",
         flexDirection: "column",
     },
