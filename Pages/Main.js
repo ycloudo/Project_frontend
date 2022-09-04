@@ -7,6 +7,7 @@ import { data } from "../data";
 const Main = ({ navigation }) => {
     const placeholder = "...來點日式料理?";
     const color = "#FFFAFA";
+    let counter = 0;
     return (
         <View style={styles.scrollview_container}>
             <ScrollView
@@ -21,13 +22,18 @@ const Main = ({ navigation }) => {
                     color={color}
                 />
                 <View style={styles.card_container}>
-                    {data.map((item) => (
-                        <Card
-                            item={item}
-                            navigation={navigation}
-                            key={item.id}
-                        />
-                    ))}
+                    {data.map((item) => {
+                        counter += 1;
+                        console.log({ counter });
+                        return (
+                            <Card
+                                item={item}
+                                navigation={navigation}
+                                counter={counter}
+                                key={counter}
+                            />
+                        );
+                    })}
 
                     {/* <Text>到底囉</Text> */}
                 </View>
