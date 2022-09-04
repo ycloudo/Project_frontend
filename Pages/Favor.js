@@ -27,6 +27,7 @@ const listTab = [
 
 
 const Favor = ({ navigation }) => {
+    let counter = 0;
     const [status, setStatus] = useState('全部')
     const [datalist, setDatalist] = useState(data)/////////////////data改成save的值是1or0的
     const setStatusFilter = status =>{
@@ -80,13 +81,17 @@ const Favor = ({ navigation }) => {
                             keyExtractor={(e, i) =>i.toString()}
                             renderItem={renderItem}
                         />*/}
-                    {datalist.map((item) => ( 
-                        <Card
+                    {datalist.map((item) => { 
+                        counter +=1;
+                        return(
+                            <Card
                             item={item}
                             navigation={navigation}
-                            key={item.id}
+                            counter={counter}
+                            key={counter}
                         />
-                    ))}
+                        );
+                    })}
                </View>     
             </ScrollView>
         </View>   

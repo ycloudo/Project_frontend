@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { data } from "../data";
 
 const Main = ({ navigation }) => {
+    let counter = 0;
     return (
         <View style={styles.scrollview_container}>
             <ScrollView
@@ -15,13 +16,18 @@ const Main = ({ navigation }) => {
                 <SearchBox />
                 
                 <View style={styles.card_container}>
-                    {data.map((item) => ( 
+                    {data.map((item) => {
+                        counter +=1;
+                        console.log({counter});
+                        return(
                         <Card
                         item={item}
                         navigation={navigation}
-                        key={item.id}
-                        />
-                    ))}
+                        counter={counter}
+                        key={counter}
+                        /> 
+                        );
+                    })}
                     
                     {/* <Text>到底囉</Text> */}
                 </View>

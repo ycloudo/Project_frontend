@@ -2,11 +2,11 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity, ImageBackground, Text } from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon_save from "@expo/vector-icons/FontAwesome";
-const Card = ({navigation,item}) => {
+const Card = ({navigation,item,counter}) => {
     
     return (
         
-        ((item.num)%2 == '1')
+        ((counter)%2 == '1')
         ?<TouchableOpacity onPress={() => navigation.navigate('price',item)}>
             <View  style={styles.container1}>
             <View style={styles.card1}>
@@ -26,7 +26,9 @@ const Card = ({navigation,item}) => {
                             </TouchableOpacity>
                         }
                     <Text>{item.name}</Text>
+                    
                     <Text>{item.num}</Text>
+                    
                 </View>
             </View>
         </TouchableOpacity>
