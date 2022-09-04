@@ -4,7 +4,7 @@ export const data = [
         address:'aaa',
         star:'1',
         save:'1',
-        id:'1',
+        num:'1',
         status:'台式'
     },
     {
@@ -12,23 +12,23 @@ export const data = [
         address:'bbb',
         star:'2',
         save:'0',
-        id:'2',
-        status:'台式'
+        num:'2',
+        status:'日式'
     },
     {
         name:'CCC',
         address:'ccc',
         star:'3',
         save:'0',
-        id:'3',
-        status:'日式'
+        num:'3',
+        status:'台式'
     },
     {
         name:'DDD',
         address:'ddd',
         star:'4',
         save:'0',
-        id:'4',
+        num:'4',
         status:'韓式'
     },
     {
@@ -36,7 +36,7 @@ export const data = [
         address:'eee',
         star:'5',
         save:'0',
-        id:'5',
+        num:'5',
         status:'韓式'
     },
 ];

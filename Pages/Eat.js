@@ -21,6 +21,8 @@ const participants = [
         winnerValue: null,
         winnerIndex: null,
         started: false,
+        activeIndex: 0,
+        startbutton: 0,
       };
       this.child = null;
     }
@@ -31,9 +33,9 @@ const participants = [
       });
       this.child._onPress();
     };
-  
+    
     render() {
-      const wheelOptions = {
+    const wheelOptions = {
         rewards: participants,
         knobSize: 30,
         borderWidth: 10,
@@ -44,55 +46,84 @@ const participants = [
         textAngle: 'horizontal',
         knobSource: require('./down-arrow.png'),
         onRef: ref => (this.child = ref),
-      };
-      return (
+    };
+    
+    var touchProps = {
+        activeOpacity: 0.6,
+        onPress: () => console.log('press'),                 // <-- "onPress" is apparently required
+      }; 
+    var starttouchProps = {
+        activeOpacity: 1,
+        //onPress: () => console.log('press'),                 // <-- "onPress" is apparently required
+        onPress: () => {this.setState({ startbutton: 1 })},
+      };       
+    return (
         <View style={styles.scrollview_container}>
             <View style={styles.top}>
                 <Text style={styles.top1}>今天</Text>
                 <Text style={styles.top2}>要吃什麼呢？</Text>
                 <View style={styles.choice_container}>
-                    <TouchableOpacity>
-                        <View style={styles.boxf}>
-                            <Image
-                                source={require("../assets/money.png")}
-                                style={styles.photo}
-                            />
-                            <Text style={styles.text}>中式</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <View style={styles.box}>
-                            <Image
-                                source={require("../assets/service.png")}
-                                style={styles.photo}
-                            />
-                            <Text style={styles.text}>日式</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <View style={styles.box}>
-                            <Image
-                                source={require("../assets/food.png")}
-                                style={styles.photo}
-                            />
-                            <Text style={styles.text}>韓式</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <View style={styles.box}>
-                            <Image
-                                source={require("../assets/money.png")}
-                                style={styles.photo}
-                            />
-                            <Text style={styles.text}>美式</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={styles.boxf}>
+                      <TouchableOpacity {...touchProps}
+                      onPress={() => {this.setState({ activeIndex: 0 })}}
+                      >
+                          <View style={this.state.activeIndex === 0 ? styles.optionActive : styles.option}>
+                              <Image
+                                  source={require("../assets/money.png")}
+                                  style={styles.photo}
+                              />
+                              <Text style={styles.text}>中式</Text>
+                          </View>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.box}>
+                      <TouchableOpacity {...touchProps}
+                      onPress={() => {
+                        this.setState({ activeIndex: 1, started: false, winnerValue: null, winnerIndex: null });
+                      }}
+                      >
+                          <View style={this.state.activeIndex === 1 ? styles.optionActive : styles.option}>
+                              <Image
+                                  source={require("../assets/service.png")}
+                                  style={styles.photo}
+                              />
+                              <Text style={styles.text}>日式</Text>
+                          </View>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.box}>
+                      <TouchableOpacity {...touchProps}
+                      onPress={() => {this.setState({ activeIndex: 2 })}}
+                      >
+                          <View style={this.state.activeIndex === 2 ? styles.optionActive : styles.option}>
+                              <Image
+                                  source={require("../assets/food.png")}
+                                  style={styles.photo}
+                              />
+                              <Text style={styles.text}>韓式</Text>
+                          </View>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.box}>
+                      <TouchableOpacity {...touchProps}
+                      onPress={() => {this.setState({ activeIndex: 3 })}}
+                      >
+                          <View style={this.state.activeIndex === 3 ? styles.optionActive : styles.option}>
+                              <Image
+                                  source={require("../assets/money.png")}
+                                  style={styles.photo}
+                              />
+                              <Text style={styles.text}>美式</Text>
+                          </View>
+                      </TouchableOpacity>
+                    </View>
                 </View>
             </View>
             
             
-                <View style={styles.container}>
+          <View style={styles.container}>
           <StatusBar barStyle={'light-content'} />
+         
           <WheelOfFortune
             options={wheelOptions}
             getWinner={(value, index) => {
@@ -102,14 +133,16 @@ const participants = [
           {!this.state.started && (
             <View style={styles.startButtonView}>
             <View style={styles.startButtonback}>
-              <TouchableOpacity
+              <TouchableOpacity {...starttouchProps}
                 onPress={() => this.buttonPress()}
-                style={styles.startButton}>
+                style={this.state.startbutton === 1 ? styles.startButtonActive : styles.startButton}
+                >
                 <Text style={styles.startButtonText}>START!</Text>
               </TouchableOpacity>
               </View>
             </View>
           )}
+          
           {this.state.winnerIndex != null && (
             <View style={styles.winnerView}>
               <Text style={styles.winnerText}>
@@ -164,7 +197,23 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
     },
+    optionActive: {
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 20,
+      width: 75,
+      height:75,
+    },
+    option: {
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 20,
+      width: 75,
+      height:75,
+      opacity:0.5,
+    },
     box: {
+        backgroundColor:"red",
         marginLeft: 15,
         justifyContent: "center",
         backgroundColor: "#fff",
@@ -177,12 +226,12 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5,
-        
+        elevation: 5, 
         width: 75,
         height:75,
     },
     boxf: {
+        backgroundColor:"yellow",
         justifyContent: "center",
         backgroundColor: "#fff",
         borderRadius: 20,
@@ -195,10 +244,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        
         width: 75,
         height:75,
     },
+    
     photo: {
         marginTop:5,
         width: 40,
@@ -230,13 +279,24 @@ const styles = StyleSheet.create({
         padding: 5,
         borderColor:"#000000",
         borderWidth: 2,
-        marginRight: 5,
-        marginBottom: 5,
+        marginTop: -5,
+        marginLeft: -5,
+        width:140,
+        height:55,
+      },
+      startButtonActive: {
+        padding: 5,
+        borderColor:"#000000",
+        borderWidth: 2,
+        width:140,
+        height:55,
       },
       startButtonback: {
         backgroundColor: '#FFD24D',
-        marginTop: 365,
+        marginTop: 360,
         marginLeft: 5,
+        width:140,
+        height:55,
       },
       startButtonText: {
         fontSize: 35,
@@ -259,7 +319,7 @@ const styles = StyleSheet.create({
         //padding: 5,
         fontWeight: 'bold',
         color:'#FFD24D',
-        marginTop: 350,
+        marginTop: 345,
         //backgroundColor:'yellow',
       },
       tryAgainText: {

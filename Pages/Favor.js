@@ -28,7 +28,7 @@ const listTab = [
 
 const Favor = ({ navigation }) => {
     const [status, setStatus] = useState('全部')
-    const [datalist, setDatalist] = useState(data)
+    const [datalist, setDatalist] = useState(data)/////////////////data改成save的值是1or0的
     const setStatusFilter = status =>{
         if (status !== '全部'){
             setDatalist([...data.filter(e => e.status === status)])
@@ -42,8 +42,7 @@ const Favor = ({ navigation }) => {
             <View>
                 <Card
                     item={item}
-                    navigation={navigation}
-                    key={item.id}
+                    navigation={navigation} 
                 />
             </View>
             
@@ -51,58 +50,73 @@ const Favor = ({ navigation }) => {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.main_container}>
+            <View style={styles.option_container}>
                 <View style={styles.back_favor}>
                     <Icon_favor name="bookmark" size={30} color='#FFC107' />
                     <Text style={styles.favor_title}>我的收藏</Text>
                 </View>    
-                <SafeAreaView>
-                    <View style={styles.listTab}>
-                        <ScrollView
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                        >
-                            {
-                                listTab.map(e =>(
-                                    <TouchableOpacity 
-                                        style={[styles.btnTab, status === e.status && styles.btnTabActive]}
-                                        onPress={() =>setStatusFilter(e.status)}
-                                    >
-                                        <Text style={styles.textTab}>{e.status}</Text>
-                                    </TouchableOpacity>
-                                ))
-                            }
-                        </ScrollView>
-                    </View>
-                    <View style={styles.card_container}>
-                        <FlatList
+                <View style={styles.listTab}>
+                    <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    >
+                        {
+                            listTab.map(e =>(
+                                <TouchableOpacity 
+                                    style={[styles.btnTab, status === e.status && styles.btnTabActive]}
+                                    onPress={() =>setStatusFilter(e.status)}
+                                >
+                                    <Text style={styles.textTab}>{e.status}</Text>
+                                </TouchableOpacity>
+                            ))
+                        }
+                    </ScrollView>
+                </View> 
+            </View>
+            <ScrollView contentContainerStyle={styles.card_container}>
+                <View>
+                    {/*<FlatList
                             data={datalist}
                             keyExtractor={(e, i) =>i.toString()}
                             renderItem={renderItem}
+                        />*/}
+                    {datalist.map((item) => ( 
+                        <Card
+                            item={item}
+                            navigation={navigation}
+                            key={item.id}
                         />
-                    </View>
-                </SafeAreaView>
-            </View>     
-        </View>
+                    ))}
+               </View>     
+            </ScrollView>
+        </View>   
     );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({   
     container: {
-        flex:1,
         backgroundColor: "#EFFAFF",
+        height: "100%",
     },
-    main_container: {
-        top: "10%",
+    option_container: {
+        //top:80,
+        top:"10%",
         paddingLeft: "6%",
         paddingRight: "6%",
         display: "flex",
         flexDirection: "column",
-        paddingBottom: 70,
+        paddingBottom: 100,
+    },
+    card_container: {
+        //top:20,
+        top:"5%",
+        paddingLeft: "6%",
+        paddingRight: "6%",
+        display: "flex",
+        flexDirection: "column",
     },
     listTab: {
         flexDirection: "row",
-        
     },
     btnTab: {
         width:70,
@@ -129,12 +143,6 @@ const styles = StyleSheet.create({
         marginLeft:10,
         fontSize:17,
         fontWeight:'bold',
-    },
-    card_container: {
-        top: 20,
-        display: "flex",
-        flexDirection: "column",
-        marginBottom:200,
     },
 });
 
