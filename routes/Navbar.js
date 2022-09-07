@@ -26,12 +26,22 @@ const Navbar = () => {
             <Tab.Screen
                 name="首頁"
                 component={MainStack}
+                //listeners={{
+                    //tabPress: e => {
+                      // Prevent default action
+                      //e.preventDefault();
+                        
+                      //Any custom code here
+                      //alert(123);
+                    //},
+                  //}}
                 options={({ route }) => ({
                     tabBarStyle: {
                         display: getRouteName(route),
                         backgroundColor: "#EFFAFF",
                         height: "10%",
                     },
+                    
                     tabBarIcon: ({ focused }) => {
                         const height = focused
                             ? 48
@@ -57,12 +67,14 @@ const Navbar = () => {
             <Tab.Screen
                 name="吃什麼"
                 component={Eat}
+            
                 options={({ route }) => ({
                     tabBarStyle: {
                         display: getRouteName(route),
                         backgroundColor: "#fff",
                         height: "10%",
                     },
+                    
                     tabBarIcon: ({ focused }) => {
                         const height = focused
                             ? 48

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { View, Text, Image, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 import WheelOfFortune from 'react-native-wheel-of-fortune';
-
+import  {DeviceEventEmitter} from 'react-native';
 const participants = [
     '1',
     '2',
@@ -13,7 +13,9 @@ const participants = [
     '8',
     '9',
   ];
+
   class Eat extends Component {
+    
     constructor(props) {
       super(props);
   
@@ -26,7 +28,6 @@ const participants = [
       };
       this.child = null;
     }
-  
     buttonPress = () => {
       this.setState({
         started: true,
@@ -41,7 +42,7 @@ const participants = [
         borderWidth: 10,
         borderColor: '#fff',
         innerRadius: 30,
-        duration: 60,
+        duration: 100,
         backgroundColor: 'transparent',
         textAngle: 'horizontal',
         knobSource: require('./down-arrow.png'),
@@ -50,11 +51,11 @@ const participants = [
     
     var touchProps = {
         activeOpacity: 0.6,
-        onPress: () => console.log('press'),                 // <-- "onPress" is apparently required
+        onPress: () => console.log('press'),
       }; 
     var starttouchProps = {
         activeOpacity: 1,
-        //onPress: () => console.log('press'),                 // <-- "onPress" is apparently required
+        //onPress: () => console.log('press'),
         onPress: () => {this.setState({ startbutton: 1 })},
       };       
     return (
@@ -65,7 +66,12 @@ const participants = [
                 <View style={styles.choice_container}>
                     <View style={styles.boxf}>
                       <TouchableOpacity {...touchProps}
-                      onPress={() => {this.setState({ activeIndex: 0 })}}
+                      onPress={() => {
+                        this.setState({ activeIndex: 0, started: false, winnerValue: null, winnerIndex: null });
+                        this.child.resetWheelState();
+                        this.child.prepareWheel();
+                        this.child.angleListener();
+                      }}
                       >
                           <View style={this.state.activeIndex === 0 ? styles.optionActive : styles.option}>
                               <Image
@@ -80,6 +86,9 @@ const participants = [
                       <TouchableOpacity {...touchProps}
                       onPress={() => {
                         this.setState({ activeIndex: 1, started: false, winnerValue: null, winnerIndex: null });
+                        this.child.resetWheelState();
+                        this.child.prepareWheel();
+                        this.child.angleListener();
                       }}
                       >
                           <View style={this.state.activeIndex === 1 ? styles.optionActive : styles.option}>
@@ -93,7 +102,12 @@ const participants = [
                     </View>
                     <View style={styles.box}>
                       <TouchableOpacity {...touchProps}
-                      onPress={() => {this.setState({ activeIndex: 2 })}}
+                      onPress={() => {
+                        this.setState({ activeIndex: 2, started: false, winnerValue: null, winnerIndex: null });
+                        this.child.resetWheelState();
+                        this.child.prepareWheel();
+                        this.child.angleListener();
+                      }}
                       >
                           <View style={this.state.activeIndex === 2 ? styles.optionActive : styles.option}>
                               <Image
@@ -106,7 +120,12 @@ const participants = [
                     </View>
                     <View style={styles.box}>
                       <TouchableOpacity {...touchProps}
-                      onPress={() => {this.setState({ activeIndex: 3 })}}
+                      onPress={() => {
+                        this.setState({ activeIndex: 3, started: false, winnerValue: null, winnerIndex: null });
+                        this.child.resetWheelState();
+                        this.child.prepareWheel();
+                        this.child.angleListener();
+                      }}
                       >
                           <View style={this.state.activeIndex === 3 ? styles.optionActive : styles.option}>
                               <Image

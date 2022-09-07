@@ -4,21 +4,26 @@ import Card from "../Components/Card";
 import SearchBox from "../Components/SearchBox";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { data } from "../data";
+import { useScrollToTop } from '@react-navigation/native';
+
 
 const Main = ({ navigation }) => {
     let counter = 0;
+    const ref = React.useRef(null);
+    useScrollToTop(ref);
     return (
         <View style={styles.scrollview_container}>
             <ScrollView
                 contentContainerStyle={styles.main_container}
                 keyboardDismissMode="on-drag"
+                ref={ref}
             >
                 <SearchBox />
                 
                 <View style={styles.card_container}>
                     {data.map((item) => {
                         counter +=1;
-                        console.log({counter});
+                        //console.log({counter});
                         return(
                         <Card
                         item={item}
