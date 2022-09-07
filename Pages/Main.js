@@ -3,17 +3,21 @@ import { ScrollView, StyleSheet, View, Text } from "react-native";
 import Card from "../Components/Card";
 import SearchBox from "../Components/SearchBox";
 import { data } from "../data";
+import { useScrollToTop } from "@react-navigation/native";
 
 const Main = ({ navigation }) => {
     const placeholder = "...來點日式料理?";
     const color = "#FFFAFA";
     let counter = 0;
+    const ref = React.useRef(null);
+    useScrollToTop(ref);
     return (
         <View style={styles.scrollview_container}>
             <ScrollView
                 contentContainerStyle={styles.main_container}
                 keyboardDismissMode="on-drag"
                 keyboardShouldPersistTaps="always"
+                ref={ref}
             >
                 <SearchBox
                     navigation={navigation}
@@ -24,7 +28,7 @@ const Main = ({ navigation }) => {
                 <View style={styles.card_container}>
                     {data.map((item) => {
                         counter += 1;
-                        console.log({ counter });
+                        //console.log({counter});
                         return (
                             <Card
                                 item={item}

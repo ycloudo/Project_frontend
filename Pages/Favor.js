@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { data } from "../data";
 import Icon_favor from "@expo/vector-icons/FontAwesome";
 import { FlatList } from "react-native-gesture-handler";
+import { useScrollToTop } from '@react-navigation/native';
 
 const listTab = [
     {
@@ -28,6 +29,8 @@ const listTab = [
 
 const Favor = ({ navigation }) => {
     let counter = 0;
+    const ref = React.useRef(null);
+    useScrollToTop(ref);
     const [status, setStatus] = useState('全部')
     const [datalist, setDatalist] = useState(data)/////////////////data改成save的值是1or0的
     const setStatusFilter = status =>{
@@ -46,7 +49,6 @@ const Favor = ({ navigation }) => {
                     navigation={navigation} 
                 />
             </View>
-            
         )
     }
     return (
@@ -74,7 +76,10 @@ const Favor = ({ navigation }) => {
                     </ScrollView>
                 </View> 
             </View>
-            <ScrollView contentContainerStyle={styles.card_container}>
+            <ScrollView 
+                contentContainerStyle={styles.card_container}
+                ref={ref}
+            >
                 <View>
                     {/*<FlatList
                             data={datalist}
