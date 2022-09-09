@@ -3,16 +3,21 @@ import { ScrollView, StyleSheet, View, Text } from "react-native";
 import Card from "../Components/Card";
 import SearchBox from "../Components/SearchBox";
 import { data } from "../data";
+import { useScrollToTop } from "@react-navigation/native";
 
 const Main = ({ navigation }) => {
     const placeholder = "...來點日式料理?";
     const color = "#FFFAFA";
+    let counter = 0;
+    const ref = React.useRef(null);
+    useScrollToTop(ref);
     return (
         <View style={styles.scrollview_container}>
             <ScrollView
                 contentContainerStyle={styles.main_container}
                 keyboardDismissMode="on-drag"
                 keyboardShouldPersistTaps="always"
+                ref={ref}
             >
                 <SearchBox
                     navigation={navigation}
@@ -21,14 +26,18 @@ const Main = ({ navigation }) => {
                     color={color}
                 />
                 <View style={styles.card_container}>
-                    <Text>{}</Text>
-                    {data.map((item) => (
-                        <Card
-                            item={item}
-                            navigation={navigation}
-                            key={item.id}
-                        />
-                    ))}
+                    {data.map((item) => {
+                        counter += 1;
+                        //console.log({counter});
+                        return (
+                            <Card
+                                item={item}
+                                navigation={navigation}
+                                counter={counter}
+                                key={counter}
+                            />
+                        );
+                    })}
 
                     {/* <Text>到底囉</Text> */}
                 </View>
@@ -40,10 +49,11 @@ const Main = ({ navigation }) => {
 const styles = StyleSheet.create({
     scrollview_container: {
         //height: "90%",
-        backgroundColor: "#E0E0E0",
+        backgroundColor: "#EFFAFF",
     },
     main_container: {
         top: "10%",
+        //top:80,
         paddingLeft: "6%",
         paddingRight: "6%",
         display: "flex",
@@ -51,7 +61,8 @@ const styles = StyleSheet.create({
         paddingBottom: 100,
     },
     card_container: {
-        top: 35,
+        //top: 55,
+        top: "5%",
         display: "flex",
         flexDirection: "column",
     },

@@ -11,6 +11,8 @@ import Options from "../Components/options";
 import Info from "../Components/info";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRoute } from '@react-navigation/native';
+import Icon_save from "@expo/vector-icons/FontAwesome";
+import Icon_back from "@expo/vector-icons/AntDesign";
 
 const Restaurant = ({navigation}) => {
     const route = useRoute();
@@ -24,25 +26,16 @@ const Restaurant = ({navigation}) => {
                 <View style={styles.top}>
                     <View style={styles.backbackground}>
                         <TouchableOpacity onPress={() => {navigation.goBack();}}>
-                            <Image
-                                source={require("../assets/back.png")}
-                                style={styles.back}
-                            />
+                            <Icon_back name="arrowleft" size={25} color='#000000' />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.savebackground}>
                         {route.params.save == '0'
                             ?<TouchableOpacity>
-                                <Image
-                                source={require("../assets/save.png")}
-                                style={styles.save}
-                                />
+                                <Icon_save name="bookmark-o" size={25} color='#000000' />
                             </TouchableOpacity>
                             :<TouchableOpacity>
-                                <Image
-                                source={require("../assets/saved.png")}
-                                style={styles.save}
-                                />
+                                <Icon_save name="bookmark" size={25} color='#000000' />
                             </TouchableOpacity>
                         } 
                     </View>
@@ -57,7 +50,7 @@ const Restaurant = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#DFE0E2",
+        backgroundColor: "#EFFAFF",
         //alignItems: 'center',
         //justifyContent: 'center',
     },
@@ -67,33 +60,25 @@ const styles = StyleSheet.create({
     backbackground: {
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#DFE0E2",
-        marginTop: 40,
-        marginLeft: 25,
-        height: 45,
-        width: 45,
+        backgroundColor: "#EFFAFF",
+        marginRight: 120,
+        height: 40,
+        width: 40,
         borderRadius: 90,
-    },
-    back: {
-        height: 27,
-        width: 27,
     },
     top: {
         flexDirection: "row",
+        justifyContent: "center",
+        marginTop: "12%",
     },
     savebackground: {
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#DFE0E2",
-        marginTop: 40,
-        marginLeft: 245,
-        height: 45,
-        width: 45,
+        backgroundColor: "#EFFAFF",
+        marginLeft: 120,
+        height: 40,
+        width: 40,
         borderRadius: 90,
-    },
-    save: {
-        height: 23,
-        width: 23,
     },
 });
 
