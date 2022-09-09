@@ -2,7 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, TextInput, StyleSheet, Text, Animated } from "react-native";
 import Eye from "./Eye";
 
-const Input = ({ label, Icon, secure, inputStateHandler, input }) => {
+const Input = ({
+    label,
+    Icon,
+    secure,
+    inputStateHandler,
+    input,
+    isValid,
+    setInputValid,
+}) => {
     const ani = useRef(new Animated.Value(0)).current;
     const [isFocused, setFocused] = useState(0);
     const [showPwd, setShowPwd] = useState(secure);
@@ -23,8 +31,14 @@ const Input = ({ label, Icon, secure, inputStateHandler, input }) => {
     const inputHandler = (text) => {
         inputStateHandler(text);
         setInputLen(text.length);
+        setInputValid(true);
     };
-    const color = isFocused || inputLen ? "#423067" : "gray";
+    let color;
+    if (isValid) {
+        color = isFocused || inputLen ? "#423067" : "gray";
+    } else {
+        color = !isValid && inputLen !== 0 ? "#423067" : "red";
+    }
     const bgColor = isFocused || inputLen ? "#ffffff" : "transparent";
     const text = {
         position: "absolute",

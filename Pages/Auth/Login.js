@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
     Text,
     View,
@@ -12,17 +12,28 @@ import Icon_f from "@expo/vector-icons/Feather";
 import Icon_o from "@expo/vector-icons/Octicons";
 import AuthButton from "../../Components/AuthButton";
 import Header from "../../Components/SignPage/Header";
+import { AuthContext } from "../../content/AuthContext";
+import ErrorMsg from "../../Components/SignPage/ErrorMsg";
 
 const Login = ({ navigation, route }) => {
     const Icon_user = (props) => <Icon_f {...props} name="user" />;
     const Icon_pwd = (props) => <Icon_o {...props} name="key" />;
+    const { login } = useContext(AuthContext);
     const [account, setAccount] = useState("");
     const [password, setPwd] = useState("");
+    const [InputValid, setInputValid] = useState(true); //控制error message
     const signupHandler = () => {
         navigation.navigate("signup");
     };
-    const LoginHandler = () => {
-        // console.log(1);
+    const LoginHandler = async () => {
+        if (account === "" || password === "") {
+            setInputValid(false);
+        } else {
+            const res = await login(account, password);
+            if (res.message) {
+                setInputValid(false);
+            }
+        }
     };
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -42,6 +53,8 @@ const Login = ({ navigation, route }) => {
                             secure={false}
                             inputStateHandler={setAccount}
                             input={account}
+                            isValid={InputValid}
+                            setInputValid={setInputValid}
                         />
                         <Input
                             label="使用者密碼"
@@ -49,8 +62,11 @@ const Login = ({ navigation, route }) => {
                             secure={true}
                             inputStateHandler={setPwd}
                             input={password}
+                            isValid={InputValid}
+                            setInputValid={setInputValid}
                         />
                     </View>
+                    {!InputValid ? <ErrorMsg /> : null}
                     <View style={content.btn}>
                         <AuthButton
                             Icon={() => (
@@ -84,12 +100,12 @@ const Login = ({ navigation, route }) => {
 const ctr = StyleSheet.create({
     main_ctr: {
         height: "100%",
-        backgroundColor: "#F6FFFF",
+        backgroundColor: "#EFFAFF",
         display: "flex",
         flexDirection: "column",
     },
     header_ctr: {
-        paddingTop: "17%",
+        paddingTop: "20%",
         height: "20%",
     },
     content_ctr: {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
     Text,
     View,
@@ -14,15 +14,38 @@ import Icon_o from "@expo/vector-icons/Octicons";
 import Input from "../../Components/Input";
 import AuthButton from "../../Components/AuthButton";
 import Header from "../../Components/SignPage/Header";
+import { AuthContext } from "../../content/AuthContext";
+import ErrorMsg from "../../Components/SignPage/ErrorMsg";
 
 const Signup = ({ navigation, route }) => {
     const Icon_name = (props) => <Icon_ma {...props} name="text-account" />;
     const Icon_account = (props) => <Icon_f {...props} name="user" />;
     const Icon_pwd = (props) => <Icon_o {...props} name="key" />;
+    const [name, setName] = useState("");
+    const [account, setAccount] = useState("");
+    const [password, setPassword] = useState("");
+    // const [confirmPwd, setConfirmPwd] = useState("");
+    const [InputValid, setInputValid] = useState(true);
+    const { signup } = useContext(AuthContext);
     const signinHandler = () => {
         navigation.navigate("login");
     };
-    const onSignup = () => {};
+
+    const onSignup = () => {
+        if (
+            name === "" ||
+            account === "" ||
+            password === "" ||
+            setPassword === ""
+        ) {
+            setInputValid(false);
+        } else {
+            setInputValid(true);
+            setTimeout(() => {
+                signup(name, account, password);
+            }, 250);
+        }
+    };
     return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-250}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -40,31 +63,42 @@ const Signup = ({ navigation, route }) => {
                                 label="姓名"
                                 Icon={Icon_name}
                                 secure={false}
-                                inputStateHandler={() => {}}
-                                input={""}
+                                inputStateHandler={setName}
+                                input={name}
+                                isValid={InputValid}
+                                setInputValid={setInputValid}
                             />
                             <Input
                                 label="帳號"
                                 Icon={Icon_account}
                                 secure={false}
-                                inputStateHandler={() => {}}
-                                input={""}
+                                inputStateHandler={setAccount}
+                                input={account}
+                                isValid={InputValid}
+                                setInputValid={setInputValid}
                             />
                             <Input
                                 label="密碼"
                                 Icon={Icon_pwd}
                                 secure={true}
-                                inputStateHandler={() => {}}
-                                input={""}
+                                inputStateHandler={setPassword}
+                                input={password}
+                                isValid={InputValid}
+                                setInputValid={setInputValid}
                             />
-                            <Input
+                            {/* <Input
                                 label="確認密碼"
                                 Icon={Icon_pwd}
                                 secure={true}
-                                inputStateHandler={() => {}}
-                                input={""}
-                            />
+                                inputStateHandler={setConfirmPwd}
+                                input={confirmPwd}
+                                isValid={InputValid}
+                                setInputValid={setInputValid}
+                            /> */}
                         </View>
+                        {!InputValid ? (
+                            <ErrorMsg bottom={{ bottom: 20 }} />
+                        ) : null}
                         <View style={content.btn}>
                             <AuthButton
                                 Icon={() => (
@@ -99,22 +133,22 @@ const Signup = ({ navigation, route }) => {
 const ctr = StyleSheet.create({
     main: {
         height: "100%",
-        backgroundColor: "#F6FFFF",
+        backgroundColor: "#EFFAFF",
         display: "flex",
         flexDirection: "column",
     },
     header: {
-        height: "17%",
-        paddingTop: "17%",
+        height: "20%",
+        paddingTop: "20%",
     },
     content: {
         alignItems: "center",
-        height: "70%",
+        height: "60%",
         width: "100%",
     },
     bottom: {
         // height: "23%",
-        paddingTop: "10%",
+        paddingTop: "20%",
         alignItems: "center",
     },
 });
@@ -131,10 +165,9 @@ const content = StyleSheet.create({
     },
     input: {
         width: "80%",
-        paddingTop: "10%",
         flexDirection: "column",
         justifyContent: "space-evenly",
-        height: "70%",
+        height: "60%",
     },
     btn: {
         height: "10%",

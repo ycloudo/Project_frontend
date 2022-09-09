@@ -11,12 +11,12 @@ const Header = (props) => {
             <View style={styles.component_ctr}>
                 <View style={[styles.btn_ctr, { backgroundColor: bgColor_c1 }]}>
                     <Text style={[styles.text, { fontWeight: text_c1 }]}>
-                        Sign in
+                        登入
                     </Text>
                 </View>
                 <View style={[styles.btn_ctr, { backgroundColor: bgColor_c2 }]}>
                     <Text style={[styles.text, { fontWeight: text_c2 }]}>
-                        Sign up
+                        註冊
                     </Text>
                 </View>
             </View>
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
     },
     btn_ctr: {
         padding: 15,
-        width: "45%",
+        width: "35%",
         alignItems: "center",
-        borderRadius: 30,
+        borderRadius: 10,
     },
     text: {
         fontSize: 20,
