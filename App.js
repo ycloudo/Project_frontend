@@ -6,10 +6,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import Drawer from "./routes/DrawerNav";
 import Auth from "./routes/AuthStackNav";
 import { AuthContext } from "./content/AuthContext";
+import { API_URL } from "@env";
 
 export default function App() {
-    // const [isLoading, setIsLoading] = useState(true);
-    // const [token, setToken] = useState(null);
     const initialLoginState = {
         isLoading: true,
         userAccount: null,
@@ -27,7 +26,7 @@ export default function App() {
             case "LOGIN":
                 return {
                     ...state,
-                    userAccount: action.id,
+                    userAccount: action.account,
                     userToken: action.token,
                     isLoading: false,
                 };
@@ -41,7 +40,7 @@ export default function App() {
             case "SIGNUP":
                 return {
                     ...state,
-                    userAccount: action.id,
+                    userAccount: action.account,
                     userToken: action.token,
                     isLoading: false,
                 };
@@ -51,25 +50,65 @@ export default function App() {
     const [Authstate, dispatch] = useReducer(authReducer, initialLoginState);
 
     const authContext = useMemo(() => ({
-        login: (account, password) => {
+        login: async (account, password) => {
             //api call
-            let userToken;
-            if (account == "user" && password == 12345) {
-                userToken = "ascd";
+            const requestOption = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    account: account,
+                    password: password,
+                }),
+            };
+            let userToken, userAccount, json;
+            try {
+                const res = await fetch(`${API_URL}/user/login`, requestOption);
+                json = await res.json();
+                userAccount = json.account;
+                userToken = json.token;
+            } catch (e) {
+                console.error(e);
             }
-            dispatch({ type: "LOGIN", id: account, token: userToken });
+            setTimeout(() => {
+                dispatch({
+                    type: "LOGIN",
+                    account: userAccount,
+                    token: userToken,
+                });
+            }, 280);
+            return json;
         },
         logout: () => {
             dispatch({ type: "LOGOUT" });
         },
-        signup: (name, account, password) => {
+        signup: async (name, account, password) => {
             //api call
-            //if註冊成功
-            let userToken;
-            if (account && password && name) {
-                userToken = "ascd";
+            const requestOption = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: name,
+                    account: account,
+                    password: password,
+                }),
+            };
+            let userToken, userAccount;
+            try {
+                const res = await fetch(
+                    `${API_URL}/user/register`,
+                    requestOption
+                );
+                const json = await res.json();
+                userAccount = json.info.account;
+                userToken = json.token;
+            } catch (e) {
+                console.error(e);
             }
-            dispatch({ type: "SIGNUP", id: account, token: userToken });
+            dispatch({
+                type: "SIGNUP",
+                account: userAccount,
+                token: userToken,
+            });
         },
     }));
     useEffect(() => {
@@ -88,7 +127,7 @@ export default function App() {
         <AuthContext.Provider value={authContext}>
             <StatusBar style="auto" />
             <NavigationContainer>
-                {Authstate.userToken === "ascd" ? <Drawer /> : <Auth />}
+                {Authstate.userToken != null ? <Drawer /> : <Auth />}
             </NavigationContainer>
         </AuthContext.Provider>
     );
