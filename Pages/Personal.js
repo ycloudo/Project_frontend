@@ -55,6 +55,7 @@ const Personal = ({ navigation }) => {
         const fetchData = async () => {
             const userInfo = await fetchUserInfo();
             const avatars = await fetchAvatar();
+            console.log(userInfo);
             const newinfo = { ...userInfo };
             setCount(userInfo.avatar_id);
             setUserInfo(newinfo);
@@ -64,12 +65,12 @@ const Personal = ({ navigation }) => {
     }, []);
     const fetchUserInfo = async () => {
         const token = await SecureStore.getItemAsync("auth-token");
-        const uid = await SecureStore.getItemAsync("user-id");
+        const uid = JSON.parse(await SecureStore.getItemAsync("user-id"));
         const requestOption = {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": token,
+                "auth-token": JSON.parse(token),
             },
         };
         return fetch(`${API_URL}/user/getProfile/${uid}`, requestOption).then(
