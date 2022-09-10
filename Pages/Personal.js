@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image,TextInput, TouchableOpacity, ImageBackground} from "react-native";
+import React, { useState,Component } from "react";
+import { View, Text, StyleSheet, Image,TextInput, TouchableOpacity, ImageBackground,Input} from "react-native";
 import Icon_left from "@expo/vector-icons/Entypo";
 import Icon_right from "@expo/vector-icons/Entypo";
 import Icon_account from "@expo/vector-icons/MaterialCommunityIcons";
@@ -8,14 +8,21 @@ import Icon_human_male_female from "@expo/vector-icons/MaterialCommunityIcons";
 //import Icon_phone from "@expo/vector-icons/Entypo";
 import Icon_check from "@expo/vector-icons/Feather";
 import Icon_back from "@expo/vector-icons/AntDesign";
+import RadioForm from 'react-native-simple-radio-button';
 
 const Personal = ({navigation}) => {
     const [account, onChangeAccount] = React.useState("程尤欣欣向榮");
     const [passward, onChangePassward] = React.useState("123456789");
-    const [human, onChangeHuman] = React.useState("Male");
+    const [gender, setGender] = useState("Male");
     //const [phone, onChangePhone] = React.useState("0932-xxx-xxx");
     const [name, onChangeName] = React.useState("程尤欣");
     const [count, setCount] = useState(1);
+    const options = [
+        { label: 'Male', value: 'Male' },
+        { label: 'Female', value: 'Female' },
+      ];
+    
+    
     return (
         <ImageBackground
                 source={require("../assets/personal_bg.png")}
@@ -69,9 +76,18 @@ const Personal = ({navigation}) => {
                     </View>
                     <View style={styles.info_box_end}>
                         <Icon_human_male_female name="human-male-female" size={31} color="#7B7B7B"/>
-                        <TextInput style={styles.info} onChangeText={onChangeHuman} value={human} />
-                    </View>
-                    
+                        <RadioForm
+                            style={styles.info}
+                            radio_props={options}
+                            initial={0}
+                            //formHorizontal={true}
+                            buttonColor={'#7B7B7B'}
+                            buttonSize={10}
+                            labelStyle={{fontSize: 20, color: '#7B7B7B',fontWeight:'bold'}}
+                            selectedButtonColor={'#7B7B7B'}
+                            onPress={(value) => {setGender(value);}}
+                        />
+                        </View>
                     <View style={styles.save}>
                         <TouchableOpacity>
                             <Icon_check name="check" size={53} color='#000'/>
@@ -151,7 +167,7 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
     },
     info_box_end: {
-        top:"7%",
+        top:"12%",
         height:60,
         alignItems: "center",
         flexDirection: "row",
@@ -187,7 +203,7 @@ const styles = StyleSheet.create({
         backgroundColor:"#FFE153",
         borderRadius:90,
         marginLeft:160,
-        marginTop:15,
+        marginTop:20,
     },
 });
 
