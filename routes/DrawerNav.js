@@ -4,6 +4,7 @@ import CustomDrawer from "../Pages/CustomDrawer";
 import Personal from "../Pages/Personal";
 import Navbar from "./Navbar";
 import FavorSetting from "../Pages/FavorSetting";
+import Icon_m from "@expo/vector-icons/MaterialCommunityIcons";
 
 const Drawer = createDrawerNavigator();
 
@@ -26,7 +27,7 @@ const SettingDrawer = () => {
             drawerContent={(props) => <CustomDrawer {...props} />}
         >
             <Drawer.Screen
-                name="首頁"
+                name="Home"
                 component={Navbar}
                 options={{
                     drawerIcon: ({ color }) => (

@@ -8,7 +8,7 @@ import Icon_i from "@expo/vector-icons/Ionicons";
 import Main from "../Pages/Main";
 import Eat from "../Pages/Eat";
 import Favor from "../Pages/Favor";
-import { MainStack } from "../Pages/index";
+import { MainStack } from "../routes/IndexStackNav";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import FavorSetting from "../Pages/FavorSetting";
 
@@ -174,7 +174,11 @@ const getRouteName = (route) => {
     const routeName = getFocusedRouteNameFromRoute(route);
     //console.log(routeName);
     //console.log(route);
-    if (routeName == "restaurant" || routeName == "price") {
+    if (
+        routeName == "restaurant" ||
+        routeName == "price" ||
+        routeName == "result"
+    ) {
         return "none";
     }
     return "flex";
