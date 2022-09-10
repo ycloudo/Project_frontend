@@ -128,10 +128,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
     },
     container1: {
-        transform: [{ rotate: "-1.2deg" }]
+        transform: [{ rotate: "-1.5deg" }]
     },
     container2: {
-        transform: [{ rotate: "1.2deg" }]
+        transform: [{ rotate: "1.5deg" }]
     },
     card1: {
         //backgroundColor: "#FFFAFA",

@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import { View, Text, Image, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, StatusBar, Animated,TouchableOpacity } from "react-native";
 import WheelOfFortune from 'react-native-wheel-of-fortune';
-import  {DeviceEventEmitter} from 'react-native';
+import AnimatedFade from '../Components/AnimatedFade';
+
 const participants = [
     '1',
     '2',
@@ -13,7 +14,7 @@ const participants = [
     '8',
     '9',
   ];
-
+  
   class Eat extends Component {
     
     constructor(props) {
@@ -36,6 +37,7 @@ const participants = [
     };
     
     render() {
+      
     const wheelOptions = {
         rewards: participants,
         knobSize: 30,
@@ -60,9 +62,12 @@ const participants = [
       };       
     return (
         <View style={styles.scrollview_container}>
+          
             <View style={styles.top}>
+            <AnimatedFade>
                 <Text style={styles.top1}>今天</Text>
                 <Text style={styles.top2}>要吃什麼呢？</Text>
+            </AnimatedFade>
                 <View style={styles.choice_container}>
                     <View style={styles.boxf}>
                       <TouchableOpacity {...touchProps}

@@ -36,12 +36,44 @@ const Main = ({ navigation }) => {
                     
                     {/* <Text>到底囉</Text> */}
                 </View>
+                <View>
+                    <View style={styles.name_bg1}>
+                        <View style={styles.name1}>
+                            <Text style={styles.name}>AAA</Text>
+                        </View>
+                    </View> 
+                </View>
             </ScrollView>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    name_bg1: {
+        height:35,
+        backgroundColor:"#FFF4B0",
+        width:120,
+        marginLeft:-8,
+        marginTop:-15,
+        borderRadius: 5,
+    },
+    name1: {
+        height:35,
+        borderWidth:2,
+        borderColor:"#423067",
+        width:120,
+        marginLeft:-3.5,
+        marginTop:-3.5,
+        borderRadius: 5,
+        paddingLeft:5,
+        paddingRight:5,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    name: {
+        color:"#423067",
+        fontSize:18,
+    },
     scrollview_container: {
         //height: "90%",
         backgroundColor: "#EFFAFF",
