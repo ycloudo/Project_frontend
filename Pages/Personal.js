@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
     View,
     Text,
@@ -8,11 +8,13 @@ import {
     TouchableOpacity,
     ImageBackground,
 } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import Icon_left from "@expo/vector-icons/Entypo";
 import Icon_right from "@expo/vector-icons/Entypo";
 import Icon_account from "@expo/vector-icons/MaterialCommunityIcons";
 import Icon_passward from "@expo/vector-icons/Entypo";
 import Icon_human_male_female from "@expo/vector-icons/MaterialCommunityIcons";
+import RadioForm from "react-native-simple-radio-button";
 //import Icon_phone from "@expo/vector-icons/Entypo";
 import Icon_check from "@expo/vector-icons/Feather";
 import Icon_back from "@expo/vector-icons/AntDesign";
@@ -20,24 +22,30 @@ import * as SecureStore from "expo-secure-store";
 import { API_URL } from "@env";
 
 const Personal = ({ navigation }) => {
+    const radioButtonRef = useRef(null);
+    const isFocused = useIsFocused();
+    const options = [
+        { label: "Male", value: true },
+        { label: "Female", value: false },
+    ];
     const [userInfo, setUserInfo] = useState({
-        account: "",
         name: "",
+        account: "",
         password: "",
-        gender: "Male",
-        avatar: "",
+        gender: null,
+        avatar_id: "",
     });
-    const onChangeAccount = (input) => {
+    const onChangeAccount = (acc) => {
         const data = {
             ...userInfo,
-            account: input,
+            account: acc,
         };
         setUserInfo(data);
     };
-    const onChangePassward = (input) => {
+    const onChangePassword = (pwd) => {
         const data = {
             ...userInfo,
-            passward: input,
+            password: pwd,
         };
         setUserInfo(data);
     };
@@ -48,21 +56,27 @@ const Personal = ({ navigation }) => {
     //     };
     //     setUserInfo(data);
     // }
-    const [human, onChangeHuman] = useState("Male");
+    const onChangeGender = (input) => {
+        const data = {
+            ...userInfo,
+            gender: input,
+        };
+        setUserInfo(data);
+    };
     const [avatars, setAvatars] = useState([]);
     const [count, setCount] = useState(1);
     useEffect(() => {
         const fetchData = async () => {
             const userInfo = await fetchUserInfo();
             const avatars = await fetchAvatar();
-            console.log(userInfo);
             const newinfo = { ...userInfo };
             setCount(userInfo.avatar_id);
             setUserInfo(newinfo);
             setAvatars(avatars);
         };
         fetchData();
-    }, []);
+        radioButtonRef.current.updateIsActiveIndex(userInfo.gender ? 0 : 1);
+    }, [isFocused]);
     const fetchUserInfo = async () => {
         const token = await SecureStore.getItemAsync("auth-token");
         const uid = JSON.parse(await SecureStore.getItemAsync("user-id"));
@@ -79,6 +93,31 @@ const Personal = ({ navigation }) => {
     };
     const fetchAvatar = async () => {
         return fetch(`${API_URL}/data/allAvatar`).then((res) => res.json());
+    };
+    const submitHandler = async () => {
+        const token = await SecureStore.getItemAsync("auth-token");
+        const uid = JSON.parse(await SecureStore.getItemAsync("user-id"));
+        const requestOption = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": JSON.parse(token),
+            },
+            body: JSON.stringify({
+                ...userInfo,
+                avatar_id: count,
+            }),
+        };
+        try {
+            const res = await fetch(
+                `${API_URL}/user/editProfile/${uid}`,
+                requestOption
+            );
+            const json = await res.json();
+            // console.log(json);
+        } catch (err) {
+            console.error(e);
+        }
     };
     return (
         <ImageBackground
@@ -175,7 +214,7 @@ const Personal = ({ navigation }) => {
                             <TextInput
                                 style={styles.info}
                                 onChangeText={(input) => {
-                                    onChangePassward(input);
+                                    onChangePassword(input);
                                 }}
                                 value={userInfo.password}
                             />
@@ -186,15 +225,28 @@ const Personal = ({ navigation }) => {
                                 size={31}
                                 color="#7B7B7B"
                             />
-                            <TextInput
+                            <RadioForm
                                 style={styles.info}
-                                onChangeText={onChangeHuman}
-                                value={human}
+                                radio_props={options}
+                                initial={userInfo.gender ? 0 : 1}
+                                //formHorizontal={true}
+                                buttonColor={"#7B7B7B"}
+                                buttonSize={10}
+                                labelStyle={{
+                                    fontSize: 20,
+                                    color: "#7B7B7B",
+                                    fontWeight: "bold",
+                                }}
+                                ref={radioButtonRef}
+                                selectedButtonColor={"#7B7B7B"}
+                                onPress={(input) => {
+                                    onChangeGender(input);
+                                }}
                             />
                         </View>
 
                         <View style={styles.save}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={submitHandler}>
                                 <Icon_check
                                     name="check"
                                     size={53}

@@ -67,17 +67,11 @@ export default function App() {
                 json = await res.json();
                 userId = json.uid;
                 userToken = json.token;
-                await SecureStore.setItemAsync(
-                    "auth-token",
-                    JSON.stringify(userToken)
-                );
-                await SecureStore.setItemAsync(
-                    "user-id",
-                    JSON.stringify(userId)
-                );
             } catch (e) {
                 console.error(e);
             }
+            await SecureStore.setItemAsync("auth-token", userToken);
+            await SecureStore.setItemAsync("user-id", userId);
             setTimeout(() => {
                 dispatch({
                     type: "LOGIN",
