@@ -7,11 +7,12 @@ import Drawer from "./routes/DrawerNav";
 import Auth from "./routes/AuthStackNav";
 import { AuthContext } from "./content/AuthContext";
 import { API_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 export default function App() {
     const initialLoginState = {
         isLoading: true,
-        userAccount: null,
+        userId: null,
         userToken: null,
     };
 
@@ -26,21 +27,21 @@ export default function App() {
             case "LOGIN":
                 return {
                     ...state,
-                    userAccount: action.account,
+                    userId: action.id,
                     userToken: action.token,
                     isLoading: false,
                 };
             case "LOGOUT":
                 return {
                     ...state,
-                    userAccount: null,
+                    userId: null,
                     userToken: null,
                     isLoading: false,
                 };
             case "SIGNUP":
                 return {
                     ...state,
-                    userAccount: action.account,
+                    userId: action.id,
                     userToken: action.token,
                     isLoading: false,
                 };
@@ -60,19 +61,27 @@ export default function App() {
                     password: password,
                 }),
             };
-            let userToken, userAccount, json;
+            let userToken, userId, json;
             try {
                 const res = await fetch(`${API_URL}/user/login`, requestOption);
                 json = await res.json();
-                userAccount = json.account;
+                userId = json.uid;
                 userToken = json.token;
+                await SecureStore.setItemAsync(
+                    "auth-token",
+                    JSON.stringify(userToken)
+                );
+                await SecureStore.setItemAsync(
+                    "user-id",
+                    JSON.stringify(userId)
+                );
             } catch (e) {
                 console.error(e);
             }
             setTimeout(() => {
                 dispatch({
                     type: "LOGIN",
-                    account: userAccount,
+                    id: userId,
                     token: userToken,
                 });
             }, 280);
@@ -92,21 +101,21 @@ export default function App() {
                     password: password,
                 }),
             };
-            let userToken, userAccount;
+            let userToken, userId;
             try {
                 const res = await fetch(
                     `${API_URL}/user/register`,
                     requestOption
                 );
                 const json = await res.json();
-                userAccount = json.info.account;
+                userId = json.info._id;
                 userToken = json.token;
             } catch (e) {
                 console.error(e);
             }
             dispatch({
                 type: "SIGNUP",
-                account: userAccount,
+                id: userId,
                 token: userToken,
             });
         },
