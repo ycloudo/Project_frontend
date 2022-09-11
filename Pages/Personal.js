@@ -79,12 +79,12 @@ const Personal = ({ navigation }) => {
     }, [isFocused]);
     const fetchUserInfo = async () => {
         const token = await SecureStore.getItemAsync("auth-token");
-        const uid = JSON.parse(await SecureStore.getItemAsync("user-id"));
+        const uid = await SecureStore.getItemAsync("user-id");
         const requestOption = {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": JSON.parse(token),
+                "auth-token": token,
             },
         };
         return fetch(`${API_URL}/user/getProfile/${uid}`, requestOption).then(
@@ -96,12 +96,12 @@ const Personal = ({ navigation }) => {
     };
     const submitHandler = async () => {
         const token = await SecureStore.getItemAsync("auth-token");
-        const uid = JSON.parse(await SecureStore.getItemAsync("user-id"));
+        const uid = await SecureStore.getItemAsync("user-id");
         const requestOption = {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": JSON.parse(token),
+                "auth-token": token,
             },
             body: JSON.stringify({
                 ...userInfo,
