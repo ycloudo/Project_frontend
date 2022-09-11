@@ -61,17 +61,20 @@ export default function App() {
                     password: password,
                 }),
             };
-            let userToken, userId, json;
+            let userToken, userId, res;
             try {
-                const res = await fetch(`${API_URL}/user/login`, requestOption);
-                json = await res.json();
-                userId = json.uid;
-                userToken = json.token;
+                res = await fetch(`${API_URL}/user/login`, requestOption).then(
+                    (r) => r.json()
+                );
+                userId = res.uid;
+                userToken = res.token;
             } catch (e) {
                 console.error(e);
             }
-            await SecureStore.setItemAsync("auth-token", userToken);
-            await SecureStore.setItemAsync("user-id", userId);
+            if (userId && userToken) {
+                await SecureStore.setItemAsync("auth-token", userToken);
+                await SecureStore.setItemAsync("user-id", userId);
+            }
             setTimeout(() => {
                 dispatch({
                     type: "LOGIN",
@@ -79,7 +82,7 @@ export default function App() {
                     token: userToken,
                 });
             }, 280);
-            return json;
+            return res;
         },
         logout: () => {
             dispatch({ type: "LOGOUT" });
