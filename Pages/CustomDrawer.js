@@ -21,7 +21,7 @@ const CustomDrawer = (props) => {
             </View>
 
             <View style={styles.footer_container}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={logoutHandler}>
                     <View style={styles.logout_container}>
                         <Icon_m name="logout" size={25} />
                         <Text style={{ marginLeft: 5, fontSize: 17 }}>
