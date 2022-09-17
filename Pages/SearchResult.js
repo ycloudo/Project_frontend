@@ -12,6 +12,7 @@ import SearchBox from "../Components/SearchBox";
 import { useRoute } from "@react-navigation/native";
 
 const SearchResult = ({ navigation }) => {
+    let counter = 0;
     const route = useRoute();
     const data = [
         {
@@ -60,13 +61,17 @@ const SearchResult = ({ navigation }) => {
                 <Text style={styles.text}>搜尋結果如下</Text>
                 <View style={styles.card_container}>
                     <Text>{}</Text>
-                    {data.map((item) => (
-                        <Card
-                            item={item}
-                            navigation={navigation}
-                            key={item.id}
-                        />
-                    ))}
+                    {data.map((item) => {
+                        counter++;
+                        return (
+                            <Card
+                                item={item}
+                                navigation={navigation}
+                                key={counter}
+                                counter={counter}
+                            />
+                        );
+                    })}
 
                     {/* <Text>到底囉</Text> */}
                 </View>
@@ -78,12 +83,12 @@ const styles = StyleSheet.create({
     main_container: {
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#E0E0E0",
+        backgroundColor: "#F5F5F5",
     },
     header_container: {
         height: "10%",
         width: "100%",
-        backgroundColor: "#FFC107",
+        backgroundColor: "#FFE153",
         paddingLeft: "6%",
     },
     scrollview_container: {

@@ -20,6 +20,7 @@ import Icon_check from "@expo/vector-icons/Feather";
 import Icon_back from "@expo/vector-icons/AntDesign";
 import * as SecureStore from "expo-secure-store";
 import { API_URL } from "@env";
+import Modal from "../Components/Modal";
 
 const Personal = ({ navigation }) => {
     const radioButtonRef = useRef(null);
@@ -35,6 +36,7 @@ const Personal = ({ navigation }) => {
         gender: null,
         avatar_id: "",
     });
+    const [message, setMessage] = useState("");
     const onChangeAccount = (acc) => {
         const data = {
             ...userInfo,
@@ -49,14 +51,10 @@ const Personal = ({ navigation }) => {
         };
         setUserInfo(data);
     };
-    // const onChangeName = (input)=>{
-    //     const data = {
-    //         ...userInfo,
-    //         name: input,
-    //     };
-    //     setUserInfo(data);
-    // }
     const onChangeGender = (input) => {
+        if (typeof input == "object") {
+            input = input.value;
+        }
         const data = {
             ...userInfo,
             gender: input,
@@ -65,6 +63,7 @@ const Personal = ({ navigation }) => {
     };
     const [avatars, setAvatars] = useState([]);
     const [count, setCount] = useState(1);
+    const [isModalVisible, setModalVisible] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             const userInfo = await fetchUserInfo();
@@ -73,9 +72,9 @@ const Personal = ({ navigation }) => {
             setCount(userInfo.avatar_id);
             setUserInfo(newinfo);
             setAvatars(avatars);
+            radioButtonRef.current.updateIsActiveIndex(newinfo.gender ? 0 : 1);
         };
         fetchData();
-        radioButtonRef.current.updateIsActiveIndex(userInfo.gender ? 0 : 1);
     }, [isFocused]);
     const fetchUserInfo = async () => {
         const token = await SecureStore.getItemAsync("auth-token");
@@ -114,7 +113,13 @@ const Personal = ({ navigation }) => {
                 requestOption
             );
             const json = await res.json();
-            // console.log(json);
+            if (json.message == "edit success") {
+                setModalVisible(true);
+                setMessage("修改成功!");
+            } else {
+                setModalVisible(true);
+                setMessage("修改失敗!");
+            }
         } catch (err) {
             console.error(e);
         }
@@ -244,7 +249,12 @@ const Personal = ({ navigation }) => {
                                 }}
                             />
                         </View>
-
+                        {isModalVisible ? (
+                            <Modal
+                                message={message}
+                                setModal={setModalVisible}
+                            />
+                        ) : null}
                         <View style={styles.save}>
                             <TouchableOpacity onPress={submitHandler}>
                                 <Icon_check

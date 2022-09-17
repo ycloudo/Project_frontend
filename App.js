@@ -22,6 +22,8 @@ export default function App() {
             case "LOADING":
                 return {
                     ...state,
+                    userId: action.id,
+                    userToken: action.token,
                     isLoading: false,
                 };
             case "LOGIN":
@@ -84,7 +86,9 @@ export default function App() {
             }, 280);
             return res;
         },
-        logout: () => {
+        logout: async () => {
+            await SecureStore.deleteItemAsync("auth-token");
+            await SecureStore.deleteItemAsync("user-id");
             dispatch({ type: "LOGOUT" });
         },
         signup: async (name, account, password) => {
@@ -118,9 +122,14 @@ export default function App() {
         },
     }));
     useEffect(() => {
-        setTimeout(() => {
-            dispatch({ type: "LOADING" });
-        }, 1000);
+        const fetchUser = async () => {
+            const token = await SecureStore.getItemAsync("auth-token");
+            const userId = await SecureStore.getItemAsync("user-id");
+            setTimeout(() => {
+                dispatch({ type: "LOADING", token: token, id: userId });
+            }, 1000);
+        };
+        fetchUser();
     }, []);
     if (Authstate.isLoading) {
         return (
