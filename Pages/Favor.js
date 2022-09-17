@@ -22,6 +22,18 @@ const listTab = [
         status:'韓式'
     },
     {
+        status:'西式'
+    },
+    {
+        status:'泰式'
+    },
+    {
+        status:'美式'
+    },
+    {
+        status:'異國'
+    },
+    {
         status:'其他'
     }
 ]
@@ -29,6 +41,7 @@ const listTab = [
 
 const Favor = ({ navigation }) => {
     let counter = 0;
+    let option = 0;
     const ref = React.useRef(null);
     useScrollToTop(ref);
     const [status, setStatus] = useState('全部')
@@ -64,14 +77,18 @@ const Favor = ({ navigation }) => {
                     showsHorizontalScrollIndicator={false}
                     >
                         {
-                            listTab.map(e =>(
+                            listTab.map(e =>{
+                                option +=1;
+                                return(
                                 <TouchableOpacity 
                                     style={[styles.btnTab, status === e.status && styles.btnTabActive]}
                                     onPress={() =>setStatusFilter(e.status)}
+                                    key={option}
                                 >
                                     <Text style={styles.textTab}>{e.status}</Text>
                                 </TouchableOpacity>
-                            ))
+                                );
+                            })
                         }
                     </ScrollView>
                 </View> 

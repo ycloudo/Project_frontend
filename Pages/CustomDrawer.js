@@ -1,41 +1,27 @@
-import React, { useContext } from "react";
-import {
-    Text,
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    ImageBackground,
-    Image,
-} from "react-native";
+import React from "react";
+import { Text, View, StyleSheet, TouchableOpacity,Image } from "react-native";
 import {
     DrawerContentScrollView,
     DrawerItemList,
 } from "@react-navigation/drawer";
 import Icon_m from "@expo/vector-icons/MaterialIcons";
-import { AuthContext } from "../content/AuthContext";
 
 const CustomDrawer = (props) => {
-    const { logout } = useContext(AuthContext);
-    const logoutHandler = () => {
-        logout();
-    };
-
     return (
         <View style={{ flex: 1 }}>
-            <ImageBackground style={styles.header_container}>
-                <View style={styles.avatar_container}>
-                    <Image
-                        source={require("../assets/temp_avatar/kplin.jpg")}
-                        style={styles.avatar}
-                    />
-                </View>
-                <Text style={styles.name}>程尤欣欣向榮</Text>
-            </ImageBackground>
+            <View style={styles.avatar_container}>
+                <Image
+                    source={require("../assets/google.png")}//還沒串
+                    style={styles.photo}
+                />
+                <Text style={styles.name}>name</Text>{/*還沒串*/}
+            </View>
             <View style={styles.item_container}>
                 <DrawerItemList {...props} />
             </View>
+
             <View style={styles.footer_container}>
-                <TouchableOpacity onPress={logoutHandler}>
+                <TouchableOpacity>
                     <View style={styles.logout_container}>
                         <Icon_m name="logout" size={25} />
                         <Text style={{ marginLeft: 5, fontSize: 17 }}>
@@ -49,25 +35,28 @@ const CustomDrawer = (props) => {
 };
 
 const styles = StyleSheet.create({
+    name: {
+        marginTop:15,
+        fontSize: 23,
+        fontWeight:"bold",
+        paddingLeft:15,
+        paddingRight:15,
+    },
+    photo: {
+        width: 115,
+        height: 115,
+        borderRadius: 180,
+        borderWidth: 10,
+        borderColor: "#FFE153",
+        marginTop:100,
+    },
     avatar_container: {
         backgroundColor: "#FFF4B0",
-        height: 300,
+        paddingBottom:30,
+        //height: 300,
         width: "100%",
+        //justifyContent: 'center',
         alignItems: "center",
-        paddingTop: "40%",
-    },
-    avatar_container: {
-        height: 120,
-        width: 120,
-    },
-    avatar: {
-        borderRadius: 60,
-        maxHeight: "100%",
-        maxWidth: "100%",
-    },
-    name: {
-        top: "10%",
-        fontSize: 18,
     },
     item_container: {
         flex: 1,

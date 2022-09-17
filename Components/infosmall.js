@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingLeft: 30,
         paddingRight: 30,
-        paddingBottom: 15,
+        paddingBottom: 20,
         backgroundColor: "#fff",
         marginTop: 50,
         marginLeft: 30,
@@ -54,15 +54,17 @@ const styles = StyleSheet.create({
     name: {
         marginTop: 10,
         fontSize: 30,
+        width: 200,
     },
     address: {
         fontSize: 18,
         color: "#7B7B7B",
+        width: "100%",
     },
     star: {
         alignItems: "center",
         justifyContent: "center",
-        marginLeft: 100,
+        marginLeft: 25,
     },
     starphoto: {
         width: 50,
