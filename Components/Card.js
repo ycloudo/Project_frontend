@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon_save from "@expo/vector-icons/FontAwesome";
+
 const Card = ({ navigation, item, counter }) => {
     return counter % 2 == "1" ? (
         <TouchableOpacity onPress={() => navigation.navigate("price", item)}>

@@ -8,68 +8,57 @@ import {
     ScrollView,
 } from "react-native";
 
-const Price_comment = (props) => {
+const Price_comment = ({navigation,item,comment,resource}) => {
+    
     return (
-        <View style={styles.container}>
-            <ScrollView>
+        ((comment)=='1')
+        ?<View>
                 <View style={styles.detail}>
-                    <Image
-                        source={require("../assets/dcard.png")}
-                        style={styles.photo}
-                    />
-                    <Text style={styles.text}>asdf</Text>
-                </View>
-                <View style={styles.line}></View>
+                    {(resource) == "dcard" ? ( 
+                        <Image
+                            source={require("../assets/dcard.png")}
+                            style={styles.resource}
+                        />
+                    ) : (resource) == "ptt" ? (
+                        <Image
+                            source={require("../assets/ptt.png")}
+                            style={styles.resource}
+                        />
+                    ) : (
+                        <Image
+                            source={require("../assets/google.png")}
+                            style={styles.resource}
+                        />
+                    )}
+                <Text style={styles.comment}>{item.comment}</Text>
+            </View>
+        </View>  
+        :<View>
+            <View style={styles.line}></View>
                 <View style={styles.detail}>
-                    <Image
-                        source={require("../assets/facebook.png")}
-                        style={styles.photo}
-                    />
-                    <Text style={styles.text}>asdf</Text>
-                </View>
-                <View style={styles.line}></View>
-                <View style={styles.detail}>
-                    <Image
-                        source={require("../assets/dcard.png")}
-                        style={styles.photo}
-                    />
-                    <Text style={styles.text}>asdf</Text>
-                </View>
-                <View style={styles.line}></View>
-                <View style={styles.detail}>
-                    <Image
-                        source={require("../assets/google.png")}
-                        style={styles.photo}
-                    />
-                    <Text style={styles.text}>asdf</Text>
-                </View>
-                <View style={styles.line}></View>
-                <View style={styles.detail}>
-                    <Image
-                        source={require("../assets/ptt.png")}
-                        style={styles.photo}
-                    />
-                    <Text style={styles.text}>asdf</Text>
-                </View>
-                <View style={styles.line}></View>
-                <View style={styles.detail}>
-                    <Image
-                        source={require("../assets/facebook.png")}
-                        style={styles.photo}
-                    />
-                    <Text style={styles.text}>asdf</Text>
-                </View>
-            </ScrollView>
-        </View>
+                    {(resource) == "dcard" ? ( 
+                        <Image
+                            source={require("../assets/dcard.png")}
+                            style={styles.resource}
+                        />
+                    ) : (resource) == "ptt" ? (
+                        <Image
+                            source={require("../assets/ptt.png")}
+                            style={styles.resource}
+                        />
+                    ) : (
+                        <Image
+                            source={require("../assets/google.png")}
+                            style={styles.resource}
+                        />
+                    )}
+                <Text style={styles.comment}>{item.comment}</Text>
+            </View>
+        </View>  
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        //alignItems: 'center',
-        //justifyContent: 'center',
-    },
     detail: {
         flexDirection: "row",
         paddingTop: 10,
@@ -82,11 +71,11 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         alignItems: "center",
     },
-    photo: {
+    resource: {
         width: 35,
         height: 35,
     },
-    text: {
+    comment: {
         padding: 15,
         fontSize: 20,
     },

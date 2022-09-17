@@ -12,6 +12,7 @@ const Main = ({ navigation }) => {
     const ref = React.useRef(null);
     useScrollToTop(ref);
     return (
+        
         <View style={styles.scrollview_container}>
             <ScrollView
                 contentContainerStyle={styles.main_container}
