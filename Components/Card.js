@@ -9,11 +9,14 @@ import {
 } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon_save from "@expo/vector-icons/FontAwesome";
+
 const Card = ({ navigation, item, counter }) => {
     return counter % 2 == "1" ? (
         <TouchableOpacity onPress={() => navigation.navigate("price", item)}>
             <Animated.View style={styles.container1} shouldRasterizeIOS={true}>
-                <View style={styles.card1}>
+                <ImageBackground
+                source={require("../assets/photo.jpg")}
+                 style={styles.card1}>
                     {/* <View> */}
                     <View style={styles.name_bg1}>
                         <View style={styles.name1}>
@@ -43,7 +46,7 @@ const Card = ({ navigation, item, counter }) => {
                     <Text>{item.name}</Text>
 
                     <Text>{item.num}</Text>
-                </View>
+                </ImageBackground>
             </Animated.View>
         </TouchableOpacity>
     ) : (
