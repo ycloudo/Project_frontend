@@ -15,6 +15,9 @@ import { useRoute } from '@react-navigation/native';
 import Icon_save from "@expo/vector-icons/FontAwesome";
 import Icon_back from "@expo/vector-icons/AntDesign";
 import { data_r } from "../data_r";
+import ActionButton from 'react-native-action-button';
+import Icon_add from "@expo/vector-icons/SimpleLineIcons";
+import Modal from "../Components/Modal_comment";
 
 const listTab = [
     {
@@ -51,6 +54,10 @@ const Price = ({navigation}) => {
         }
         setStatus(status)
     }
+    const [isModalVisible, setModalVisible] = useState(false);
+    const submitHandler = async () => {
+                setModalVisible(true);
+    };
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -91,13 +98,17 @@ const Price = ({navigation}) => {
                                     onPress={() =>setStatusFilter(e.status)}
                                     key={option}
                                 >
-                                    <View style={styles.option_box}>
+                                    {/*<View style={styles.option_box}>
                                         <Image
                                                 source={require("../assets/money.png")}
                                                 style={styles.option_photo}
                                         />
-                                    </View>
-                                    <Text style={styles.textTab}>{e.status}</Text>
+                                    </View>*/}
+                                    <Text style={styles.textTab}>{e.status}  4.3</Text>{/*4.3要改成結果 */}
+                                    <Image
+                                                source={require("../assets/star.png")}
+                                                style={styles.option_star}
+                                        />
                                 </TouchableOpacity>
                                 );
                             })
@@ -117,13 +128,28 @@ const Price = ({navigation}) => {
                                 key={comment}/>
                             );
                         })}
-                </View>     
-            </ScrollView>
+                    </View>     
+                </ScrollView>
+                {isModalVisible ? (
+                            <Modal
+                                name={route.params.name}
+                                setModal={setModalVisible}
+                            />
+                ) : null}
+                <ActionButton
+                    buttonColor="#FFFFFF"
+                    onPress={submitHandler}
+                    renderIcon={() => (<View><Icon_add name="note" size={30} color='#82B1DB' /></View>)}
+                />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    option_star: {
+        width:16,
+        height:16,
+    },
     option_box: {
         width:50,
         //height:50,
@@ -148,36 +174,31 @@ const styles = StyleSheet.create({
     },
     listTab: {
         flexDirection: "row",
-        marginLeft: 30,
+        marginLeft: 35,
        //marginRight: 30,
     },
     btnTab: {
-        //backgroundColor:"red",
+        backgroundColor:"#fff",
         marginRight: 20,
-        marginBottom: 20,
+        marginBottom: 10,
         paddingRight: 10,
         paddingLeft: 10,
-        borderRadius: 10,
+        borderRadius: 30,
         alignItems: "center",
-        //shadowColor: "#000",
-        //shadowOffset: {
-            //width: 0,
-            //height: 2,
-        //},
-        //shadowOpacity: 0.25,
-        //shadowRadius: 3.84,
-        elevation: 5,
-        
+        flexDirection: "row",  
     },
     textTab: {
-        padding: 5,
-        fontSize: 13,
-        fontWeight:"bold",
+        padding: 8,
+        fontSize: 14,
+        //fontWeight:"bold",
     },
     btnTabActive: {
-        //backgroundColor:"yellow",
-       
+        backgroundColor:"#FFF4B0",
+        borderWidth:2,
+        borderColor:"#423067",
+        color:"#423067",
     },
+    
     container: {
         flex: 1,
         backgroundColor: "#EFFAFF",

@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon_i from "@expo/vector-icons/Ionicons";
 //import Icon_f from "@expo/vector-icons/Foundation";
 import Main from "../Pages/Main";
-import Eat from "../Pages/Eat";
+import Eat from "../Pages/Eat_new";
 import Favor from "../Pages/Favor";
 import { MainStack } from "../routes/IndexStackNav";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";

@@ -1,12 +1,17 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Text, View, StyleSheet, TouchableOpacity,Image } from "react-native";
 import {
     DrawerContentScrollView,
     DrawerItemList,
 } from "@react-navigation/drawer";
 import Icon_m from "@expo/vector-icons/MaterialIcons";
+import { AuthContext } from "../content/AuthContext";
 
 const CustomDrawer = (props) => {
+    const { logout } = useContext(AuthContext);
+    const logoutHandler = () => {
+        logout();
+    };
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.avatar_container}>
