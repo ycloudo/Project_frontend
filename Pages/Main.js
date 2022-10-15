@@ -161,7 +161,6 @@ const Main = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     box: {
-        backgroundColor:"red",
         //marginLeft: 15,
         justifyContent: "center",
         backgroundColor: "#fff",

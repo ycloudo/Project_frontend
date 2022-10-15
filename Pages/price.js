@@ -18,6 +18,7 @@ import { data_r } from "../data_r";
 import ActionButton from 'react-native-action-button';
 import Icon_add from "@expo/vector-icons/SimpleLineIcons";
 import Modal from "../Components/Modal_comment";
+import Modal_c from "../Components/Modal";
 
 const listTab = [
     {
@@ -46,6 +47,7 @@ const Price = ({navigation}) => {
     let comment = 0;
     const [status, setStatus] = useState('全部')
     const [datalist, setDatalist] = useState(data_r)
+    const [isNavigate, setIsNavigate] = useState(false);
     const setStatusFilter = status =>{
         if (status !== '全部'){
             setDatalist([...data_r.filter(e => e.status === status)])
@@ -54,10 +56,17 @@ const Price = ({navigation}) => {
         }
         setStatus(status)
     }
-    const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible, setModalVisible] = useState(false);//true跳到Modal_comment，填寫評論
+    const [isModalVisible_c, setModalVisible_c] = useState(false);//true跳到Modal，顯示是否成功
+    const [message, setMessage] = useState("成功送出");//可能要有失敗的訊息
     const submitHandler = async () => {
                 setModalVisible(true);
     };
+    const navigate= () => {
+        setTimeout(() => {
+            navigation.navigate("首頁");
+        }, 300);
+    }
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -134,6 +143,15 @@ const Price = ({navigation}) => {
                             <Modal
                                 name={route.params.name}
                                 setModal={setModalVisible}
+                                setModal_c={setModalVisible_c}
+                            />
+                ) : null}
+                {isModalVisible_c ? (
+                            <Modal_c
+                                setModal={setModalVisible_c}
+                                message={message}
+                                navigate={navigate}
+                                isNavigate={isNavigate}
                             />
                 ) : null}
                 <ActionButton

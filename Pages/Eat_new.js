@@ -3,6 +3,8 @@ import { View, Text, Image, StyleSheet, StatusBar, TouchableOpacity } from "reac
 import WheelOfFortune from 'react-native-wheel-of-fortune';
 import  {DeviceEventEmitter} from 'react-native';
 import Icon_down from "@expo/vector-icons/Entypo";
+import ModalDropdown from 'react-native-modal-dropdown';
+
 const participants = [
     '鹹水雞',
     '麥當勞',
@@ -67,9 +69,10 @@ const participants = [
             <View style={styles.top}>
                 <Text style={styles.top1}>今天</Text>
                 <Text style={styles.top2}>要吃什麼呢？</Text>
-            </View>
+            </View>    
             <View style={styles.wheel_topic_box}>
               <Text style={styles.option_text}>轉盤內容</Text>
+              
               <View style={styles.wheel_topic}>
                 <Text style={styles.wheel_topic_text}>餐廳特色</Text>
                 <Icon_down name="chevron-down" size={20} color='#000000' />

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactNativeModal from "react-native-modal";
-import { View, Text, Button, StyleSheet, Animated,Pressable } from "react-native";
+import { View, Text, Button, StyleSheet, Animated,Pressable, TextInput } from "react-native";
 
-const CustomModal = ({ name,setModal }) => {
+
+const CommentModal = ({ name,setModal,setModal_c }) => {
     const closeModalHandler = () => {
         setModal(false);
     };
+    const submitHandler = () => {
+        const comment = {comment};//要儲存的評論內容
+        const name = {name}//被評論的店家
+        setModal(false);
+        setModal_c(true);
+    };
+    const placeholder = "評論～";
+    const [comment, onComment] = useState("");
     return (
         <ReactNativeModal isVisible={true} animationIn="bounceIn">
             <View style={styles.main}>
@@ -15,7 +24,11 @@ const CustomModal = ({ name,setModal }) => {
                             <Text style={styles.name_text}>{name}</Text>
                         </Animated.View>
                     </Animated.View>
-                    <Text style={styles.comment_text}>評論～</Text>
+                    <TextInput
+                        placeholder={placeholder}
+                        style={styles.comment_text}
+                        onChangeText={onComment}
+                    />
                 </View>
                 
                 <View style={styles.buttom_button}>
@@ -36,7 +49,7 @@ const CustomModal = ({ name,setModal }) => {
                     </Pressable>
                     <Pressable
                         style={styles.button_r}
-                        onPress={closeModalHandler}
+                        onPress={submitHandler}
                     >
                         <Text
                             style={{
@@ -55,6 +68,11 @@ const CustomModal = ({ name,setModal }) => {
 };
 
 const styles = StyleSheet.create({
+    try: {
+        backgroundColor:"red",
+        width:100,
+        height:100,
+    },
     comment_text: {
         color:"#4E5B6B",
         marginLeft:15,
@@ -135,4 +153,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CustomModal;
+export default CommentModal;
