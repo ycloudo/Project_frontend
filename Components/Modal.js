@@ -2,9 +2,12 @@ import React from "react";
 import ReactNativeModal from "react-native-modal";
 import { View, Text, Button, StyleSheet, Pressable } from "react-native";
 
-const CustomModal = ({ message, setModal }) => {
+const CustomModal = ({ message, setModal, navigate, isNavigate }) => {
     const closeModalHandler = () => {
         setModal(false);
+        if (isNavigate) {
+            navigate();
+        }
     };
     return (
         <ReactNativeModal isVisible={true} animationIn="bounceIn">
@@ -13,7 +16,7 @@ const CustomModal = ({ message, setModal }) => {
                     <Text style={styles.msg}>{message}</Text>
                     <Pressable
                         style={styles.button}
-                        onPress={closeModalHandler}
+                        onPressIn={closeModalHandler}
                     >
                         <Text
                             style={{

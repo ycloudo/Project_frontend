@@ -1,134 +1,213 @@
-import React, { useState } from "react";
-import { ScrollView, StyleSheet, View, TouchableOpacity, Text, SafeAreaView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+    ScrollView,
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    Text,
+} from "react-native";
 import Card from "../Components/Card";
-import SearchBox from "../Components/SearchBox";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { data } from "../data";
 import Icon_favor from "@expo/vector-icons/FontAwesome";
-import { FlatList } from "react-native-gesture-handler";
-import { useScrollToTop } from '@react-navigation/native';
+import { useScrollToTop } from "@react-navigation/native";
+import { API_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 const listTab = [
     {
-        status:'全部'
+        id: 99,
+        status: "全部",
     },
     {
-        status:'中式'
+        id: 1,
+        status: "中式",
     },
     {
-        status:'日式'
+        id: 2,
+        status: "日式",
     },
     {
-        status:'韓式'
+        id: 3,
+        status: "韓式",
     },
     {
-        status:'歐式'
+        id: 4,
+        status: "美式",
     },
     {
-        status:'泰式'
+        id: 5,
+        status: "西式",
     },
     {
-        status:'美式'
+        id: 6,
+        status: "異國料理",
     },
     {
-        status:'異式'
+        id: 7,
+        status: "泰式",
     },
     {
-        status:'輕食'
-    }
-]
-
-
+        id: 8,
+        status: "輕食",
+    },
+];
 const Favor = ({ navigation }) => {
     let counter = 0;
     let option = 0;
     const ref = React.useRef(null);
     useScrollToTop(ref);
-    const [status, setStatus] = useState('全部')
-    const [datalist, setDatalist] = useState(data)/////////////////data改成save的值是1or0的
-    const setStatusFilter = status =>{
-        if (status !== '全部'){
-            setDatalist([...data.filter(e => e.status === status)])
-        }else{
-            setDatalist(data)
+    const [userFavor, setUserFavor] = useState([]);
+    const [data, setData] = useState([]);
+    const [status, setStatus] = useState(99);
+    const [datalist, setDatalist] = useState(data);
+    const setStatusFilter = (id) => {
+        if (id != 99) {
+            setDatalist([...data.filter((e) => e.res_type == id)]);
+        } else {
+            setDatalist(data);
         }
-        setStatus(status)
-    }
-    const renderItem =({item, index}) =>{
-        return(
-            <View>
-                <Card
-                    item={item}
-                    navigation={navigation} 
-                />
-            </View>
-        )
-    }
+        setStatus(id);
+    };
+    const fetchUserFavor = async () => {
+        const token = await SecureStore.getItemAsync("auth-token");
+        const uid = await SecureStore.getItemAsync("user-id");
+        const requestOption = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": token,
+            },
+        };
+        return fetch(`${API_URL}/user/getFavor/${uid}`, requestOption).then(
+            (res) => res.json()
+        );
+    };
+    const fetchres = async (favors) => {
+        const requestOption = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                favors: favors,
+            }),
+        };
+        return fetch(`${API_URL}/restaurant/getInfoById`, requestOption).then(
+            (res) => res.json()
+        );
+    };
+    useEffect(() => {
+        const fetchdata = async () => {
+            const favor = await fetchUserFavor();
+            const restaurants = await fetchres(favor.favor);
+            setUserFavor(favor.favor);
+            setData(restaurants);
+            setDatalist(restaurants);
+            console.log(1);
+        };
+        fetchdata();
+    }, []);
+    const favorEditHandler = async (isFavor, favorIndex, rid) => {
+        if (isFavor) {
+            //取消收藏
+            const rear = userFavor.length - 1;
+            [userFavor[favorIndex], userFavor[rear]] = [
+                userFavor[rear],
+                userFavor[favorIndex],
+            ]; //swap
+            userFavor.pop();
+        } //收藏
+        else {
+            userFavor.push(rid);
+        }
+        const res = await postUserFavor(userFavor);
+        if (res.message == "edit success") {
+            setUserFavor(userFavor);
+            return true;
+            // setIsFavor(!isFavor);
+        } else {
+            return false;
+            // console.log("failed");
+        }
+    };
+    const postUserFavor = async (favorList) => {
+        const uid = await SecureStore.getItemAsync("user-id");
+        const token = await SecureStore.getItemAsync("auth-token");
+        const requestOption = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": token,
+            },
+            body: JSON.stringify({
+                uid: uid,
+                favor: favorList,
+            }),
+        };
+        return fetch(`${API_URL}/user/setFavor`, requestOption).then((res) =>
+            res.json()
+        );
+    };
     return (
         <View style={styles.container}>
             <View style={styles.option_container}>
                 <View style={styles.back_favor}>
-                    <Icon_favor name="bookmark" size={30} color='#FFC107' />
+                    <Icon_favor name="bookmark" size={30} color="#FFC107" />
                     <Text style={styles.favor_title}>我的收藏</Text>
-                </View>    
+                </View>
                 <View style={styles.listTab}>
                     <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
                     >
-                        {
-                            listTab.map(e =>{
-                                option +=1;
-                                return(
-                                <TouchableOpacity 
-                                    style={[styles.btnTab, status === e.status && styles.btnTabActive]}
-                                    onPress={() =>setStatusFilter(e.status)}
+                        {listTab.map((e) => {
+                            option += 1;
+                            return (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.btnTab,
+                                        status == e.id && styles.btnTabActive,
+                                    ]}
+                                    onPress={() => setStatusFilter(e.id)}
                                     key={option}
                                 >
-                                    
-                                    <Text style={styles.textTab}>{e.status}</Text>
+                                    <Text style={styles.textTab}>
+                                        {e.status}
+                                    </Text>
                                 </TouchableOpacity>
-                                );
-                            })
-                        }
+                            );
+                        })}
                     </ScrollView>
-                </View> 
+                </View>
             </View>
-            <ScrollView 
-                contentContainerStyle={styles.card_container}
-                ref={ref}
-            >
+            <ScrollView contentContainerStyle={styles.card_container} ref={ref}>
                 <View>
-                    {/*<FlatList
-                            data={datalist}
-                            keyExtractor={(e, i) =>i.toString()}
-                            renderItem={renderItem}
-                        />*/}
-                    {datalist.map((item) => { 
-                        counter +=1;
-                        return(
+                    {datalist.map((item) => {
+                        counter += 1;
+                        return (
                             <Card
-                            item={item}
-                            navigation={navigation}
-                            counter={counter}
-                            key={counter}
-                        />
+                                item={item}
+                                navigation={navigation}
+                                counter={counter}
+                                key={counter}
+                                favorList={userFavor}
+                                setUserFavor={favorEditHandler}
+                            />
                         );
                     })}
-               </View>     
+                </View>
             </ScrollView>
-        </View>   
+        </View>
     );
 };
 
-const styles = StyleSheet.create({   
+const styles = StyleSheet.create({
     container: {
         backgroundColor: "#EFFAFF",
         height: "100%",
     },
     option_container: {
         //top:80,
-        top:"10%",
+        top: "10%",
         paddingLeft: "6%",
         paddingRight: "6%",
         display: "flex",
@@ -137,7 +216,7 @@ const styles = StyleSheet.create({
     },
     card_container: {
         //top:20,
-        top:"5%",
+        top: "5%",
         paddingLeft: "6%",
         paddingRight: "6%",
         display: "flex",
@@ -147,30 +226,30 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     btnTab: {
-        width:70,
+        width: 70,
         flexDirection: "row",
-        borderBottomWidth:2,
-        borderBottomColor:"#EFFAFF",
-        paddingBottom:10,
-        marginLeft:15,
-        marginRight:15,
-        justifyContent: 'center',
+        borderBottomWidth: 2,
+        borderBottomColor: "#EFFAFF",
+        paddingBottom: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        justifyContent: "center",
     },
     textTab: {
-        fontSize:15,
+        fontSize: 15,
     },
     btnTabActive: {
-        borderBottomColor:"#FFC107",
+        borderBottomColor: "#FFC107",
     },
     back_favor: {
         alignItems: "center",
         flexDirection: "row",
-        marginBottom:15,
+        marginBottom: 15,
     },
     favor_title: {
-        marginLeft:10,
-        fontSize:17,
-        fontWeight:'bold',
+        marginLeft: 10,
+        fontSize: 17,
+        fontWeight: "bold",
     },
 });
 

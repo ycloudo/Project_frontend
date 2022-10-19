@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     StyleSheet,
@@ -7,25 +7,92 @@ import {
     Text,
     Animated,
 } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon_save from "@expo/vector-icons/FontAwesome";
+import { API_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
-const Card = ({ navigation, item, counter }) => {
-    return counter % 2 == "1" ? (
+const Card = ({ navigation, item, counter, favorList, setUserFavor }) => {
+    const [isFavor, setIsFavor] = useState(false);
+    const [favorIndex, setFavorIndex] = useState(-1); //喜好餐廳在array中的位置
+    useEffect(() => {
+        const index = favorList.findIndex((element) => {
+            return element === item.id;
+        });
+        if (index > -1) {
+            setIsFavor(true);
+        } else {
+            setFavorIndex(index);
+        }
+    }, []);
+    const favorEditHandler = (isFavor, favorIndex, rid) => {
+        const res = setUserFavor(isFavor, favorIndex, rid);
+        if (res) {
+            setIsFavor(!isFavor);
+        }
+    };
+    // const favorEditHandler = async (isFavor) => {
+    //     if (isFavor) {
+    //         //取消收藏
+    //         const rear = favorList.length - 1;
+    //         [favorList[favorIndex], favorList[rear]] = [
+    //             favorList[rear],
+    //             favorList[favorIndex],
+    //         ]; //swap
+    //         favorList.pop();
+    //     } //收藏
+    //     else {
+    //         favorList.push(item.id);
+    //     }
+    //     const res = await postUserFavor(favorList);
+    //     if (res.message == "edit success") {
+    //         setUserFavor(favorList);
+    //         setIsFavor(!isFavor);
+    //     } else {
+    //         console.log("failed");
+    //     }
+    // };
+    // const postUserFavor = async (favorList) => {
+    //     const uid = await SecureStore.getItemAsync("user-id");
+    //     const token = await SecureStore.getItemAsync("auth-token");
+    //     const requestOption = {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "auth-token": token,
+    //         },
+    //         body: JSON.stringify({
+    //             uid: uid,
+    //             favor: favorList,
+    //         }),
+    //     };
+    //     return fetch(`${API_URL}/user/setFavor`, requestOption).then((res) =>
+    //         res.json()
+    //     );
+    // };
+    item = {
+        ...item,
+        favorIndex: favorIndex,
+        isFavor: isFavor,
+        favorEditHandler: favorEditHandler, //以當下狀態作為參數
+    };
+    return counter % 2 == 1 ? (
         <TouchableOpacity onPress={() => navigation.navigate("price", item)}>
             <Animated.View style={styles.container1} shouldRasterizeIOS={true}>
                 <ImageBackground
-                source={require("../assets/photo.jpg")}
-                 style={styles.card1}>
-                    {/* <View> */}
+                    source={{ uri: item.photo }}
+                    style={styles.card1}
+                >
                     <View style={styles.name_bg1}>
                         <View style={styles.name1}>
                             <Text style={styles.name}>{item.name}</Text>
                         </View>
                     </View>
-                    {/* </View> */}
-                    {item.save == "0" ? (
-                        <TouchableOpacity>
+                    {!isFavor ? (
+                        <TouchableOpacity
+                            onPress={() => {
+                                favorEditHandler(isFavor, favorIndex, item.id);
+                            }}
+                        >
                             <Icon_save
                                 name="bookmark-o"
                                 size={30}
@@ -34,7 +101,11 @@ const Card = ({ navigation, item, counter }) => {
                             />
                         </TouchableOpacity>
                     ) : (
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                favorEditHandler(isFavor, favorIndex, item.id);
+                            }}
+                        >
                             <Icon_save
                                 name="bookmark"
                                 size={30}
@@ -43,16 +114,16 @@ const Card = ({ navigation, item, counter }) => {
                             />
                         </TouchableOpacity>
                     )}
-                    <Text>{item.name}</Text>
-
-                    <Text>{item.num}</Text>
                 </ImageBackground>
             </Animated.View>
         </TouchableOpacity>
     ) : (
         <TouchableOpacity onPress={() => navigation.navigate("price", item)}>
             <Animated.View style={styles.container2} shouldRasterizeIOS={true}>
-                <View style={styles.card2}>
+                <ImageBackground
+                    style={styles.card2}
+                    source={{ uri: item.photo }}
+                >
                     <View>
                         <View style={styles.name_bg2}>
                             <View style={styles.name2}>
@@ -60,8 +131,12 @@ const Card = ({ navigation, item, counter }) => {
                             </View>
                         </View>
                     </View>
-                    {item.save == "0" ? (
-                        <TouchableOpacity>
+                    {!isFavor ? (
+                        <TouchableOpacity
+                            onPress={() => {
+                                favorEditHandler(isFavor, favorIndex, item.id);
+                            }}
+                        >
                             <Icon_save
                                 name="bookmark-o"
                                 size={30}
@@ -70,7 +145,11 @@ const Card = ({ navigation, item, counter }) => {
                             />
                         </TouchableOpacity>
                     ) : (
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                favorEditHandler(isFavor, favorIndex, item.id);
+                            }}
+                        >
                             <Icon_save
                                 name="bookmark"
                                 size={30}
@@ -79,9 +158,7 @@ const Card = ({ navigation, item, counter }) => {
                             />
                         </TouchableOpacity>
                     )}
-                    <Text>{item.name}</Text>
-                    <Text>{item.num}</Text>
-                </View>
+                </ImageBackground>
             </Animated.View>
         </TouchableOpacity>
     );
@@ -175,7 +252,7 @@ const styles = StyleSheet.create({
     },
     card2: {
         //backgroundColor: "#FFFAFA",
-        backgroundColor: "red",
+        // backgroundColor: "red",
         width: "100%",
         height: 180,
         marginBottom: "15%",

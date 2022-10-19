@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     StyleSheet,
@@ -8,42 +8,52 @@ import {
 } from "react-native";
 import Card from "../Components/Card";
 import Icon_i from "@expo/vector-icons/Ionicons";
-import SearchBox from "../Components/SearchBox";
 import { useRoute } from "@react-navigation/native";
+import { API_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 const SearchResult = ({ navigation }) => {
     let counter = 0;
     const route = useRoute();
-    const data = [
-        {
-            name: "AAA",
-            address: "aaa",
-            star: "1",
-            save: "1",
-            id: "1",
-        },
-        {
-            name: "AAC",
-            address: "bbb",
-            star: "2",
-            save: "0",
-            id: "2",
-        },
-        {
-            name: "AAAC",
-            address: "ccc",
-            star: "3",
-            save: "0",
-            id: "3",
-        },
-        {
-            name: "AAAAC",
-            address: "ddd",
-            star: "4",
-            save: "0",
-            id: "4",
-        },
-    ];
+    const [data, setData] = useState([]);
+    const [userFavor, setUserFavor] = useState([]);
+    useEffect(() => {
+        const init = async () => {
+            const favor = await fetchUserFavor();
+            const result = await postData();
+            if (result.length != 0) {
+                setData(result);
+            }
+            setUserFavor(favor.favor);
+        };
+        init();
+    }, []);
+    const postData = async () => {
+        const input = route.params.input;
+        const requestOption = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+        return fetch(`${API_URL}/search/text/${input}`, requestOption).then(
+            (res) => res.json()
+        );
+    };
+    const fetchUserFavor = async () => {
+        const token = await SecureStore.getItemAsync("auth-token");
+        const uid = await SecureStore.getItemAsync("user-id");
+        const requestOption = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": token,
+            },
+        };
+        return fetch(`${API_URL}/user/getFavor/${uid}`, requestOption).then(
+            (res) => res.json()
+        );
+    };
     return (
         <View style={styles.main_container}>
             <View style={styles.header_container}>
@@ -69,6 +79,8 @@ const SearchResult = ({ navigation }) => {
                                 navigation={navigation}
                                 key={counter}
                                 counter={counter}
+                                favorList={userFavor}
+                                setUserFavor={setUserFavor}
                             />
                         );
                     })}
@@ -86,7 +98,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F5F5F5",
     },
     header_container: {
-        height: "10%",
+        height: 100,
         width: "100%",
         backgroundColor: "#FFE153",
         paddingLeft: "6%",
@@ -100,7 +112,7 @@ const styles = StyleSheet.create({
         paddingBottom: "60%",
     },
     card_container: {
-        top: 5,
+        top: 30,
         display: "flex",
         flexDirection: "column",
     },
@@ -109,12 +121,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     go_back: {
-        top: "70%",
+        top: 40,
         padding: 5,
-        width: 60,
+        width: 100,
     },
     search_content: {
-        top: "15%",
+        top: 10,
         paddingRight: "6%",
         textAlign: "center",
         fontSize: 20,

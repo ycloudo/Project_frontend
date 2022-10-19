@@ -34,7 +34,7 @@ const Personal = ({ navigation }) => {
         account: "",
         password: "",
         gender: null,
-        avatar_id: "",
+        avatar_id: 0,
     });
     const [message, setMessage] = useState("");
     const onChangeAccount = (acc) => {
@@ -62,7 +62,7 @@ const Personal = ({ navigation }) => {
         setUserInfo(data);
     };
     const [avatars, setAvatars] = useState([]);
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
@@ -104,7 +104,7 @@ const Personal = ({ navigation }) => {
             },
             body: JSON.stringify({
                 ...userInfo,
-                avatar_id: count,
+                avatar_id: Math.abs(count) % 5,
             }),
         };
         try {
@@ -123,6 +123,11 @@ const Personal = ({ navigation }) => {
         } catch (err) {
             console.error(e);
         }
+    };
+    const navigate = () => {
+        setTimeout(() => {
+            navigation.navigate("首頁");
+        }, 300);
     };
     return (
         <ImageBackground
@@ -149,29 +154,29 @@ const Personal = ({ navigation }) => {
                             }}
                         />
                     </TouchableOpacity>
-                    {count % 5 == 0 ? ( //aid = 5
-                        <Image
-                            source={{ uri: avatars[4] }}
-                            style={styles.photo}
-                        />
-                    ) : count % 5 == 1 ? (
+                    {Math.abs(count) % 5 == 0 ? (
                         <Image
                             source={{ uri: avatars[0] }}
                             style={styles.photo}
                         />
-                    ) : count % 5 == 2 ? (
+                    ) : Math.abs(count) % 5 == 1 ? (
                         <Image
                             source={{ uri: avatars[1] }}
                             style={styles.photo}
                         />
-                    ) : count % 5 == 3 ? (
+                    ) : Math.abs(count) % 5 == 2 ? (
                         <Image
                             source={{ uri: avatars[2] }}
                             style={styles.photo}
                         />
-                    ) : (
+                    ) : Math.abs(count) % 5 == 3 ? (
                         <Image
                             source={{ uri: avatars[3] }}
+                            style={styles.photo}
+                        />
+                    ) : (
+                        <Image
+                            source={{ uri: avatars[4] }}
                             style={styles.photo}
                         />
                     )}
@@ -253,6 +258,8 @@ const Personal = ({ navigation }) => {
                             <Modal
                                 message={message}
                                 setModal={setModalVisible}
+                                navigate={navigate}
+                                isNavigate={true}
                             />
                         ) : null}
                         <View style={styles.save}>

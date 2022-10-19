@@ -27,36 +27,34 @@ const Navbar = () => {
                 name="首頁"
                 component={MainStack}
                 //listeners={{
-                    //tabPress: e => {
-                      // Prevent default action
-                      //e.preventDefault();
-                        
-                      //Any custom code here
-                      //alert(123);
-                    //},
-                  //}}
+                //tabPress: e => {
+                // Prevent default action
+                //e.preventDefault();
+
+                //Any custom code here
+                //alert(123);
+                //},
+                //}}
                 options={({ route }) => ({
                     tabBarStyle: {
                         display: getRouteName(route),
                         backgroundColor: "#EFFAFF",
                         height: "10%",
                     },
-                    
+
                     tabBarIcon: ({ focused }) => {
-                        const height = focused
-                            ? 48
-                            : 40;
-                        const width = focused
-                            ? 15
-                            : 12.5;
-                        const rotate = focused
-                            ? '-45deg'
-                            : '0deg';
+                        const height = focused ? 48 : 40;
+                        const width = focused ? 15 : 12.5;
+                        const rotate = focused ? "-45deg" : "0deg";
                         return (
                             <View style={styles.icon_container}>
                                 <Image
-                                source={require("../assets/spoon.png")}
-                                style={{height:height,width:width,transform: [{rotateZ:rotate}]}}
+                                    source={require("../assets/spoon.png")}
+                                    style={{
+                                        height: height,
+                                        width: width,
+                                        transform: [{ rotateZ: rotate }],
+                                    }}
                                 />
                                 <Text>首頁</Text>
                             </View>
@@ -67,29 +65,26 @@ const Navbar = () => {
             <Tab.Screen
                 name="吃什麼"
                 component={Eat}
-            
                 options={({ route }) => ({
                     tabBarStyle: {
                         display: getRouteName(route),
                         backgroundColor: "#fff",
                         height: "10%",
                     },
-                    
+
                     tabBarIcon: ({ focused }) => {
-                        const height = focused
-                            ? 48
-                            : 40;
-                        const width = focused
-                            ? 15
-                            : 12.5;
-                        const rotate = focused
-                            ? '-45deg'
-                            : '0deg';
+                        const height = focused ? 48 : 40;
+                        const width = focused ? 15 : 12.5;
+                        const rotate = focused ? "-45deg" : "0deg";
                         return (
                             <View style={styles.icon_container}>
                                 <Image
-                                source={require("../assets/fork.png")}
-                                style={{height:height,width:width,transform: [{rotateZ:rotate}]}}
+                                    source={require("../assets/fork.png")}
+                                    style={{
+                                        height: height,
+                                        width: width,
+                                        transform: [{ rotateZ: rotate }],
+                                    }}
                                 />
                                 <Text>吃什麼</Text>
                             </View>
@@ -107,20 +102,18 @@ const Navbar = () => {
                         height: "10%",
                     },
                     tabBarIcon: ({ focused }) => {
-                        const height = focused
-                            ? 48
-                            : 40;
-                        const width = focused
-                            ? 15
-                            : 12.5;
-                        const rotate = focused
-                            ? '-45deg'
-                            : '0deg';
+                        const height = focused ? 48 : 40;
+                        const width = focused ? 15 : 12.5;
+                        const rotate = focused ? "-45deg" : "0deg";
                         return (
                             <View style={styles.icon_container}>
                                 <Image
-                                source={require("../assets/knife.png")}
-                                style={{height:height,width:width,transform: [{rotateZ:rotate}]}}
+                                    source={require("../assets/knife.png")}
+                                    style={{
+                                        height: height,
+                                        width: width,
+                                        transform: [{ rotateZ: rotate }],
+                                    }}
                                 />
                                 <Text>收藏</Text>
                             </View>
@@ -135,8 +128,8 @@ const Navbar = () => {
                     tabBarIcon: () => (
                         <View style={styles.icon_container}>
                             <Image
-                            source={require("../assets/plate.png")}
-                            style={styles.icon}
+                                source={require("../assets/plate.png")}
+                                style={styles.icon}
                             />
                             <Text>設定</Text>
                         </View>
@@ -161,7 +154,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#E0E0E0",
     },
     icon_container: {
-        marginTop:10,
+        marginTop: 10,
         alignItems: "center",
     },
     icon: {
