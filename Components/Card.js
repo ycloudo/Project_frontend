@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
     View,
     StyleSheet,
@@ -8,12 +8,12 @@ import {
     Animated,
 } from "react-native";
 import Icon_save from "@expo/vector-icons/FontAwesome";
-import { API_URL } from "@env";
-import * as SecureStore from "expo-secure-store";
+import { UserContext } from "../content/UserContext";
 
-const Card = ({ navigation, item, counter, favorList, setUserFavor }) => {
+const Card = ({ navigation, item, counter, favorList, lastElementRef }) => {
     const [isFavor, setIsFavor] = useState(false);
     const [favorIndex, setFavorIndex] = useState(-1); //喜好餐廳在array中的位置
+    const { UserInfoState, userContext } = useContext(UserContext);
     useEffect(() => {
         const index = favorList.findIndex((element) => {
             return element === item.id;
@@ -25,58 +25,21 @@ const Card = ({ navigation, item, counter, favorList, setUserFavor }) => {
         }
     }, []);
     const favorEditHandler = (isFavor, favorIndex, rid) => {
-        const res = setUserFavor(isFavor, favorIndex, rid);
+        const res = userContext.setfavor(isFavor, favorIndex, rid);
         if (res) {
             setIsFavor(!isFavor);
         }
     };
-    // const favorEditHandler = async (isFavor) => {
-    //     if (isFavor) {
-    //         //取消收藏
-    //         const rear = favorList.length - 1;
-    //         [favorList[favorIndex], favorList[rear]] = [
-    //             favorList[rear],
-    //             favorList[favorIndex],
-    //         ]; //swap
-    //         favorList.pop();
-    //     } //收藏
-    //     else {
-    //         favorList.push(item.id);
-    //     }
-    //     const res = await postUserFavor(favorList);
-    //     if (res.message == "edit success") {
-    //         setUserFavor(favorList);
-    //         setIsFavor(!isFavor);
-    //     } else {
-    //         console.log("failed");
-    //     }
-    // };
-    // const postUserFavor = async (favorList) => {
-    //     const uid = await SecureStore.getItemAsync("user-id");
-    //     const token = await SecureStore.getItemAsync("auth-token");
-    //     const requestOption = {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "auth-token": token,
-    //         },
-    //         body: JSON.stringify({
-    //             uid: uid,
-    //             favor: favorList,
-    //         }),
-    //     };
-    //     return fetch(`${API_URL}/user/setFavor`, requestOption).then((res) =>
-    //         res.json()
-    //     );
-    // };
     item = {
         ...item,
         favorIndex: favorIndex,
         isFavor: isFavor,
-        favorEditHandler: favorEditHandler, //以當下狀態作為參數
     };
     return counter % 2 == 1 ? (
-        <TouchableOpacity onPress={() => navigation.navigate("price", item)}>
+        <TouchableOpacity
+            onPress={() => navigation.navigate("price", item)}
+            lastElementRef={lastElementRef}
+        >
             <Animated.View style={styles.container1} shouldRasterizeIOS={true}>
                 <ImageBackground
                     source={{ uri: item.photo }}
@@ -118,7 +81,10 @@ const Card = ({ navigation, item, counter, favorList, setUserFavor }) => {
             </Animated.View>
         </TouchableOpacity>
     ) : (
-        <TouchableOpacity onPress={() => navigation.navigate("price", item)}>
+        <TouchableOpacity
+            onPress={() => navigation.navigate("price", item)}
+            ref={lastElementRef}
+        >
             <Animated.View style={styles.container2} shouldRasterizeIOS={true}>
                 <ImageBackground
                     style={styles.card2}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
     ScrollView,
     StyleSheet,
@@ -11,6 +11,7 @@ import Icon_favor from "@expo/vector-icons/FontAwesome";
 import { useScrollToTop } from "@react-navigation/native";
 import { API_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
+import { UserContext } from "../content/UserContext";
 
 const listTab = [
     {
@@ -51,11 +52,11 @@ const listTab = [
     },
 ];
 const Favor = ({ navigation }) => {
+    const { UserInfoState, userContext } = useContext(UserContext);
     let counter = 0;
     let option = 0;
     const ref = React.useRef(null);
     useScrollToTop(ref);
-    const [userFavor, setUserFavor] = useState([]);
     const [data, setData] = useState([]);
     const [status, setStatus] = useState(99);
     const [datalist, setDatalist] = useState(data);
@@ -66,20 +67,6 @@ const Favor = ({ navigation }) => {
             setDatalist(data);
         }
         setStatus(id);
-    };
-    const fetchUserFavor = async () => {
-        const token = await SecureStore.getItemAsync("auth-token");
-        const uid = await SecureStore.getItemAsync("user-id");
-        const requestOption = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": token,
-            },
-        };
-        return fetch(`${API_URL}/user/getFavor/${uid}`, requestOption).then(
-            (res) => res.json()
-        );
     };
     const fetchres = async (favors) => {
         const requestOption = {
@@ -97,9 +84,7 @@ const Favor = ({ navigation }) => {
     };
     useEffect(() => {
         const fetchdata = async () => {
-            const favor = await fetchUserFavor();
-            const restaurants = await fetchres(favor.favor);
-            setUserFavor(favor.favor);
+            const restaurants = await fetchres(UserInfoState.favor);
             setData(restaurants);
             setDatalist(restaurants);
             console.log(1);
@@ -107,45 +92,7 @@ const Favor = ({ navigation }) => {
         fetchdata();
     }, []);
     const favorEditHandler = async (isFavor, favorIndex, rid) => {
-        if (isFavor) {
-            //取消收藏
-            const rear = userFavor.length - 1;
-            [userFavor[favorIndex], userFavor[rear]] = [
-                userFavor[rear],
-                userFavor[favorIndex],
-            ]; //swap
-            userFavor.pop();
-        } //收藏
-        else {
-            userFavor.push(rid);
-        }
-        const res = await postUserFavor(userFavor);
-        if (res.message == "edit success") {
-            setUserFavor(userFavor);
-            return true;
-            // setIsFavor(!isFavor);
-        } else {
-            return false;
-            // console.log("failed");
-        }
-    };
-    const postUserFavor = async (favorList) => {
-        const uid = await SecureStore.getItemAsync("user-id");
-        const token = await SecureStore.getItemAsync("auth-token");
-        const requestOption = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": token,
-            },
-            body: JSON.stringify({
-                uid: uid,
-                favor: favorList,
-            }),
-        };
-        return fetch(`${API_URL}/user/setFavor`, requestOption).then((res) =>
-            res.json()
-        );
+        userContext.setfavor(isFavor, favorIndex, rid);
     };
     return (
         <View style={styles.container}>
@@ -189,7 +136,7 @@ const Favor = ({ navigation }) => {
                                 navigation={navigation}
                                 counter={counter}
                                 key={counter}
-                                favorList={userFavor}
+                                favorList={UserInfoState.favor}
                                 setUserFavor={favorEditHandler}
                             />
                         );
