@@ -20,7 +20,7 @@ import SearchBox from '../Components/SearchBox';
 import { useScrollToTop } from '@react-navigation/native';
 import { API_URL } from '@env';
 import { UserContext } from '../content/UserContext';
-import { getItemAsync } from 'expo-secure-store';
+import EmptyComponent from '../Components/EmptyCompoent';
 
 const listTab = [
   {
@@ -66,13 +66,16 @@ const Main = ({ navigation }) => {
   const color = '#FFFAFA';
   const ref = useRef(null);
   useScrollToTop(ref);
+  const [isCardLoading, setCardLoading] = useState(true);
   //for data setting
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState(99);
+  const [status, setStatus] = useState(99); //res_type tag
   const [datalist, setDatalist] = useState([]);
+  const prevStatus = useRef(99); //previous res_type tag
   //for lazy load
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [reachedEnd, setReachedEnd] = useState(false);
   const fetchMoredata = () => {
     setPage((prev) => prev + 1);
   };
@@ -93,38 +96,51 @@ const Main = ({ navigation }) => {
     />
   );
   const setStatusFilter = (id) => {
-    if (id != 99) {
-      setDatalist([...data.filter((e) => e.res_type == id)]);
+    // console.log('======setStatus=======');
+    // console.log(id);
+    // console.log(prevStatus.current);
+    if (id != prevStatus.current) {
+      setPage(1);
+      setCardLoading(true);
     } else {
-      setDatalist(data);
+      setCardLoading(false);
     }
     setStatus(id);
   };
-  const fetchdata = () => {
+  const fetchdata = (cid) => {
+    // console.log('======fetchdata=======');
+    // console.log(cid);
+    // console.log(prevStatus.current);
     const requestOption = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-
     setIsLoading(true);
-    fetch(`${API_URL}/restaurant/all/${page}`, requestOption)
+    fetch(`${API_URL}/restaurant/getInfoByTag/${cid}/${page}`, requestOption)
       .then((res) => res.json())
       .then((json) => {
-        json.map((e) => {
-          console.log(e.name);
-        });
-        setData([...data, ...json]);
-        setDatalist([...data, ...json]);
+        if (cid != prevStatus.current && page == 1) {
+          //into new tag page
+          //clear data
+          setData([...json]);
+          setDatalist([...json]);
+        } else {
+          setData([...data, ...json]);
+          setDatalist([...data, ...json]);
+        }
         setIsLoading(false);
+        prevStatus.current = status;
       })
       .catch((error) => console.log(error));
   };
   useEffect(() => {
-    console.log(page);
-    fetchdata();
-  }, [page]);
+    setTimeout(() => {
+      setCardLoading(false);
+    }, 200);
+    fetchdata(status);
+  }, [page, status]);
   return (
     <View style={styles.container}>
       <View style={styles.option_container}>
@@ -139,11 +155,14 @@ const Main = ({ navigation }) => {
             {listTab.map((e, index) => {
               return (
                 <TouchableOpacity
+                  disabled={status == e.id}
                   style={[styles.btnTab, status == e.id && styles.btnTabActive]}
                   onPress={() => setStatusFilter(e.id)}
                   key={index}
                 >
-                  <View style={styles.box}>
+                  <View
+                    style={[styles.box, status === e.id && styles.boxActive]}
+                  >
                     {e.status == '全部' ? (
                       <Image
                         source={require('../assets/food.png')}
@@ -199,20 +218,29 @@ const Main = ({ navigation }) => {
           </ScrollView>
         </View>
       </View>
-      <FlatList
-        contentContainerStyle={styles.card_container}
-        data={data}
-        renderItem={renderItem}
-        onMomentumScrollEnd={() => {
-          fetchMoredata();
-        }}
-        onEndReachedThreshold={0.2}
-        onMomentumScrollBegin={() => {
-          setIsLoading(true);
-        }}
-        ListFooterComponent={renderLoader}
-        keyExtractor={(item, index) => String(index)}
-      />
+      {isCardLoading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.card_container}
+          data={datalist}
+          renderItem={renderItem}
+          onEndReachedThreshold={0.2}
+          onMomentumScrollBegin={() => {
+            setIsLoading(true);
+            setReachedEnd(false);
+          }}
+          onEndReached={() => {
+            if (!reachedEnd) {
+              fetchMoredata();
+              setReachedEnd(true);
+            }
+          }}
+          //   ListEmptyComponent={<EmptyComponent />}
+          ListFooterComponent={renderLoader}
+          keyExtractor={(item, index) => String(index)}
+        />
+      )}
     </View>
   );
 };
@@ -223,6 +251,22 @@ const styles = StyleSheet.create({
     //marginLeft: 15,
     justifyContent: 'center',
     backgroundColor: '#fff',
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    width: 65,
+    height: 65,
+  },
+  boxActive: {
+    justifyContent: 'center',
+    backgroundColor: '#F0F0F0',
     borderRadius: 10,
     alignItems: 'center',
     shadowColor: '#000',
@@ -269,7 +313,6 @@ const styles = StyleSheet.create({
     marginRight: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    //透明度要調整
   },
   textTab: {
     fontSize: 15,
