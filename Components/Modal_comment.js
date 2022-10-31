@@ -68,13 +68,8 @@ const CommentModal = ({ name, setModal, setModal_c }) => {
 };
 
 const styles = StyleSheet.create({
-  try: {
-    backgroundColor: "red",
-    width: 100,
-    height: 100,
-  },
   comment_text: {
-    color: "#4E5B6B",
+    color: '#4E5B6B',
     marginLeft: 15,
     marginTop: 8,
   },

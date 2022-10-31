@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,20 +6,20 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-} from "react-native";
+} from 'react-native';
 
 const Price_comment = ({ navigation, item, comment, resource }) => {
-  return comment == "1" ? (
+  return comment == 1 ? (
     <View>
       <View style={styles.detail}>
-        {resource == "dcard" ? (
+        {resource == 'Dcard' ? (
           <Image
-            source={require("../assets/dcard.png")}
+            source={require('../assets/dcard.png')}
             style={styles.resource}
           />
-        ) : resource == "ptt" ? (
+        ) : resource == 'PTT' ? (
           <Image
-            source={require("../assets/ptt.png")}
+            source={require('../assets/ptt.png')}
             style={styles.resource}
           />
         ) : (
@@ -35,14 +35,14 @@ const Price_comment = ({ navigation, item, comment, resource }) => {
     <View>
       <View style={styles.line}></View>
       <View style={styles.detail}>
-        {resource == "dcard" ? (
+        {resource == 'Dcard' ? (
           <Image
-            source={require("../assets/dcard.png")}
+            source={require('../assets/dcard.png')}
             style={styles.resource}
           />
-        ) : resource == "ptt" ? (
+        ) : resource == 'PTT' ? (
           <Image
-            source={require("../assets/ptt.png")}
+            source={require('../assets/ptt.png')}
             style={styles.resource}
           />
         ) : (

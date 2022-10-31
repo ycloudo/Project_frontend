@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -7,85 +7,127 @@ import {
   Text,
   Animated,
 } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon_save from "@expo/vector-icons/FontAwesome";
+import { UserContext } from "../content/UserContext";
 
-const Card = ({ navigation, item, counter }) => {
-  return counter % 2 == "1" ? (
-    <TouchableOpacity onPress={() => navigation.navigate("price", item)}>
-      <Animated.View style={styles.container1} shouldRasterizeIOS={true}>
-        <ImageBackground
-          source={require("../assets/photo.jpg")}
-          style={styles.card1}
+const Card = ({ navigation, item, counter, favorList, lastElementRef }) => {
+    const [isFavor, setIsFavor] = useState(false);
+    const [favorIndex, setFavorIndex] = useState(-1); //喜好餐廳在array中的位置
+    const { UserInfoState, userContext } = useContext(UserContext);
+    useEffect(() => {
+        const index = favorList.findIndex((element) => {
+            return element === item.id;
+        });
+        if (index > -1) {
+            setIsFavor(true);
+        } else {
+            setFavorIndex(index);
+        }
+    }, []);
+    const favorEditHandler = (isFavor, favorIndex, rid) => {
+        const res = userContext.setfavor(isFavor, favorIndex, rid);
+        if (res) {
+            setIsFavor(!isFavor);
+        }
+    };
+    item = {
+        ...item,
+        favorIndex: favorIndex,
+        isFavor: isFavor,
+    };
+    return counter % 2 == 1 ? (
+        <TouchableOpacity
+            onPress={() => navigation.navigate("price", item)}
+            lastElementRef={lastElementRef}
         >
-          {/* <View> */}
-          <View style={styles.name_bg1}>
-            <View style={styles.name1}>
-              <Text style={styles.name}>{item.name}</Text>
-            </View>
-          </View>
-          {/* </View> */}
-          {item.save == "0" ? (
-            <TouchableOpacity>
-              <Icon_save
-                name="bookmark-o"
-                size={30}
-                color="#000000"
-                style={styles.favor1}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity>
-              <Icon_save
-                name="bookmark"
-                size={30}
-                color="#000000"
-                style={styles.favor1}
-              />
-            </TouchableOpacity>
-          )}
-          <Text>{item.name}</Text>
-
-          <Text>{item.num}</Text>
-        </ImageBackground>
-      </Animated.View>
-    </TouchableOpacity>
-  ) : (
-    <TouchableOpacity onPress={() => navigation.navigate("price", item)}>
-      <Animated.View style={styles.container2} shouldRasterizeIOS={true}>
-        <View style={styles.card2}>
-          <View>
-            <View style={styles.name_bg2}>
-              <View style={styles.name2}>
-                <Text style={styles.name}>{item.name}</Text>
-              </View>
-            </View>
-          </View>
-          {item.save == "0" ? (
-            <TouchableOpacity>
-              <Icon_save
-                name="bookmark-o"
-                size={30}
-                color="#000000"
-                style={styles.favor2}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity>
-              <Icon_save
-                name="bookmark"
-                size={30}
-                color="#000000"
-                style={styles.favor2}
-              />
-            </TouchableOpacity>
-          )}
-          <Text>{item.name}</Text>
-          <Text>{item.num}</Text>
-        </View>
-      </Animated.View>
-    </TouchableOpacity>
-  );
+            <Animated.View style={styles.container1} shouldRasterizeIOS={true}>
+                <ImageBackground
+                    source={{ uri: item.photo }}
+                    style={styles.card1}
+                >
+                    <View style={styles.name_bg1}>
+                        <View style={styles.name1}>
+                            <Text style={styles.name}>{item.name}</Text>
+                        </View>
+                    </View>
+                    {!isFavor ? (
+                        <TouchableOpacity
+                            onPress={() => {
+                                favorEditHandler(isFavor, favorIndex, item.id);
+                            }}
+                        >
+                            <Icon_save
+                                name="bookmark-o"
+                                size={30}
+                                color="#000000"
+                                style={styles.favor1}
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            onPress={() => {
+                                favorEditHandler(isFavor, favorIndex, item.id);
+                            }}
+                        >
+                            <Icon_save
+                                name="bookmark"
+                                size={30}
+                                color="#000000"
+                                style={styles.favor1}
+                            />
+                        </TouchableOpacity>
+                    )}
+                </ImageBackground>
+            </Animated.View>
+        </TouchableOpacity>
+    ) : (
+        <TouchableOpacity
+            onPress={() => navigation.navigate("price", item)}
+            ref={lastElementRef}
+        >
+            <Animated.View style={styles.container2} shouldRasterizeIOS={true}>
+                <ImageBackground
+                    style={styles.card2}
+                    source={{ uri: item.photo }}
+                >
+                    <View>
+                        <View style={styles.name_bg2}>
+                            <View style={styles.name2}>
+                                <Text style={styles.name}>{item.name}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    {!isFavor ? (
+                        <TouchableOpacity
+                            onPress={() => {
+                                favorEditHandler(isFavor, favorIndex, item.id);
+                            }}
+                        >
+                            <Icon_save
+                                name="bookmark-o"
+                                size={30}
+                                color="#000000"
+                                style={styles.favor2}
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            onPress={() => {
+                                favorEditHandler(isFavor, favorIndex, item.id);
+                            }}
+                        >
+                            <Icon_save
+                                name="bookmark"
+                                size={30}
+                                color="#000000"
+                                style={styles.favor2}
+                            />
+                        </TouchableOpacity>
+                    )}
+                </ImageBackground>
+            </Animated.View>
+        </TouchableOpacity>
+    );
 };
 
 const styles = StyleSheet.create({

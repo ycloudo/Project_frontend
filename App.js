@@ -123,8 +123,26 @@ export default function App() {
     }));
     useEffect(() => {
         const fetchUser = async () => {
-            const token = await SecureStore.getItemAsync("auth-token");
-            const userId = await SecureStore.getItemAsync("user-id");
+            let token = await SecureStore.getItemAsync("auth-token");
+            let userId = null;
+            const requestOption = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    token: token,
+                }),
+            };
+            const response = await fetch(
+                `${API_URL}/user/isTokenValid`,
+                requestOption
+            ).then((res) => res.json());
+            if (response) {
+                userId = await SecureStore.getItemAsync("user-id");
+            } else {
+                await SecureStore.deleteItemAsync("auth-token");
+                await SecureStore.deleteItemAsync("user-id");
+                token = null;
+            }
             setTimeout(() => {
                 dispatch({ type: "LOADING", token: token, id: userId });
             }, 1000);

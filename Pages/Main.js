@@ -1,62 +1,146 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from 'react';
 import {
   ScrollView,
+  FlatList,
   StyleSheet,
   View,
   TouchableOpacity,
   Text,
   Image,
-} from "react-native";
-import Card from "../Components/Card";
-import SearchBox from "../Components/SearchBox";
-import { data } from "../data";
-import { useScrollToTop } from "@react-navigation/native";
+  ActivityIndicator,
+} from 'react-native';
+import Card from '../Components/Card';
+import SearchBox from '../Components/SearchBox';
+import { useScrollToTop } from '@react-navigation/native';
+import { API_URL } from '@env';
+import { UserContext } from '../content/UserContext';
+import EmptyComponent from '../Components/EmptyCompoent';
+
 const listTab = [
   {
-    status: "全部",
+    id: 99,
+    status: '全部',
   },
   {
-    status: "中式",
+    id: 1,
+    status: '中式',
   },
   {
-    status: "日式",
+    id: 2,
+    status: '日式',
   },
   {
-    status: "韓式",
+    id: 3,
+    status: '韓式',
   },
   {
-    status: "美式",
+    id: 4,
+    status: '美式',
   },
   {
-    status: "西式",
+    id: 5,
+    status: '西式',
   },
   {
-    status: "異式",
+    id: 6,
+    status: '異國料理',
   },
   {
-    status: "泰式",
+    id: 7,
+    status: '泰式',
   },
   {
-    status: "輕食",
+    id: 8,
+    status: '輕食',
   },
 ];
 const Main = ({ navigation }) => {
-  const placeholder = "...來點日式料理?";
-  const color = "#FFFAFA";
-  let counter = 0;
-  let option = 0;
-  const ref = React.useRef(null);
+  const { UserInfoState } = useContext(UserContext);
+  const placeholder = '...來點日式料理?';
+  const color = '#FFFAFA';
+  const ref = useRef(null);
   useScrollToTop(ref);
-  const [status, setStatus] = useState("全部");
-  const [datalist, setDatalist] = useState(data);
-  const setStatusFilter = (status) => {
-    if (status !== "全部") {
-      setDatalist([...data.filter((e) => e.status === status)]);
-    } else {
-      setDatalist(data);
-    }
-    setStatus(status);
+  const [isCardLoading, setCardLoading] = useState(true);
+  //for data setting
+  const [data, setData] = useState([]);
+  const [status, setStatus] = useState(99); //res_type tag
+  const [datalist, setDatalist] = useState([]);
+  const prevStatus = useRef(99); //previous res_type tag
+  //for lazy load
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [reachedEnd, setReachedEnd] = useState(false);
+  const fetchMoredata = () => {
+    setPage((prev) => prev + 1);
   };
+  const renderLoader = () => {
+    return isLoading ? (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" />
+      </View>
+    ) : null;
+  };
+  const renderItem = ({ item, index }) => (
+    <Card
+      item={item}
+      navigation={navigation}
+      counter={index + 1}
+      key={item.id}
+      favorList={UserInfoState.favor}
+    />
+  );
+  const setStatusFilter = (id) => {
+    // console.log('======setStatus=======');
+    // console.log(id);
+    // console.log(prevStatus.current);
+    if (id != prevStatus.current) {
+      setPage(1);
+      setCardLoading(true);
+    } else {
+      setCardLoading(false);
+    }
+    setStatus(id);
+  };
+  const fetchdata = (cid) => {
+    // console.log('======fetchdata=======');
+    // console.log(cid);
+    // console.log(prevStatus.current);
+    const requestOption = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    setIsLoading(true);
+    fetch(`${API_URL}/restaurant/getInfoByTag/${cid}/${page}`, requestOption)
+      .then((res) => res.json())
+      .then((json) => {
+        if (cid != prevStatus.current && page == 1) {
+          //into new tag page
+          //clear data
+          setData([...json]);
+          setDatalist([...json]);
+        } else {
+          setData([...data, ...json]);
+          setDatalist([...data, ...json]);
+        }
+        setIsLoading(false);
+        prevStatus.current = status;
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    setTimeout(() => {
+      setCardLoading(false);
+    }, 200);
+    fetchdata(status);
+  }, [page, status]);
   return (
     <View style={styles.container}>
       <View style={styles.option_container}>
@@ -68,62 +152,55 @@ const Main = ({ navigation }) => {
         />
         <View style={styles.listTab}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {listTab.map((e) => {
-              option += 1;
+            {listTab.map((e, index) => {
               return (
                 <TouchableOpacity
-                  style={[
-                    styles.btnTab,
-                    status === e.status && styles.btnTabActive,
-                  ]}
-                  onPress={() => setStatusFilter(e.status)}
-                  key={option}
-                  activeOpacity={0.7}
+                  disabled={status == e.id}
+                  style={[styles.btnTab, status == e.id && styles.btnTabActive]}
+                  onPress={() => setStatusFilter(e.id)}
+                  key={index}
                 >
                   <View
-                    style={[
-                      styles.box,
-                      status === e.status && styles.boxActive,
-                    ]}
+                    style={[styles.box, status === e.id && styles.boxActive]}
                   >
-                    {e.status == "全部" ? ( //aid = 5
+                    {e.status == '全部' ? (
                       <Image
-                        source={require("../assets/food.png")}
+                        source={require('../assets/food.png')}
                         style={styles.photo}
                       />
-                    ) : e.status == "中式" ? (
+                    ) : e.status == '中式' ? (
                       <Image
-                        source={require("../assets/food1.png")}
+                        source={require('../assets/food1.png')}
                         style={styles.photo}
                       />
-                    ) : e.status == "日式" ? (
+                    ) : e.status == '日式' ? (
                       <Image
-                        source={require("../assets/food2.png")}
+                        source={require('../assets/food2.png')}
                         style={styles.photo}
                       />
-                    ) : e.status == "韓式" ? (
+                    ) : e.status == '韓式' ? (
                       <Image
-                        source={require("../assets/food3.png")}
+                        source={require('../assets/food3.png')}
                         style={styles.photo}
                       />
-                    ) : e.status == "西式" ? (
+                    ) : e.status == '西式' ? (
                       <Image
-                        source={require("../assets/food5.png")}
+                        source={require('../assets/food5.png')}
                         style={styles.photo}
                       />
-                    ) : e.status == "泰式" ? (
+                    ) : e.status == '泰式' ? (
                       <Image
-                        source={require("../assets/food7.png")}
+                        source={require('../assets/food7.png')}
                         style={styles.photo}
                       />
-                    ) : e.status == "美式" ? (
+                    ) : e.status == '美式' ? (
                       <Image
-                        source={require("../assets/food4.png")}
+                        source={require('../assets/food4.png')}
                         style={styles.photo}
                       />
-                    ) : e.status == "異式" ? (
+                    ) : e.status == '異國料理' ? (
                       <Image
-                        source={require("../assets/food6.png")}
+                        source={require('../assets/food6.png')}
                         style={styles.photo}
                       />
                     ) : (
@@ -140,26 +217,29 @@ const Main = ({ navigation }) => {
           </ScrollView>
         </View>
       </View>
-      <ScrollView contentContainerStyle={styles.card_container} ref={ref}>
-        <View>
-          {/*<FlatList
-                            data={datalist}
-                            keyExtractor={(e, i) =>i.toString()}
-                            renderItem={renderItem}
-                        />*/}
-          {datalist.map((item) => {
-            counter += 1;
-            return (
-              <Card
-                item={item}
-                navigation={navigation}
-                counter={counter}
-                key={counter}
-              />
-            );
-          })}
-        </View>
-      </ScrollView>
+      {isCardLoading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.card_container}
+          data={datalist}
+          renderItem={renderItem}
+          onEndReachedThreshold={0.2}
+          onMomentumScrollBegin={() => {
+            setIsLoading(true);
+            setReachedEnd(false);
+          }}
+          onEndReached={() => {
+            if (!reachedEnd) {
+              fetchMoredata();
+              setReachedEnd(true);
+            }
+          }}
+          //   ListEmptyComponent={<EmptyComponent />}
+          ListFooterComponent={renderLoader}
+          keyExtractor={(item, index) => String(index)}
+        />
+      )}
     </View>
   );
 };
@@ -238,8 +318,11 @@ const styles = StyleSheet.create({
   },
   btnTabActive: {
     marginRight: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loader: {
+    alignItems: 'center',
   },
 });
 const Seacrhbox_style = StyleSheet.create({

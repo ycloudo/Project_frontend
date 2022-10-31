@@ -3,32 +3,35 @@ import ReactNativeModal from "react-native-modal";
 import { View, Text, Button, StyleSheet, Pressable } from "react-native";
 
 const CustomModal = ({ message, setModal, navigate, isNavigate }) => {
-  const closeModalHandler = () => {
-    setModal(false);
-    if (isNavigate) {
-      navigate();
-    }
-  };
-  return (
-    <ReactNativeModal isVisible={true} animationIn="bounceIn">
-      <View style={styles.main_ctr}>
-        <View style={styles.msg_ctr}>
-          <Text style={styles.msg}>{message}</Text>
-          <Pressable style={styles.button} onPress={closeModalHandler}>
-            <Text
-              style={{
-                color: "#423067",
-                fontSize: 16,
-                fontWeight: "500",
-              }}
-            >
-              確認
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-    </ReactNativeModal>
-  );
+    const closeModalHandler = () => {
+        setModal(false);
+        if (isNavigate) {
+            navigate();
+        }
+    };
+    return (
+        <ReactNativeModal isVisible={true} animationIn="bounceIn">
+            <View style={styles.main_ctr}>
+                <View style={styles.msg_ctr}>
+                    <Text style={styles.msg}>{message}</Text>
+                    <Pressable
+                        style={styles.button}
+                        onPressIn={closeModalHandler}
+                    >
+                        <Text
+                            style={{
+                                color: "#423067",
+                                fontSize: 16,
+                                fontWeight: "500",
+                            }}
+                        >
+                            確認
+                        </Text>
+                    </Pressable>
+                </View>
+            </View>
+        </ReactNativeModal>
+    );
 };
 
 const styles = StyleSheet.create({
