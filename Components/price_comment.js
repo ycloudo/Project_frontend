@@ -24,7 +24,7 @@ const Price_comment = ({ navigation, item, comment, resource }) => {
           />
         ) : (
           <Image
-            source={require('../assets/google.png')}
+            source={require("../assets/google.png")}
             style={styles.resource}
           />
         )}
@@ -47,7 +47,7 @@ const Price_comment = ({ navigation, item, comment, resource }) => {
           />
         ) : (
           <Image
-            source={require('../assets/google.png')}
+            source={require("../assets/google.png")}
             style={styles.resource}
           />
         )}
@@ -59,7 +59,7 @@ const Price_comment = ({ navigation, item, comment, resource }) => {
 
 const styles = StyleSheet.create({
   detail: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingTop: 10,
     paddingLeft: 15,
     paddingRight: 15,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   line: {
-    backgroundColor: '#5B5B5B',
+    backgroundColor: "#5B5B5B",
     height: 1,
     marginBottom: 5,
     marginHorizontal: 30,

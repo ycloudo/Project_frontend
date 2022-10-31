@@ -3,7 +3,8 @@ import Icon_i from "@expo/vector-icons/Ionicons";
 import CustomDrawer from "../Pages/CustomDrawer";
 import Personal from "../Pages/Personal";
 import Navbar from "./Navbar";
-import FavorSetting from "../Pages/FavorSetting";
+import FavorSettingStack from "./FavorSettingStack";
+import FavorSetting0 from "../Pages/FavorSetting0";
 
 const Drawer = createDrawerNavigator();
 
@@ -56,7 +57,8 @@ const SettingDrawer = () => {
             />
             <Drawer.Screen
                 name="偏好設定"
-                component={FavorSetting}
+                component={FavorSettingStack}
+                //component={FavorSetting0}
                 options={{
                     drawerIcon: ({ color }) => (
                         <Icon_i

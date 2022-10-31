@@ -205,12 +205,11 @@ const Main = ({ navigation }) => {
                       />
                     ) : (
                       <Image
-                        source={require('../assets/food8.png')}
+                        source={require("../assets/food8.png")}
                         style={styles.photo}
                       />
                     )}
                   </View>
-
                   <Text style={styles.textTab}>{e.status}</Text>
                 </TouchableOpacity>
               );
@@ -247,13 +246,12 @@ const Main = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   box: {
-    backgroundColor: 'red',
     //marginLeft: 15,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    backgroundColor: "#fff",
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -265,11 +263,11 @@ const styles = StyleSheet.create({
     height: 65,
   },
   boxActive: {
-    justifyContent: 'center',
-    backgroundColor: '#F0F0F0',
+    justifyContent: "center",
+    backgroundColor: "#F0F0F0",
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -285,34 +283,34 @@ const styles = StyleSheet.create({
     height: 40,
   },
   container: {
-    backgroundColor: '#EFFAFF',
-    height: '100%',
+    backgroundColor: "#EFFAFF",
+    height: "100%",
   },
   option_container: {
     //top:80,
-    top: '10%',
-    paddingLeft: '6%',
-    paddingRight: '6%',
-    display: 'flex',
-    flexDirection: 'column',
+    top: "10%",
+    paddingLeft: "6%",
+    paddingRight: "6%",
+    display: "flex",
+    flexDirection: "column",
     paddingBottom: 90,
   },
   card_container: {
     //top:20,
-    top: '5%',
-    paddingLeft: '6%',
-    paddingRight: '6%',
-    display: 'flex',
-    flexDirection: 'column',
+    top: "5%",
+    paddingLeft: "6%",
+    paddingRight: "6%",
+    display: "flex",
+    flexDirection: "column",
   },
   listTab: {
     marginTop: 25,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   btnTab: {
     marginRight: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   textTab: {
     fontSize: 15,
@@ -329,20 +327,20 @@ const styles = StyleSheet.create({
 });
 const Seacrhbox_style = StyleSheet.create({
   input: {
-    backgroundColor: '#FFFAFA',
+    backgroundColor: "#FFFAFA",
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     flexGrow: 1,
     fontSize: 17,
   },
   searchbox: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
   },
   searchbotton: {
     padding: 5,
-    backgroundColor: '#FFC107',
+    backgroundColor: "#FFC107",
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
   },

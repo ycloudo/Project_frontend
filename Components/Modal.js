@@ -35,30 +35,30 @@ const CustomModal = ({ message, setModal, navigate, isNavigate }) => {
 };
 
 const styles = StyleSheet.create({
-    main_ctr: {
-        flex: 1,
-        justifyContent: "center",
-    },
-    msg_ctr: {
-        backgroundColor: "#DBEEFF",
-        height: 150,
-        flexDirection: "column",
-        justifyContent: "space-around",
-        borderRadius: 10,
-        alignItems: "center",
-    },
-    msg: {
-        textAlign: "center",
-        fontSize: 22,
-    },
-    button: {
-        borderRadius: 5,
-        padding: 10,
-        alignItems: "center",
-        width: 60,
-        height: 40,
-        backgroundColor: "#FFE153",
-    },
+  main_ctr: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  msg_ctr: {
+    backgroundColor: "#DBEEFF",
+    height: 150,
+    flexDirection: "column",
+    justifyContent: "space-around",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  msg: {
+    textAlign: "center",
+    fontSize: 22,
+  },
+  button: {
+    borderRadius: 5,
+    padding: 10,
+    alignItems: "center",
+    width: 60,
+    height: 40,
+    backgroundColor: "#FFE153",
+  },
 });
 
 export default CustomModal;

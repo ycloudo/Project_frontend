@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    ImageBackground,
-    Text,
-    Animated,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  Text,
+  Animated,
 } from "react-native";
 import Icon_save from "@expo/vector-icons/FontAwesome";
 import { UserContext } from "../content/UserContext";
@@ -131,104 +131,104 @@ const Card = ({ navigation, item, counter, favorList, lastElementRef }) => {
 };
 
 const styles = StyleSheet.create({
-    name_bg1: {
-        height: 35,
-        backgroundColor: "#FFF4B0",
-        width: 120,
-        marginLeft: -8,
-        marginTop: -15,
-        borderRadius: 5,
+  name_bg1: {
+    height: 35,
+    backgroundColor: "#FFF4B0",
+    width: 120,
+    marginLeft: -8,
+    marginTop: -15,
+    borderRadius: 5,
+  },
+  name1: {
+    height: 35,
+    borderWidth: 2,
+    borderColor: "#423067",
+    width: 120,
+    marginLeft: -3.5,
+    marginTop: -3.5,
+    borderRadius: 5,
+    paddingLeft: 5,
+    paddingRight: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  name: {
+    color: "#423067",
+    fontSize: 18,
+  },
+  name_bg2: {
+    height: 35,
+    backgroundColor: "#FFF4B0",
+    width: 120,
+    marginLeft: "60%",
+    marginTop: -15,
+    borderRadius: 5,
+  },
+  name2: {
+    height: 35,
+    borderWidth: 2,
+    borderColor: "#423067",
+    width: 120,
+    marginLeft: -3.5,
+    marginTop: -3.5,
+    borderRadius: 5,
+    paddingLeft: 5,
+    paddingRight: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  favor1: {
+    marginTop: -10,
+    marginLeft: "90%",
+    shadowColor: "#fff",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    name1: {
-        height: 35,
-        borderWidth: 2,
-        borderColor: "#423067",
-        width: 120,
-        marginLeft: -3.5,
-        marginTop: -3.5,
-        borderRadius: 5,
-        paddingLeft: 5,
-        paddingRight: 5,
-        justifyContent: "center",
-        alignItems: "center",
+    shadowOpacity: 0.2,
+  },
+  favor2: {
+    marginTop: 5,
+    marginLeft: "88%",
+    shadowColor: "#fff",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    name: {
-        color: "#423067",
-        fontSize: 18,
+    shadowOpacity: 0.2,
+  },
+  container1: {
+    transform: [{ rotate: "-1.2deg" }],
+  },
+  container2: {
+    transform: [{ rotate: "1.2deg" }],
+  },
+  card1: {
+    //backgroundColor: "#FFFAFA",
+    backgroundColor: "yellow",
+    width: "100%",
+    height: 180,
+    marginBottom: "15%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    name_bg2: {
-        height: 35,
-        backgroundColor: "#FFF4B0",
-        width: 120,
-        marginLeft: "60%",
-        marginTop: -15,
-        borderRadius: 5,
+    shadowOpacity: 0.2,
+  },
+  card2: {
+    //backgroundColor: "#FFFAFA",
+    backgroundColor: "red",
+    width: "100%",
+    height: 180,
+    marginBottom: "15%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    name2: {
-        height: 35,
-        borderWidth: 2,
-        borderColor: "#423067",
-        width: 120,
-        marginLeft: -3.5,
-        marginTop: -3.5,
-        borderRadius: 5,
-        paddingLeft: 5,
-        paddingRight: 5,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    favor1: {
-        marginTop: -10,
-        marginLeft: "90%",
-        shadowColor: "#fff",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.2,
-    },
-    favor2: {
-        marginTop: 5,
-        marginLeft: "88%",
-        shadowColor: "#fff",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.2,
-    },
-    container1: {
-        transform: [{ rotate: "-1.2deg" }],
-    },
-    container2: {
-        transform: [{ rotate: "1.2deg" }],
-    },
-    card1: {
-        //backgroundColor: "#FFFAFA",
-        backgroundColor: "yellow",
-        width: "100%",
-        height: 180,
-        marginBottom: "15%",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.2,
-    },
-    card2: {
-        //backgroundColor: "#FFFAFA",
-        // backgroundColor: "red",
-        width: "100%",
-        height: 180,
-        marginBottom: "15%",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.2,
-    },
+    shadowOpacity: 0.2,
+  },
 });
 
 export default Card;
