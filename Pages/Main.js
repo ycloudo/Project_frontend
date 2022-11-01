@@ -61,17 +61,18 @@ const listTab = [
   },
 ];
 const Main = ({ navigation }) => {
-  const { UserInfoState } = useContext(UserContext);
   const placeholder = '...來點日式料理?';
   const color = '#FFFAFA';
   const ref = useRef(null);
   useScrollToTop(ref);
   const [isCardLoading, setCardLoading] = useState(true);
+  const { UserInfoState, userContext } = useContext(UserContext);
   //for data setting
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(99); //res_type tag
   const [datalist, setDatalist] = useState([]);
   const prevStatus = useRef(99); //previous res_type tag
+  const prevPage = useRef(1);
   //for lazy load
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +93,6 @@ const Main = ({ navigation }) => {
       navigation={navigation}
       counter={index + 1}
       key={item.id}
-      favorList={UserInfoState.favor}
     />
   );
   const setStatusFilter = (id) => {
@@ -131,6 +131,7 @@ const Main = ({ navigation }) => {
           setDatalist([...data, ...json]);
         }
         setIsLoading(false);
+        prevPage.current = page;
         prevStatus.current = status;
       })
       .catch((error) => console.log(error));
@@ -139,6 +140,7 @@ const Main = ({ navigation }) => {
     setTimeout(() => {
       setCardLoading(false);
     }, 200);
+    console.log('main');
     fetchdata(status);
   }, [page, status]);
   return (
@@ -205,7 +207,7 @@ const Main = ({ navigation }) => {
                       />
                     ) : (
                       <Image
-                        source={require("../assets/food8.png")}
+                        source={require('../assets/food8.png')}
                         style={styles.photo}
                       />
                     )}
@@ -247,11 +249,11 @@ const Main = ({ navigation }) => {
 const styles = StyleSheet.create({
   box: {
     //marginLeft: 15,
-    justifyContent: "center",
-    backgroundColor: "#fff",
+    justifyContent: 'center',
+    backgroundColor: '#fff',
     borderRadius: 10,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -263,11 +265,11 @@ const styles = StyleSheet.create({
     height: 65,
   },
   boxActive: {
-    justifyContent: "center",
-    backgroundColor: "#F0F0F0",
+    justifyContent: 'center',
+    backgroundColor: '#F0F0F0',
     borderRadius: 10,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -283,34 +285,34 @@ const styles = StyleSheet.create({
     height: 40,
   },
   container: {
-    backgroundColor: "#EFFAFF",
-    height: "100%",
+    backgroundColor: '#EFFAFF',
+    height: '100%',
   },
   option_container: {
     //top:80,
-    top: "10%",
-    paddingLeft: "6%",
-    paddingRight: "6%",
-    display: "flex",
-    flexDirection: "column",
+    top: '10%',
+    paddingLeft: '6%',
+    paddingRight: '6%',
+    display: 'flex',
+    flexDirection: 'column',
     paddingBottom: 90,
   },
   card_container: {
     //top:20,
-    top: "5%",
-    paddingLeft: "6%",
-    paddingRight: "6%",
-    display: "flex",
-    flexDirection: "column",
+    top: '5%',
+    paddingLeft: '6%',
+    paddingRight: '6%',
+    display: 'flex',
+    flexDirection: 'column',
   },
   listTab: {
     marginTop: 25,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   btnTab: {
     marginRight: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textTab: {
     fontSize: 15,
@@ -327,20 +329,20 @@ const styles = StyleSheet.create({
 });
 const Seacrhbox_style = StyleSheet.create({
   input: {
-    backgroundColor: "#FFFAFA",
+    backgroundColor: '#FFFAFA',
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     flexGrow: 1,
     fontSize: 17,
   },
   searchbox: {
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
   },
   searchbotton: {
     padding: 5,
-    backgroundColor: "#FFC107",
+    backgroundColor: '#FFC107',
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
   },
