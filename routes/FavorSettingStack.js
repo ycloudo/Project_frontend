@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import FavorSetting from "../Pages/FavorSetting";
 import FavorSetting2 from "../Pages/FavorSetting2";
 import DrawerNav from "./DrawerNav";
-import FavorSetting0 from "../Pages/FavorSetting0";
+
 
 const Stack = createStackNavigator();
 
@@ -16,10 +16,7 @@ const FavorSettingStack = () => {
             }}
             initialRouteName="favorsetting"
         >
-            <Stack.Screen name="root" component={DrawerNav} 
-                options={{headerShown:false}}
-            />
-            <Stack.Screen name="favorsetting0" component={FavorSetting0} 
+            <Stack.Screen name="root" component={DrawerNav}
                 options={{headerShown:false}}
             />
             <Stack.Screen name="favorsetting" component={FavorSetting} />

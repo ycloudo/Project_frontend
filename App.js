@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator,Image } from "react-native";
 import { useState, useMemo, useEffect, useReducer } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import Drawer from "./routes/DrawerNav";
 import Auth from "./routes/AuthStackNav";
+import FavorSetting from "./routes/FavorSettingStack";
 import { AuthContext } from "./content/AuthContext";
 import { API_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
@@ -145,14 +146,18 @@ export default function App() {
             }
             setTimeout(() => {
                 dispatch({ type: "LOADING", token: token, id: userId });
-            }, 1000);
+            }, 1500);
         };
         fetchUser();
     }, []);
     if (Authstate.isLoading) {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size="large" />
+                <Image
+                    source={require('./assets/logo.jpg')}
+                    style={styles.photo}
+                />
+                {/*<ActivityIndicator size="small" />*/}
             </View>
         );
     }
@@ -171,5 +176,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#EFFAFF",
     },
+    photo: {
+        width:200,
+        height:200, 
+    }
 });

@@ -237,6 +237,7 @@ const Main = ({ navigation }) => {
               setReachedEnd(true);
             }
           }}
+          ref={ref}
           //   ListEmptyComponent={<EmptyComponent />}
           ListFooterComponent={renderLoader}
           keyExtractor={(item, index) => String(index)}
