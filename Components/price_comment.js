@@ -48,7 +48,7 @@ const Price_comment = ({ navigation, item, comment, resource, status }) => {
         )}
         <Text style={styles.comment}>
           {reviews.comments.map((e, index) => {
-            const mes = e + '，';
+            const mes = e + ' ';
             const type = reviews.types[index];
             return (
               <Comment
@@ -85,7 +85,7 @@ const Price_comment = ({ navigation, item, comment, resource, status }) => {
         {/* <Text style={styles.comment}>{item.comment}</Text> */}
         <Text style={styles.comment}>
           {reviews.comments.map((e, index) => {
-            const mes = e + '，';
+            const mes = e + ' ';
             const type = reviews.types[index];
             return (
               <Comment
