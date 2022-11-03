@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,8 +7,26 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import ListItemSwipeable from 'react-native-elements/dist/list/ListItemSwipeable';
+import Comment from './Comment';
 
-const Price_comment = ({ navigation, item, comment, resource }) => {
+const Price_comment = ({ navigation, item, comment, resource, status }) => {
+  // const comments = item.singlecomment;
+  // const types = item.type;
+  const [reviews, setReviews] = useState({
+    comments: [],
+    types: [],
+  });
+  // console.log({
+  //   comment: reviews.comments,
+  //   types: reviews.types,
+  // });
+  useEffect(() => {
+    setReviews({
+      comments: item.singlecomment,
+      types: item.type,
+    });
+  }, []);
   return comment == 1 ? (
     <View>
       <View style={styles.detail}>
@@ -24,11 +42,24 @@ const Price_comment = ({ navigation, item, comment, resource }) => {
           />
         ) : (
           <Image
-            source={require("../assets/google.png")}
+            source={require('../assets/google.png')}
             style={styles.resource}
           />
         )}
-        <Text style={styles.comment}>{item.comment}</Text>
+        <Text style={styles.comment}>
+          {reviews.comments.map((e, index) => {
+            const mes = e + '，';
+            const type = reviews.types[index];
+            return (
+              <Comment
+                message={mes}
+                mark={status == type}
+                key={index}
+                type={type}
+              />
+            );
+          })}
+        </Text>
       </View>
     </View>
   ) : (
@@ -47,11 +78,25 @@ const Price_comment = ({ navigation, item, comment, resource }) => {
           />
         ) : (
           <Image
-            source={require("../assets/google.png")}
+            source={require('../assets/google.png')}
             style={styles.resource}
           />
         )}
-        <Text style={styles.comment}>{item.comment}</Text>
+        {/* <Text style={styles.comment}>{item.comment}</Text> */}
+        <Text style={styles.comment}>
+          {reviews.comments.map((e, index) => {
+            const mes = e + '，';
+            const type = reviews.types[index];
+            return (
+              <Comment
+                message={mes}
+                mark={status == type}
+                key={index}
+                type={type}
+              />
+            );
+          })}
+        </Text>
       </View>
     </View>
   );
@@ -59,7 +104,7 @@ const Price_comment = ({ navigation, item, comment, resource }) => {
 
 const styles = StyleSheet.create({
   detail: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingTop: 10,
     paddingLeft: 15,
     paddingRight: 15,
@@ -78,7 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   line: {
-    backgroundColor: "#5B5B5B",
+    backgroundColor: '#5B5B5B',
     height: 1,
     marginBottom: 5,
     marginHorizontal: 30,
