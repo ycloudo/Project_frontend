@@ -14,6 +14,7 @@ import * as SecureStore from 'expo-secure-store';
 const Tab = createBottomTabNavigator();
 
 const Navbar = () => {
+  console.log('Navbar');
   const userInitState = {
     favor: [],
   };

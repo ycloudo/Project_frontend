@@ -30,6 +30,8 @@ const Card = ({ navigation, item, counter }) => {
       if (res) {
         setIsFavor(true);
       }
+    } else {
+      setIsFavor(false);
     }
   };
   item = {
@@ -38,7 +40,11 @@ const Card = ({ navigation, item, counter }) => {
     isFavor: isFavor,
   };
   return counter % 2 == 1 ? (
-    <TouchableOpacity onPress={() => navigation.navigate('price', item)}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('home', { screen: 'price', params: item });
+      }}
+    >
       <Animated.View style={styles.container1} shouldRasterizeIOS={true}>
         <ImageBackground source={{ uri: item.photo }} style={styles.card1}>
           <View style={styles.size1}>
@@ -79,7 +85,11 @@ const Card = ({ navigation, item, counter }) => {
       </Animated.View>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity onPress={() => navigation.navigate('price', item)}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('home', { screen: 'price', params: item });
+      }}
+    >
       <Animated.View style={styles.container2} shouldRasterizeIOS={true}>
         <ImageBackground style={styles.card2} source={{ uri: item.photo }}>
           <View>

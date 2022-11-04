@@ -67,7 +67,7 @@ const Price = ({ navigation }) => {
   const [isFavor, setFavor] = useState(route.params.isFavor);
   const [reviews, setReviews] = useState([]);
   const [status, setStatus] = useState(5);
-  const [datalist, setDatalist] = useState(reviews);
+  const [datalist, setDatalist] = useState([]);
   const favorEditHandler = (isFavor, favorIndex, rid) => {
     const res = userContext.setfavor(isFavor, favorIndex, rid);
     if (res) {
@@ -80,14 +80,17 @@ const Price = ({ navigation }) => {
       reviews.map((e) => {
         const array = e.type;
         const type = array.find((element) => element == status);
-        if (type != undefined) {
+        if (typeof type != 'undefined') {
           result.push(e);
         }
       });
-      result.sort(() => {
-        return 0.5 - Math.random();
-      });
-      setDatalist([...result]);
+      // result.map((e) => {
+      //   console.log(e.type.find((element) => element == status));
+      // });
+      // result.sort(() => {
+      //   return 0.5 - Math.random();
+      // });
+      setDatalist(result);
     } else {
       setDatalist(reviews);
     }
@@ -125,7 +128,10 @@ const Price = ({ navigation }) => {
           <View style={styles.backbackground}>
             <TouchableOpacity
               onPress={() => {
-                navigation.goBack();
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'main' }],
+                });
               }}
             >
               <Icon_back name="arrowleft" size={25} color="#000000" />
@@ -209,6 +215,7 @@ const Price = ({ navigation }) => {
                 resource={item.resource}
                 navigation={navigation}
                 comment={comment}
+                status={status}
                 key={comment}
               />
             );
@@ -232,7 +239,7 @@ const Price = ({ navigation }) => {
           setModal={setModalVisible_c}
           message={message}
           navigate={navigate}
-          isNavigate={isNavigate}
+          isNavigate={true}
         />
       ) : null}
       <ActionButton
