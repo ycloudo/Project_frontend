@@ -1,14 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import { useState, useMemo, useEffect, useReducer } from 'react';
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import Drawer from './routes/DrawerNav';
-import Auth from './routes/AuthStackNav';
-import { AuthContext } from './content/AuthContext';
-import { API_URL } from '@env';
-import * as SecureStore from 'expo-secure-store';
-import FavorSettingStack from './routes/FavorSettingStack';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, ActivityIndicator,Image } from "react-native";
+import { useState, useMemo, useEffect, useReducer } from "react";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import Drawer from "./routes/DrawerNav";
+import Auth from "./routes/AuthStackNav";
+import FavorSetting from "./routes/FavorSettingStack";
+import { AuthContext } from "./content/AuthContext";
+import { API_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 export default function App() {
   const initialLoginState = {
@@ -167,9 +167,13 @@ export default function App() {
   }, []);
   if (Authstate.isLoading) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" />
-      </View>
+        <View style={styles.container}>
+        <Image
+            source={require('./assets/logo.jpg')}
+            style={styles.photo}
+        />
+        {/*<ActivityIndicator size="small" />*/}
+    </View>
     );
   }
   if (Authstate.userToken == null) {
@@ -204,9 +208,14 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#EFFAFF",
+    },
+    photo: {
+        width:200,
+        height:200, 
+    }
 });

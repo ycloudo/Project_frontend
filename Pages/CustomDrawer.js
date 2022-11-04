@@ -51,7 +51,8 @@ const CustomDrawer = (props) => {
         <View style={{ flex: 1 }}>
             <View style={styles.avatar_container}>
                 <Image
-                    source={{ uri: info.avatar }} //還沒串
+                    source={info.avatar ? {uri: info.avatar } : null}
+                    //source={{ uri: info.avatar }} //還沒串
                     style={styles.photo}
                 />
                 <Text style={styles.name}>{info.name}</Text>

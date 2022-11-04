@@ -1,8 +1,8 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../Pages/Auth/Login';
-import Signup from '../Pages/Auth/Signup';
-import FavorSettingStack from './FavorSettingStack';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import Login from "../Pages/Auth/Login";
+import Signup from "../Pages/Auth/Signup";
+import FavorSetting from "../Pages/FavorSetting";
 
 const Stack = createStackNavigator();
 

@@ -5,7 +5,8 @@ import Eat from '../Pages/Eat_new';
 import Favor from '../Pages/Favor';
 import { MainStack } from '../routes/IndexStackNav';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import FavorSetting from '../Pages/FavorSetting';
+//import FavorSetting from '../Pages/FavorSetting';
+import FavorSetting from "../routes/FavorSettingStack";
 import { UserContext } from '../content/UserContext';
 import { API_URL } from '@env';
 import * as SecureStore from 'expo-secure-store';
@@ -253,6 +254,8 @@ const getRouteName = (route) => {
   //console.log(routeName);
   //console.log(route);
   if (
+    routeName == 'favorsetting' ||
+    routeName == 'favorsetting2' ||
     routeName == 'restaurant' ||
     routeName == 'price' ||
     routeName == 'result'
