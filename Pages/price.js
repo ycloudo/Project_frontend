@@ -128,7 +128,10 @@ const Price = ({ navigation }) => {
           <View style={styles.backbackground}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('main');
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'main' }],
+                });
               }}
             >
               <Icon_back name="arrowleft" size={25} color="#000000" />

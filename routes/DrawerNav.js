@@ -9,6 +9,7 @@ import FavorSetting0 from '../Pages/FavorSetting0';
 const Drawer = createDrawerNavigator();
 
 const SettingDrawer = () => {
+  console.log('Drawer');
   return (
     <Drawer.Navigator
       screenOptions={{
