@@ -27,7 +27,7 @@ export default function App() {
           userId: action.id,
           userToken: action.token,
           isLoading: false,
-          everWroteFavor: true,
+          everWroteFavor: false,
         };
       case 'LOGIN':
         return {
@@ -35,7 +35,7 @@ export default function App() {
           userId: action.id,
           userToken: action.token,
           isLoading: false,
-          everWroteFavor: true,
+          everWroteFavor: false,
         };
       case 'LOGOUT':
         return {
