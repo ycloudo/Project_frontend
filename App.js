@@ -5,7 +5,7 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import Drawer from "./routes/DrawerNav";
 import Auth from "./routes/AuthStackNav";
-import FavorSetting from "./routes/FavorSettingStack";
+import FavorSettingStack from "./routes/FavorSettingStack";
 import { AuthContext } from "./content/AuthContext";
 import { API_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
