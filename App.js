@@ -121,6 +121,10 @@ export default function App() {
       } catch (e) {
         console.error(e);
       }
+      if (userId && userToken) {
+        await SecureStore.setItemAsync('auth-token', userToken);
+        await SecureStore.setItemAsync('user-id', userId);
+      }
       dispatch({
         type: 'SIGNUP',
         id: userId,
