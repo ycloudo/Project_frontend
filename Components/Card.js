@@ -30,6 +30,8 @@ const Card = ({ navigation, item, counter }) => {
       if (res) {
         setIsFavor(true);
       }
+    } else {
+      setIsFavor(false);
     }
   };
   item = {
@@ -38,12 +40,18 @@ const Card = ({ navigation, item, counter }) => {
     isFavor: isFavor,
   };
   return counter % 2 == 1 ? (
-    <TouchableOpacity onPress={() => navigation.navigate('price', item)}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('home', { screen: 'price', params: item });
+      }}
+    >
       <Animated.View style={styles.container1} shouldRasterizeIOS={true}>
         <ImageBackground source={{ uri: item.photo }} style={styles.card1}>
-          <View style={styles.name_bg1}>
-            <View style={styles.name1}>
-              <Text style={styles.name}>{item.name}</Text>
+          <View style={styles.size1}>
+            <View style={styles.name_bg1}>
+              <View style={styles.name1}>
+                <Text style={styles.name}>{item.name}</Text>
+              </View>
             </View>
           </View>
           {!isFavor ? (
@@ -77,13 +85,19 @@ const Card = ({ navigation, item, counter }) => {
       </Animated.View>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity onPress={() => navigation.navigate('price', item)}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('home', { screen: 'price', params: item });
+      }}
+    >
       <Animated.View style={styles.container2} shouldRasterizeIOS={true}>
         <ImageBackground style={styles.card2} source={{ uri: item.photo }}>
           <View>
-            <View style={styles.name_bg2}>
-              <View style={styles.name2}>
-                <Text style={styles.name}>{item.name}</Text>
+            <View style={styles.size2}>
+              <View style={styles.name_bg2}>
+                <View style={styles.name2}>
+                  <Text style={styles.name}>{item.name}</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -121,11 +135,18 @@ const Card = ({ navigation, item, counter }) => {
 };
 
 const styles = StyleSheet.create({
+  size1: {
+    alignItems: 'baseline',
+  },
+  size2: {
+    alignItems: 'baseline',
+    alignItems: 'flex-end',
+    marginRight:5,
+  },
   name_bg1: {
     height: 35,
     backgroundColor: '#FFF4B0',
-    width: 120,
-    marginLeft: -8,
+    marginLeft: -8, 
     marginTop: -15,
     borderRadius: 5,
   },
@@ -133,14 +154,13 @@ const styles = StyleSheet.create({
     height: 35,
     borderWidth: 2,
     borderColor: '#423067',
-    width: 120,
     marginLeft: -3.5,
+    marginRight: 3.5,
     marginTop: -3.5,
     borderRadius: 5,
     paddingLeft: 5,
     paddingRight: 5,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   name: {
     color: '#423067',
@@ -149,8 +169,6 @@ const styles = StyleSheet.create({
   name_bg2: {
     height: 35,
     backgroundColor: '#FFF4B0',
-    width: 120,
-    marginLeft: '60%',
     marginTop: -15,
     borderRadius: 5,
   },
@@ -158,8 +176,8 @@ const styles = StyleSheet.create({
     height: 35,
     borderWidth: 2,
     borderColor: '#423067',
-    width: 120,
     marginLeft: -3.5,
+    marginRight: 3.5,
     marginTop: -3.5,
     borderRadius: 5,
     paddingLeft: 5,

@@ -5,7 +5,7 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import Main from '../Pages/Main';
 import Price from '../Pages/price';
 import SearchResult from '../Pages/SearchResult';
-
+import FavorSetting from "../Pages/FavorSetting";
 export const Stack = createStackNavigator();
 
 export const MainStack = () => {
@@ -16,6 +16,7 @@ export const MainStack = () => {
         gestureEnabled: false,
       }}
     >
+      
       <Stack.Screen name="main" component={Main} />
       <Stack.Screen name="result" component={SearchResult} />
       <Stack.Screen name="price" component={Price} />

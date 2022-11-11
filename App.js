@@ -1,19 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import { useState, useMemo, useEffect, useReducer } from 'react';
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import Drawer from './routes/DrawerNav';
-import Auth from './routes/AuthStackNav';
-import { AuthContext } from './content/AuthContext';
-import { API_URL } from '@env';
-import * as SecureStore from 'expo-secure-store';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, ActivityIndicator,Image } from "react-native";
+import { useState, useMemo, useEffect, useReducer } from "react";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import Drawer from "./routes/DrawerNav";
+import Auth from "./routes/AuthStackNav";
+import FavorSettingStack from "./routes/FavorSettingStack";
+import { AuthContext } from "./content/AuthContext";
+import { API_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 export default function App() {
   const initialLoginState = {
     isLoading: true,
     userId: null,
     userToken: null,
+    everWroteFavor: false,
   };
 
   const authReducer = (state, action) => {
@@ -25,6 +27,7 @@ export default function App() {
           userId: action.id,
           userToken: action.token,
           isLoading: false,
+          everWroteFavor: false,
         };
       case 'LOGIN':
         return {
@@ -32,6 +35,7 @@ export default function App() {
           userId: action.id,
           userToken: action.token,
           isLoading: false,
+          everWroteFavor: false,
         };
       case 'LOGOUT':
         return {
@@ -39,6 +43,7 @@ export default function App() {
           userId: null,
           userToken: null,
           isLoading: false,
+          everWroteFavor: false,
         };
       case 'SIGNUP':
         return {
@@ -46,6 +51,11 @@ export default function App() {
           userId: action.id,
           userToken: action.token,
           isLoading: false,
+        };
+      case 'FAVOR':
+        return {
+          ...state,
+          everWroteFavor: true,
         };
     }
   };
@@ -121,6 +131,11 @@ export default function App() {
         token: userToken,
       });
     },
+    wroteFavor: () => {
+      dispatch({
+        type: 'FAVOR',
+      });
+    },
   }));
   useEffect(() => {
     const fetchUser = async () => {
@@ -145,32 +160,66 @@ export default function App() {
         token = null;
       }
       setTimeout(() => {
-        dispatch({ type: 'LOADING', token: token, id: userId });
+        dispatch({
+          type: 'LOADING',
+          token: token,
+          id: userId,
+        });
       }, 1000);
     };
     fetchUser();
   }, []);
   if (Authstate.isLoading) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" />
-      </View>
+        <View style={styles.container}>
+        <Image
+            source={require('./assets/logo.jpg')}
+            style={styles.photo}
+        />
+        {/*<ActivityIndicator size="small" />*/}
+    </View>
     );
   }
-  return (
-    <AuthContext.Provider value={authContext}>
-      <StatusBar style="auto" />
-      <NavigationContainer>
-        {Authstate.userToken != null ? <Drawer /> : <Auth />}
-      </NavigationContainer>
-    </AuthContext.Provider>
-  );
+  if (Authstate.userToken == null) {
+    return (
+      <AuthContext.Provider value={authContext}>
+        <StatusBar style="auto" />
+        <NavigationContainer>
+          <Auth />
+        </NavigationContainer>
+      </AuthContext.Provider>
+    );
+  }
+  if (!Authstate.everWroteFavor) {
+    return (
+      <AuthContext.Provider value={authContext}>
+        <StatusBar style="auto" />
+        <NavigationContainer>
+          <FavorSettingStack />
+        </NavigationContainer>
+      </AuthContext.Provider>
+    );
+  } else {
+    return (
+      <AuthContext.Provider value={authContext}>
+        <StatusBar style="auto" />
+        <NavigationContainer>
+          <Drawer />
+        </NavigationContainer>
+      </AuthContext.Provider>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#EFFAFF",
+    },
+    photo: {
+        width:200,
+        height:200, 
+    }
 });
