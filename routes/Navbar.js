@@ -6,7 +6,7 @@ import Favor from '../Pages/Favor';
 import { MainStack } from '../routes/IndexStackNav';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 //import FavorSetting from '../Pages/FavorSetting';
-import FavorSetting from "../routes/FavorSettingStack";
+import FavorSetting from '../routes/FavorSettingStack';
 import { UserContext } from '../content/UserContext';
 import { API_URL } from '@env';
 import * as SecureStore from 'expo-secure-store';

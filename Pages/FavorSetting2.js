@@ -12,50 +12,59 @@ import Icon_back from '@expo/vector-icons/AntDesign';
 import Icon_click from '@expo/vector-icons/Feather';
 import Modal from '../Components/Modal';
 import { AuthContext } from '../content/AuthContext';
+import { FavorSettingContext } from '../content/FavorSettingContext';
 
 const FavorSetting2 = ({ navigation }) => {
-  const [food1, setFood1] = useState(false);
-  const [food2, setFood2] = useState(false);
-  const [food3, setFood3] = useState(false);
-  const [food4, setFood4] = useState(false);
-  const [food5, setFood5] = useState(false);
-  const [food6, setFood6] = useState(false);
-  const [food7, setFood7] = useState(false);
-  const [food8, setFood8] = useState(false);
+  // const [food1, setFood1] = useState(false);
+  // const [food2, setFood2] = useState(false);
+  // const [food3, setFood3] = useState(false);
+  // const [food4, setFood4] = useState(false);
+  // const [food5, setFood5] = useState(false);
+  // const [food6, setFood6] = useState(false);
+  // const [food7, setFood7] = useState(false);
+  // const [food8, setFood8] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [isNavigate, setIsNavigate] = useState(false);
-  const { wroteFavor } = useContext(AuthContext);
+  const { FSstate, FScontext } = useContext(FavorSettingContext);
   let counter = 0;
   const navigate = () => {
-    wroteFavor();
+    FScontext.submit();
     setTimeout(() => {
-      navigation.navigate('root', { screen: 'home' });
+      navigation.popToTop();
+      navigation.goBack();
+      // navigation.reset({
+      //   index: 0,
+      //   routes: [{ name: 'root' }],
+      // });
     }, 300);
   };
+  const checkBoxHandler = (object) => {
+    FScontext.edit(object);
+  };
   const click = () => {
-    if (food1 === true) {
+    if (FSstate.f1 === true) {
       counter += 1;
     }
-    if (food2 === true) {
+    if (FSstate.f2 === true) {
       counter += 1;
     }
-    if (food3 === true) {
+    if (FSstate.f3 === true) {
       counter += 1;
     }
-    if (food4 === true) {
+    if (FSstate.f4 === true) {
       counter += 1;
     }
-    if (food5 === true) {
+    if (FSstate.f5 === true) {
       counter += 1;
     }
-    if (food6 === true) {
+    if (FSstate.f6 === true) {
       counter += 1;
     }
-    if (food7 === true) {
+    if (FSstate.f7 === true) {
       counter += 1;
     }
-    if (food8 === true) {
+    if (FSstate.f8 === true) {
       counter += 1;
     }
     if (counter == 3) {
@@ -97,8 +106,12 @@ const FavorSetting2 = ({ navigation }) => {
           </View>
           <CheckBox
             title="中式"
-            checked={food1}
-            onPress={() => setFood1(!food1)}
+            checked={FSstate.f1}
+            onPress={() =>
+              checkBoxHandler({
+                f1: !FSstate.f1,
+              })
+            }
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             containerStyle={{
@@ -119,8 +132,12 @@ const FavorSetting2 = ({ navigation }) => {
           </View>
           <CheckBox
             title="日式"
-            checked={food2}
-            onPress={() => setFood2(!food2)}
+            checked={FSstate.f2}
+            onPress={() =>
+              checkBoxHandler({
+                f2: !FSstate.f2,
+              })
+            }
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             containerStyle={{
@@ -142,8 +159,12 @@ const FavorSetting2 = ({ navigation }) => {
           </View>
           <CheckBox
             title="韓式"
-            checked={food3}
-            onPress={() => setFood3(!food3)}
+            checked={FSstate.f3}
+            onPress={() =>
+              checkBoxHandler({
+                f3: !FSstate.f3,
+              })
+            }
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             containerStyle={{
@@ -164,8 +185,12 @@ const FavorSetting2 = ({ navigation }) => {
           </View>
           <CheckBox
             title="美式"
-            checked={food4}
-            onPress={() => setFood4(!food4)}
+            checked={FSstate.f4}
+            onPress={() =>
+              checkBoxHandler({
+                f4: !FSstate.f4,
+              })
+            }
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             containerStyle={{
@@ -187,8 +212,12 @@ const FavorSetting2 = ({ navigation }) => {
           </View>
           <CheckBox
             title="西式"
-            checked={food5}
-            onPress={() => setFood5(!food5)}
+            checked={FSstate.f5}
+            onPress={() =>
+              checkBoxHandler({
+                f5: !FSstate.f5,
+              })
+            }
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             containerStyle={{
@@ -209,8 +238,12 @@ const FavorSetting2 = ({ navigation }) => {
           </View>
           <CheckBox
             title="異國料理"
-            checked={food6}
-            onPress={() => setFood6(!food6)}
+            checked={FSstate.f6}
+            onPress={() =>
+              checkBoxHandler({
+                f6: !FSstate.f6,
+              })
+            }
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             containerStyle={{
@@ -232,8 +265,12 @@ const FavorSetting2 = ({ navigation }) => {
           </View>
           <CheckBox
             title="泰式"
-            checked={food7}
-            onPress={() => setFood7(!food7)}
+            checked={FSstate.f7}
+            onPress={() =>
+              checkBoxHandler({
+                f7: !FSstate.f7,
+              })
+            }
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             containerStyle={{
@@ -254,8 +291,12 @@ const FavorSetting2 = ({ navigation }) => {
           </View>
           <CheckBox
             title="輕食"
-            checked={food8}
-            onPress={() => setFood8(!food8)}
+            checked={FSstate.f8}
+            onPress={() =>
+              checkBoxHandler({
+                f8: !FSstate.f8,
+              })
+            }
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             containerStyle={{

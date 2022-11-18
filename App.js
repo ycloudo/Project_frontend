@@ -43,7 +43,7 @@ export default function App() {
           userId: null,
           userToken: null,
           isLoading: false,
-          everWroteFavor: false,
+          everWroteFavor: true,
         };
       case 'SIGNUP':
         return {
@@ -51,11 +51,6 @@ export default function App() {
           userId: action.id,
           userToken: action.token,
           isLoading: false,
-        };
-      case 'FAVOR':
-        return {
-          ...state,
-          everWroteFavor: true,
         };
     }
   };
@@ -129,11 +124,6 @@ export default function App() {
         type: 'SIGNUP',
         id: userId,
         token: userToken,
-      });
-    },
-    wroteFavor: () => {
-      dispatch({
-        type: 'FAVOR',
       });
     },
   }));

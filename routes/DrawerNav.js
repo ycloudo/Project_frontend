@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon_i from '@expo/vector-icons/Ionicons';
 import CustomDrawer from '../Pages/CustomDrawer';
@@ -9,7 +10,6 @@ import FavorSetting0 from '../Pages/FavorSetting0';
 const Drawer = createDrawerNavigator();
 
 const SettingDrawer = () => {
-  console.log('Drawer');
   return (
     <Drawer.Navigator
       screenOptions={{
