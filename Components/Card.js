@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import Icon_save from '@expo/vector-icons/FontAwesome';
 import { UserContext } from '../content/UserContext';
+import { API_URL } from '@env';
+import * as SecureStore from 'expo-secure-store';
 
 const Card = ({ navigation, item, counter }) => {
   const [isFavor, setIsFavor] = useState(false);
@@ -34,6 +36,23 @@ const Card = ({ navigation, item, counter }) => {
       setIsFavor(false);
     }
   };
+  const recordEditHandler = async () => {
+    const token = await SecureStore.getItemAsync('auth-token');
+    const uid = await SecureStore.getItemAsync('user-id');
+    const requestOption = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'auth-token': token },
+      body: JSON.stringify({
+        rid: item.id,
+        uid: uid,
+      }),
+    };
+    try {
+      await fetch(`${API_URL}/user/editRecord`, requestOption);
+    } catch (e) {
+      console.error(e);
+    }
+  };
   item = {
     ...item,
     favorIndex: favorIndex,
@@ -41,7 +60,8 @@ const Card = ({ navigation, item, counter }) => {
   };
   return counter % 2 == 1 ? (
     <TouchableOpacity
-      onPress={() => {
+      onPress={async () => {
+        await recordEditHandler();
         navigation.navigate('home', { screen: 'price', params: item });
       }}
     >
@@ -86,7 +106,8 @@ const Card = ({ navigation, item, counter }) => {
     </TouchableOpacity>
   ) : (
     <TouchableOpacity
-      onPress={() => {
+      onPress={async () => {
+        await recordEditHandler();
         navigation.navigate('home', { screen: 'price', params: item });
       }}
     >
@@ -141,12 +162,12 @@ const styles = StyleSheet.create({
   size2: {
     alignItems: 'baseline',
     alignItems: 'flex-end',
-    marginRight:5,
+    marginRight: 5,
   },
   name_bg1: {
     height: 35,
     backgroundColor: '#FFF4B0',
-    marginLeft: -8, 
+    marginLeft: -8,
     marginTop: -15,
     borderRadius: 5,
   },
