@@ -43,7 +43,6 @@ export default function App() {
           userId: null,
           userToken: null,
           isLoading: false,
-          everWroteFavor: true,
         };
       case 'SIGNUP':
         return {
@@ -51,6 +50,7 @@ export default function App() {
           userId: action.id,
           userToken: action.token,
           isLoading: false,
+          everWroteFavor: false,
         };
     }
   };

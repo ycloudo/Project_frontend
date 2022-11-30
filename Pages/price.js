@@ -205,7 +205,7 @@ const Price = ({ navigation }) => {
           })}
         </ScrollView>
       </View>
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{ right: 1 }}>
         <View>
           {datalist.map((item) => {
             comment += 1;
