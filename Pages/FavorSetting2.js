@@ -15,14 +15,6 @@ import { AuthContext } from '../content/AuthContext';
 import { FavorSettingContext } from '../content/FavorSettingContext';
 
 const FavorSetting2 = ({ navigation }) => {
-  // const [food1, setFood1] = useState(false);
-  // const [food2, setFood2] = useState(false);
-  // const [food3, setFood3] = useState(false);
-  // const [food4, setFood4] = useState(false);
-  // const [food5, setFood5] = useState(false);
-  // const [food6, setFood6] = useState(false);
-  // const [food7, setFood7] = useState(false);
-  // const [food8, setFood8] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [isNavigate, setIsNavigate] = useState(false);
@@ -31,12 +23,11 @@ const FavorSetting2 = ({ navigation }) => {
   const navigate = () => {
     FScontext.submit();
     setTimeout(() => {
-      navigation.popToTop();
-      navigation.goBack();
       // navigation.reset({
       //   index: 0,
       //   routes: [{ name: 'root' }],
       // });
+      navigation.navigate('root', { screen: '首頁' });
     }, 300);
   };
   const checkBoxHandler = (object) => {

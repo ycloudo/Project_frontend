@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import { FavorSettingContext } from '../content/FavorSettingContext';
 import * as SecureStore from 'expo-secure-store';
 import { API_URL } from '@env';
+import SettingDrawer from './DrawerNav';
 
 const Stack = createStackNavigator();
 
@@ -97,7 +98,7 @@ const FavorSettingStack = ({}) => {
       >
         <Stack.Screen
           name="root"
-          component={Navbar}
+          component={SettingDrawer}
           options={{ headerShown: false }}
         />
         {/* <Stack.Screen
