@@ -127,7 +127,7 @@ class Eat extends Component {
           <Text style={styles.top2}>要吃什麼呢？</Text>
         </View>
         <Text style={styles.option_text}>轉盤內容</Text>
-        <Option value1handler={this.setvalue1} value2handler={this.setvalue2} />
+        {/* <Option value1handler={this.setvalue1} value2handler={this.setvalue2} /> */}
         <View style={styles.container}>
           <StatusBar barStyle={'light-content'} />
           <WheelOfFortune
@@ -169,12 +169,12 @@ class Eat extends Component {
                 >
                   <Text style={styles.tryAgainText}>再轉一次</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => this.props.navigation.navigate('首頁')}
                   style={styles.GoButton}
                 >
                   <Text style={styles.GoText}>馬上前往!!</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           )}
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginLeft: 40,
     fontWeight: 'bold',
-    marginTop: 15,
+    marginTop: 40,
   },
   text: {
     padding: 5,
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
   container: {
     position: 'relative',
-    //top: 10,
+    top: 35,
     marginLeft: '6%',
     marginRight: '6%',
     display: 'flex',
