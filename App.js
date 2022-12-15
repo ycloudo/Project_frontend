@@ -9,6 +9,9 @@ import FavorSettingStack from './routes/FavorSettingStack';
 import { AuthContext } from './content/AuthContext';
 import { API_URL } from '@env';
 import * as SecureStore from 'expo-secure-store';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function App() {
   const initialLoginState = {
