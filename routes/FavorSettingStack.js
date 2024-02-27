@@ -101,11 +101,6 @@ const FavorSettingStack = ({}) => {
           component={SettingDrawer}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen
-          name="favorsetting0"
-          component={FavorSetting0}
-          options={{ headerShown: false }}
-        /> */}
         <Stack.Screen name="favorsetting" component={FavorSetting} />
         <Stack.Screen name="favorsetting2" component={FavorSetting2} />
       </Stack.Navigator>

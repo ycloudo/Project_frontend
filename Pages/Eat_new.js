@@ -40,7 +40,17 @@ class Eat extends Component {
       isModalVisible: false,
       value1: -1,
       value2: -1,
-      item: [],
+      item: [
+        '阪城',
+        '乾杯',
+        '青花椒',
+        '茶六',
+        '開飯',
+        '涓豆腐',
+        '響泰多',
+        '金色三麥',
+        '開飯',
+      ],
     };
     this.child = null;
   }
