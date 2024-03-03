@@ -6,7 +6,7 @@ Graduation project of the Department of Information Management, National Sun Yat
 > Since we are no longer maintaining this project, here are some demos.
 
 ### Register/Login
-
+![](GIF/login.gif)
 ### Main Page/Search
 
 ### Aggregated Reviews
