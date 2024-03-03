@@ -6,7 +6,8 @@ Graduation project of the Department of Information Management, National Sun Yat
 > Since we are no longer maintaining this project, here are some demos.
 
 ### Register/Login
-<img src='GIF/login.png' width='499'>
+<img src='https://github.com/ycloudo/Project_frontend/blob/master/GIF/login.gif' width='499'>
+
 ### Main Page/Search
 
 ### Aggregated Reviews
