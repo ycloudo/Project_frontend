@@ -2,6 +2,9 @@
 Graduation project of the Department of Information Management, National Sun Yat-sen University. This repo is for frontend development.
 Repo of backend development: <https://github.com/ycloudo/Project_backend>
 
+# Table of Contents
+[Toc]
+
 # Demo
 > Since we are no longer maintaining this project, here are some demos.
 
@@ -13,3 +16,6 @@ Repo of backend development: <https://github.com/ycloudo/Project_backend>
 
 ### Aggregated Reviews
 <img src='https://github.com/ycloudo/Project_frontend/blob/master/GIF/reviews.gif' height='540' width='250'>
+
+# Technologies Used
+- React Native
