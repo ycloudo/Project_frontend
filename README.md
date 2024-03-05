@@ -3,9 +3,10 @@ Graduation project of the Department of Information Management, National Sun Yat
 Repo of backend development: <https://github.com/ycloudo/Project_backend>
 
 # Table of Contents
-[Toc]
+- [Demo](#Demo)
+- [Technologies Used](#TechUsed)
 
-# Demo
+# Demo <a name="Demo"/>
 > Since we are no longer maintaining this project, here are some demos.
 
 ### Register/Login
@@ -17,5 +18,5 @@ Repo of backend development: <https://github.com/ycloudo/Project_backend>
 ### Aggregated Reviews
 <img src='https://github.com/ycloudo/Project_frontend/blob/master/GIF/reviews.gif' height='540' width='250'>
 
-# Technologies Used
+# Technologies_Used <a name="TechUsed"/>
 - React Native
