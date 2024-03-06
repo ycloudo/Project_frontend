@@ -21,5 +21,6 @@ Repo of backend development: <https://github.com/ycloudo/Project_backend>
 ### Aggregated Reviews <a name="AR"/>
 <img src='https://github.com/ycloudo/Project_frontend/blob/master/GIF/reviews.gif' height='540' width='250'>
 
-# Technologies_Used <a name="TechUsed"/>
+# Technologies Used <a name="TechUsed"/>
 - React Native
+- 
