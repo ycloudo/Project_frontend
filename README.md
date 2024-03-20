@@ -7,7 +7,6 @@ Repo of backend development: <https://github.com/ycloudo/Project_backend>
   - [Register/Login](#RL)
   - [Main Page/Search](#MS)
   - [Aggregated Reviews](#AR)
-- [Technologies Used](#TechUsed)
 
 # Demo <a name="Demo"/>
 > Since we are no longer maintaining this project, here are some demos.
@@ -20,7 +19,3 @@ Repo of backend development: <https://github.com/ycloudo/Project_backend>
 
 ### Aggregated Reviews <a name="AR"/>
 <img src='https://github.com/ycloudo/Project_frontend/blob/master/GIF/reviews.gif' height='540' width='250'>
-
-# Technologies Used <a name="TechUsed"/>
-- React Native
-- 
