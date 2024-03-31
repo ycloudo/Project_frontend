@@ -1,6 +1,6 @@
 # Restaurant Review Aggregation Platform
-Graduation project of the Department of Information Management, National Sun Yat-sen University. This repo is for frontend development.
-Repo of backend development: <https://github.com/ycloudo/Project_backend>
+Graduation project of the Department of Information Management, National Sun Yat-sen University. This repo is for frontend development. </br>
+Backend APIs have been containerized, please check out this repository for a demonstration: <https://github.com/ycloudo/Project_backend>
 
 # Table of Contents
 - [Demo](#Demo)
